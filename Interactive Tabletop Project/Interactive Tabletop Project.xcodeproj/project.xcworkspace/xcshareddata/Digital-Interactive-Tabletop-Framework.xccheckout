@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>33CAC68A-A50F-45F1-8D3F-854D65669954</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Digital-Interactive-Tabletop-Framework</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C3EC5771-56D0-4A8D-995B-575E92E1EE64</key>
+		<string>ssh://github.com/black-knight/digital-interactive-tabletop-framework.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Digital-Interactive-Tabletop-Framework.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C3EC5771-56D0-4A8D-995B-575E92E1EE64</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/black-knight/digital-interactive-tabletop-framework.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C3EC5771-56D0-4A8D-995B-575E92E1EE64</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C3EC5771-56D0-4A8D-995B-575E92E1EE64</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ditf</string>
+		</dict>
+	</array>
+</dict>
+</plist>
