@@ -14,13 +14,53 @@
 		6587DD2E193B1D1100C2741E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD2D193B1D1100C2741E /* main.m */; };
 		6587DD32193B1D1100C2741E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD31193B1D1100C2741E /* AppDelegate.m */; };
 		6587DD35193B1D1200C2741E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD33193B1D1100C2741E /* Main.storyboard */; };
-		6587DD38193B1D1200C2741E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD37193B1D1200C2741E /* ViewController.m */; };
+		6587DD38193B1D1200C2741E /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD37193B1D1200C2741E /* ViewController.mm */; };
 		6587DD3A193B1D1200C2741E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD39193B1D1200C2741E /* Images.xcassets */; };
 		6587DD41193B1D1200C2741E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DD40193B1D1200C2741E /* XCTest.framework */; };
 		6587DD42193B1D1200C2741E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DD21193B1D1100C2741E /* Foundation.framework */; };
 		6587DD43193B1D1200C2741E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DD25193B1D1100C2741E /* UIKit.framework */; };
 		6587DD4B193B1D1200C2741E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD49193B1D1200C2741E /* InfoPlist.strings */; };
 		6587DD4D193B1D1200C2741E /* Tabletop_MazeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD4C193B1D1200C2741E /* Tabletop_MazeTests.m */; };
+		6587DD75193CB4CA00C2741E /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DD74193CB4CA00C2741E /* opencv2.framework */; };
+		6587DDB1193CB5EA00C2741E /* BoardCalibrator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD7A193CB5EA00C2741E /* BoardCalibrator.mm */; };
+		6587DDB2193CB5EA00C2741E /* BoardRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD7C193CB5EA00C2741E /* BoardRecognizer.mm */; };
+		6587DDB3193CB5EA00C2741E /* BoardUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD7E193CB5EA00C2741E /* BoardUtil.mm */; };
+		6587DDB4193CB5EA00C2741E /* BrickRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD80193CB5EA00C2741E /* BrickRecognizer.mm */; };
+		6587DDB5193CB5EA00C2741E /* CameraSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD82193CB5EA00C2741E /* CameraSession.mm */; };
+		6587DDB6193CB5EA00C2741E /* CameraUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD84193CB5EA00C2741E /* CameraUtil.mm */; };
+		6587DDB7193CB5EA00C2741E /* Constants.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD86193CB5EA00C2741E /* Constants.mm */; };
+		6587DDB8193CB5EA00C2741E /* ExternalDislayCalibrationBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD88193CB5EA00C2741E /* ExternalDislayCalibrationBorderView.m */; };
+		6587DDB9193CB5EA00C2741E /* ExternalDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD8A193CB5EA00C2741E /* ExternalDisplay.m */; };
+		6587DDBA193CB5EA00C2741E /* FakeCameraUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD8C193CB5EA00C2741E /* FakeCameraUtil.mm */; };
+		6587DDBB193CB5EA00C2741E /* border_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD90193CB5EA00C2741E /* border_bottom.png */; };
+		6587DDBC193CB5EA00C2741E /* border_bottom_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD91193CB5EA00C2741E /* border_bottom_left.png */; };
+		6587DDBD193CB5EA00C2741E /* border_bottom_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD92193CB5EA00C2741E /* border_bottom_right.png */; };
+		6587DDBE193CB5EA00C2741E /* border_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD93193CB5EA00C2741E /* border_left.png */; };
+		6587DDBF193CB5EA00C2741E /* border_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD94193CB5EA00C2741E /* border_right.png */; };
+		6587DDC0193CB5EA00C2741E /* border_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD95193CB5EA00C2741E /* border_top.png */; };
+		6587DDC1193CB5EA00C2741E /* border_top_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD96193CB5EA00C2741E /* border_top_left.png */; };
+		6587DDC2193CB5EA00C2741E /* border_top_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD97193CB5EA00C2741E /* border_top_right.png */; };
+		6587DDC4193CB5EA00C2741E /* fake_board_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD9B193CB5EA00C2741E /* fake_board_1.png */; };
+		6587DDC5193CB5EA00C2741E /* fake_board_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD9C193CB5EA00C2741E /* fake_board_2.png */; };
+		6587DDC6193CB5EA00C2741E /* fake_board_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD9D193CB5EA00C2741E /* fake_board_3.png */; };
+		6587DDC7193CB5EA00C2741E /* fake_board_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD9E193CB5EA00C2741E /* fake_board_4.png */; };
+		6587DDC8193CB5EA00C2741E /* fake_board_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD9F193CB5EA00C2741E /* fake_board_5.png */; };
+		6587DDC9193CB5EA00C2741E /* fake_board_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DDA0193CB5EA00C2741E /* fake_board_6.png */; };
+		6587DDCA193CB5EA00C2741E /* fake_board_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DDA1193CB5EA00C2741E /* fake_board_7.png */; };
+		6587DDCB193CB5EA00C2741E /* PreviewableViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDA3193CB5EA00C2741E /* PreviewableViewController.mm */; };
+		6587DDCC193CB5EA00C2741E /* RotatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDA5193CB5EA00C2741E /* RotatedView.m */; };
+		6587DDCD193CB5EA00C2741E /* TabletopView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDA7193CB5EA00C2741E /* TabletopView.mm */; };
+		6587DDCE193CB5EA00C2741E /* TabletopViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDA9193CB5EA00C2741E /* TabletopViewController.mm */; };
+		6587DDCF193CB5EA00C2741E /* UIImage+CaptureScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDAB193CB5EA00C2741E /* UIImage+CaptureScreen.m */; };
+		6587DDD0193CB5EA00C2741E /* UIImage+OpenCV.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDAD193CB5EA00C2741E /* UIImage+OpenCV.mm */; };
+		6587DDD1193CB5EA00C2741E /* Util.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDAF193CB5EA00C2741E /* Util.mm */; };
+		6587DDD3193CB98600C2741E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DDD2193CB98600C2741E /* libz.dylib */; };
+		6587DDD5193CBA3A00C2741E /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DDD4193CBA3A00C2741E /* CoreImage.framework */; };
+		6587DDD7193CBA6D00C2741E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DDD6193CBA6D00C2741E /* QuartzCore.framework */; };
+		6587DDD9193CBA7300C2741E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DDD8193CBA7300C2741E /* AVFoundation.framework */; };
+		6587DDDB193CBA8800C2741E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DDDA193CBA8800C2741E /* CoreMedia.framework */; };
+		6587DDDE193CBAE500C2741E /* MazeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDDD193CBAE500C2741E /* MazeView.m */; };
+		6587DE01193E484D00C2741E /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE00193E484D00C2741E /* splash.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,13 +86,72 @@
 		6587DD31193B1D1100C2741E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		6587DD34193B1D1100C2741E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6587DD36193B1D1200C2741E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		6587DD37193B1D1200C2741E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		6587DD37193B1D1200C2741E /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		6587DD39193B1D1200C2741E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6587DD3F193B1D1200C2741E /* Tabletop MazeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tabletop MazeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6587DD40193B1D1200C2741E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6587DD48193B1D1200C2741E /* Tabletop MazeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tabletop MazeTests-Info.plist"; sourceTree = "<group>"; };
 		6587DD4A193B1D1200C2741E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6587DD4C193B1D1200C2741E /* Tabletop_MazeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tabletop_MazeTests.m; sourceTree = "<group>"; };
+		6587DD74193CB4CA00C2741E /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = "../Interactive Tabletop Project/opencv2.framework"; sourceTree = "<group>"; };
+		6587DD79193CB5EA00C2741E /* BoardCalibrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoardCalibrator.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BoardCalibrator.h"; sourceTree = "<group>"; };
+		6587DD7A193CB5EA00C2741E /* BoardCalibrator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BoardCalibrator.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BoardCalibrator.mm"; sourceTree = "<group>"; };
+		6587DD7B193CB5EA00C2741E /* BoardRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoardRecognizer.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BoardRecognizer.h"; sourceTree = "<group>"; };
+		6587DD7C193CB5EA00C2741E /* BoardRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BoardRecognizer.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BoardRecognizer.mm"; sourceTree = "<group>"; };
+		6587DD7D193CB5EA00C2741E /* BoardUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoardUtil.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BoardUtil.h"; sourceTree = "<group>"; };
+		6587DD7E193CB5EA00C2741E /* BoardUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BoardUtil.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BoardUtil.mm"; sourceTree = "<group>"; };
+		6587DD7F193CB5EA00C2741E /* BrickRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BrickRecognizer.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BrickRecognizer.h"; sourceTree = "<group>"; };
+		6587DD80193CB5EA00C2741E /* BrickRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BrickRecognizer.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BrickRecognizer.mm"; sourceTree = "<group>"; };
+		6587DD81193CB5EA00C2741E /* CameraSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraSession.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/CameraSession.h"; sourceTree = "<group>"; };
+		6587DD82193CB5EA00C2741E /* CameraSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CameraSession.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/CameraSession.mm"; sourceTree = "<group>"; };
+		6587DD83193CB5EA00C2741E /* CameraUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraUtil.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/CameraUtil.h"; sourceTree = "<group>"; };
+		6587DD84193CB5EA00C2741E /* CameraUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CameraUtil.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/CameraUtil.mm"; sourceTree = "<group>"; };
+		6587DD85193CB5EA00C2741E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Constants.h"; sourceTree = "<group>"; };
+		6587DD86193CB5EA00C2741E /* Constants.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Constants.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Constants.mm"; sourceTree = "<group>"; };
+		6587DD87193CB5EA00C2741E /* ExternalDislayCalibrationBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalDislayCalibrationBorderView.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/ExternalDislayCalibrationBorderView.h"; sourceTree = "<group>"; };
+		6587DD88193CB5EA00C2741E /* ExternalDislayCalibrationBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExternalDislayCalibrationBorderView.m; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/ExternalDislayCalibrationBorderView.m"; sourceTree = "<group>"; };
+		6587DD89193CB5EA00C2741E /* ExternalDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalDisplay.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/ExternalDisplay.h"; sourceTree = "<group>"; };
+		6587DD8A193CB5EA00C2741E /* ExternalDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExternalDisplay.m; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/ExternalDisplay.m"; sourceTree = "<group>"; };
+		6587DD8B193CB5EA00C2741E /* FakeCameraUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FakeCameraUtil.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/FakeCameraUtil.h"; sourceTree = "<group>"; };
+		6587DD8C193CB5EA00C2741E /* FakeCameraUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FakeCameraUtil.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/FakeCameraUtil.mm"; sourceTree = "<group>"; };
+		6587DD90193CB5EA00C2741E /* border_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_bottom.png; sourceTree = "<group>"; };
+		6587DD91193CB5EA00C2741E /* border_bottom_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_bottom_left.png; sourceTree = "<group>"; };
+		6587DD92193CB5EA00C2741E /* border_bottom_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_bottom_right.png; sourceTree = "<group>"; };
+		6587DD93193CB5EA00C2741E /* border_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_left.png; sourceTree = "<group>"; };
+		6587DD94193CB5EA00C2741E /* border_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_right.png; sourceTree = "<group>"; };
+		6587DD95193CB5EA00C2741E /* border_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_top.png; sourceTree = "<group>"; };
+		6587DD96193CB5EA00C2741E /* border_top_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_top_left.png; sourceTree = "<group>"; };
+		6587DD97193CB5EA00C2741E /* border_top_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_top_right.png; sourceTree = "<group>"; };
+		6587DD99193CB5EA00C2741E /* trollsahead_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trollsahead_logo.png; sourceTree = "<group>"; };
+		6587DD9B193CB5EA00C2741E /* fake_board_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_1.png; sourceTree = "<group>"; };
+		6587DD9C193CB5EA00C2741E /* fake_board_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_2.png; sourceTree = "<group>"; };
+		6587DD9D193CB5EA00C2741E /* fake_board_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_3.png; sourceTree = "<group>"; };
+		6587DD9E193CB5EA00C2741E /* fake_board_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_4.png; sourceTree = "<group>"; };
+		6587DD9F193CB5EA00C2741E /* fake_board_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_5.png; sourceTree = "<group>"; };
+		6587DDA0193CB5EA00C2741E /* fake_board_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_6.png; sourceTree = "<group>"; };
+		6587DDA1193CB5EA00C2741E /* fake_board_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_7.png; sourceTree = "<group>"; };
+		6587DDA2193CB5EA00C2741E /* PreviewableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreviewableViewController.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/PreviewableViewController.h"; sourceTree = "<group>"; };
+		6587DDA3193CB5EA00C2741E /* PreviewableViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = PreviewableViewController.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/PreviewableViewController.mm"; sourceTree = "<group>"; };
+		6587DDA4193CB5EA00C2741E /* RotatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RotatedView.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/RotatedView.h"; sourceTree = "<group>"; };
+		6587DDA5193CB5EA00C2741E /* RotatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotatedView.m; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/RotatedView.m"; sourceTree = "<group>"; };
+		6587DDA6193CB5EA00C2741E /* TabletopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabletopView.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/TabletopView.h"; sourceTree = "<group>"; };
+		6587DDA7193CB5EA00C2741E /* TabletopView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TabletopView.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/TabletopView.mm"; sourceTree = "<group>"; };
+		6587DDA8193CB5EA00C2741E /* TabletopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabletopViewController.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/TabletopViewController.h"; sourceTree = "<group>"; };
+		6587DDA9193CB5EA00C2741E /* TabletopViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TabletopViewController.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/TabletopViewController.mm"; sourceTree = "<group>"; };
+		6587DDAA193CB5EA00C2741E /* UIImage+CaptureScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+CaptureScreen.h"; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/UIImage+CaptureScreen.h"; sourceTree = "<group>"; };
+		6587DDAB193CB5EA00C2741E /* UIImage+CaptureScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+CaptureScreen.m"; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/UIImage+CaptureScreen.m"; sourceTree = "<group>"; };
+		6587DDAC193CB5EA00C2741E /* UIImage+OpenCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+OpenCV.h"; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/UIImage+OpenCV.h"; sourceTree = "<group>"; };
+		6587DDAD193CB5EA00C2741E /* UIImage+OpenCV.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "UIImage+OpenCV.mm"; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/UIImage+OpenCV.mm"; sourceTree = "<group>"; };
+		6587DDAE193CB5EA00C2741E /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Util.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Util.h"; sourceTree = "<group>"; };
+		6587DDAF193CB5EA00C2741E /* Util.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Util.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Util.mm"; sourceTree = "<group>"; };
+		6587DDD2193CB98600C2741E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		6587DDD4193CBA3A00C2741E /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		6587DDD6193CBA6D00C2741E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6587DDD8193CBA7300C2741E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		6587DDDA193CBA8800C2741E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		6587DDDC193CBAE500C2741E /* MazeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeView.h; sourceTree = "<group>"; };
+		6587DDDD193CBAE500C2741E /* MazeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeView.m; sourceTree = "<group>"; };
+		6587DE00193E484D00C2741E /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Images/splash/splash.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +159,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6587DDDB193CBA8800C2741E /* CoreMedia.framework in Frameworks */,
+				6587DDD9193CBA7300C2741E /* AVFoundation.framework in Frameworks */,
+				6587DDD7193CBA6D00C2741E /* QuartzCore.framework in Frameworks */,
+				6587DDD5193CBA3A00C2741E /* CoreImage.framework in Frameworks */,
+				6587DDD3193CB98600C2741E /* libz.dylib in Frameworks */,
 				6587DD24193B1D1100C2741E /* CoreGraphics.framework in Frameworks */,
 				6587DD26193B1D1100C2741E /* UIKit.framework in Frameworks */,
+				6587DD75193CB4CA00C2741E /* opencv2.framework in Frameworks */,
 				6587DD22193B1D1100C2741E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,6 +206,12 @@
 		6587DD20193B1D1100C2741E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6587DDDA193CBA8800C2741E /* CoreMedia.framework */,
+				6587DDD8193CBA7300C2741E /* AVFoundation.framework */,
+				6587DDD6193CBA6D00C2741E /* QuartzCore.framework */,
+				6587DDD4193CBA3A00C2741E /* CoreImage.framework */,
+				6587DDD2193CB98600C2741E /* libz.dylib */,
+				6587DD74193CB4CA00C2741E /* opencv2.framework */,
 				6587DD21193B1D1100C2741E /* Foundation.framework */,
 				6587DD23193B1D1100C2741E /* CoreGraphics.framework */,
 				6587DD25193B1D1100C2741E /* UIKit.framework */,
@@ -112,11 +223,15 @@
 		6587DD27193B1D1100C2741E /* Tabletop Maze */ = {
 			isa = PBXGroup;
 			children = (
+				6587DDF6193E152F00C2741E /* Images */,
+				6587DD76193CB5B100C2741E /* Framework */,
 				6587DD30193B1D1100C2741E /* AppDelegate.h */,
 				6587DD31193B1D1100C2741E /* AppDelegate.m */,
 				6587DD33193B1D1100C2741E /* Main.storyboard */,
 				6587DD36193B1D1200C2741E /* ViewController.h */,
-				6587DD37193B1D1200C2741E /* ViewController.m */,
+				6587DD37193B1D1200C2741E /* ViewController.mm */,
+				6587DDDC193CBAE500C2741E /* MazeView.h */,
+				6587DDDD193CBAE500C2741E /* MazeView.m */,
 				6587DD39193B1D1200C2741E /* Images.xcassets */,
 				6587DD28193B1D1100C2741E /* Supporting Files */,
 			);
@@ -150,6 +265,120 @@
 				6587DD49193B1D1200C2741E /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6587DD76193CB5B100C2741E /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				6587DD79193CB5EA00C2741E /* BoardCalibrator.h */,
+				6587DD7A193CB5EA00C2741E /* BoardCalibrator.mm */,
+				6587DD7B193CB5EA00C2741E /* BoardRecognizer.h */,
+				6587DD7C193CB5EA00C2741E /* BoardRecognizer.mm */,
+				6587DD7D193CB5EA00C2741E /* BoardUtil.h */,
+				6587DD7E193CB5EA00C2741E /* BoardUtil.mm */,
+				6587DD7F193CB5EA00C2741E /* BrickRecognizer.h */,
+				6587DD80193CB5EA00C2741E /* BrickRecognizer.mm */,
+				6587DD81193CB5EA00C2741E /* CameraSession.h */,
+				6587DD82193CB5EA00C2741E /* CameraSession.mm */,
+				6587DD83193CB5EA00C2741E /* CameraUtil.h */,
+				6587DD84193CB5EA00C2741E /* CameraUtil.mm */,
+				6587DD85193CB5EA00C2741E /* Constants.h */,
+				6587DD86193CB5EA00C2741E /* Constants.mm */,
+				6587DD87193CB5EA00C2741E /* ExternalDislayCalibrationBorderView.h */,
+				6587DD88193CB5EA00C2741E /* ExternalDislayCalibrationBorderView.m */,
+				6587DD89193CB5EA00C2741E /* ExternalDisplay.h */,
+				6587DD8A193CB5EA00C2741E /* ExternalDisplay.m */,
+				6587DD8B193CB5EA00C2741E /* FakeCameraUtil.h */,
+				6587DD8C193CB5EA00C2741E /* FakeCameraUtil.mm */,
+				6587DD8D193CB5EA00C2741E /* Images */,
+				6587DDA2193CB5EA00C2741E /* PreviewableViewController.h */,
+				6587DDA3193CB5EA00C2741E /* PreviewableViewController.mm */,
+				6587DDA4193CB5EA00C2741E /* RotatedView.h */,
+				6587DDA5193CB5EA00C2741E /* RotatedView.m */,
+				6587DDA6193CB5EA00C2741E /* TabletopView.h */,
+				6587DDA7193CB5EA00C2741E /* TabletopView.mm */,
+				6587DDA8193CB5EA00C2741E /* TabletopViewController.h */,
+				6587DDA9193CB5EA00C2741E /* TabletopViewController.mm */,
+				6587DDAA193CB5EA00C2741E /* UIImage+CaptureScreen.h */,
+				6587DDAB193CB5EA00C2741E /* UIImage+CaptureScreen.m */,
+				6587DDAC193CB5EA00C2741E /* UIImage+OpenCV.h */,
+				6587DDAD193CB5EA00C2741E /* UIImage+OpenCV.mm */,
+				6587DDAE193CB5EA00C2741E /* Util.h */,
+				6587DDAF193CB5EA00C2741E /* Util.mm */,
+			);
+			name = Framework;
+			sourceTree = "<group>";
+		};
+		6587DD8D193CB5EA00C2741E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				6587DD8E193CB5EA00C2741E /* board */,
+				6587DD98193CB5EA00C2741E /* intro */,
+				6587DD9A193CB5EA00C2741E /* simulator */,
+			);
+			name = Images;
+			path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Images";
+			sourceTree = "<group>";
+		};
+		6587DD8E193CB5EA00C2741E /* board */ = {
+			isa = PBXGroup;
+			children = (
+				6587DD8F193CB5EA00C2741E /* border */,
+			);
+			path = board;
+			sourceTree = "<group>";
+		};
+		6587DD8F193CB5EA00C2741E /* border */ = {
+			isa = PBXGroup;
+			children = (
+				6587DD90193CB5EA00C2741E /* border_bottom.png */,
+				6587DD91193CB5EA00C2741E /* border_bottom_left.png */,
+				6587DD92193CB5EA00C2741E /* border_bottom_right.png */,
+				6587DD93193CB5EA00C2741E /* border_left.png */,
+				6587DD94193CB5EA00C2741E /* border_right.png */,
+				6587DD95193CB5EA00C2741E /* border_top.png */,
+				6587DD96193CB5EA00C2741E /* border_top_left.png */,
+				6587DD97193CB5EA00C2741E /* border_top_right.png */,
+			);
+			path = border;
+			sourceTree = "<group>";
+		};
+		6587DD98193CB5EA00C2741E /* intro */ = {
+			isa = PBXGroup;
+			children = (
+				6587DD99193CB5EA00C2741E /* trollsahead_logo.png */,
+			);
+			path = intro;
+			sourceTree = "<group>";
+		};
+		6587DD9A193CB5EA00C2741E /* simulator */ = {
+			isa = PBXGroup;
+			children = (
+				6587DD9B193CB5EA00C2741E /* fake_board_1.png */,
+				6587DD9C193CB5EA00C2741E /* fake_board_2.png */,
+				6587DD9D193CB5EA00C2741E /* fake_board_3.png */,
+				6587DD9E193CB5EA00C2741E /* fake_board_4.png */,
+				6587DD9F193CB5EA00C2741E /* fake_board_5.png */,
+				6587DDA0193CB5EA00C2741E /* fake_board_6.png */,
+				6587DDA1193CB5EA00C2741E /* fake_board_7.png */,
+			);
+			path = simulator;
+			sourceTree = "<group>";
+		};
+		6587DDF6193E152F00C2741E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				6587DDF7193E153700C2741E /* Splash */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		6587DDF7193E153700C2741E /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				6587DE00193E484D00C2741E /* splash.png */,
+			);
+			name = Splash;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,8 +457,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6587DDBE193CB5EA00C2741E /* border_left.png in Resources */,
+				6587DDCA193CB5EA00C2741E /* fake_board_7.png in Resources */,
 				6587DD3A193B1D1200C2741E /* Images.xcassets in Resources */,
+				6587DDC4193CB5EA00C2741E /* fake_board_1.png in Resources */,
+				6587DDC7193CB5EA00C2741E /* fake_board_4.png in Resources */,
+				6587DDC5193CB5EA00C2741E /* fake_board_2.png in Resources */,
+				6587DDC1193CB5EA00C2741E /* border_top_left.png in Resources */,
 				6587DD2C193B1D1100C2741E /* InfoPlist.strings in Resources */,
+				6587DDC6193CB5EA00C2741E /* fake_board_3.png in Resources */,
+				6587DDBC193CB5EA00C2741E /* border_bottom_left.png in Resources */,
+				6587DDC9193CB5EA00C2741E /* fake_board_6.png in Resources */,
+				6587DDC8193CB5EA00C2741E /* fake_board_5.png in Resources */,
+				6587DDBD193CB5EA00C2741E /* border_bottom_right.png in Resources */,
+				6587DDBB193CB5EA00C2741E /* border_bottom.png in Resources */,
+				6587DDBF193CB5EA00C2741E /* border_right.png in Resources */,
+				6587DDC2193CB5EA00C2741E /* border_top_right.png in Resources */,
+				6587DDC0193CB5EA00C2741E /* border_top.png in Resources */,
+				6587DE01193E484D00C2741E /* splash.png in Resources */,
 				6587DD35193B1D1200C2741E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -249,9 +494,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6587DD38193B1D1200C2741E /* ViewController.m in Sources */,
-				6587DD32193B1D1100C2741E /* AppDelegate.m in Sources */,
+				6587DDB6193CB5EA00C2741E /* CameraUtil.mm in Sources */,
 				6587DD2E193B1D1100C2741E /* main.m in Sources */,
+				6587DD32193B1D1100C2741E /* AppDelegate.m in Sources */,
+				6587DDD0193CB5EA00C2741E /* UIImage+OpenCV.mm in Sources */,
+				6587DDB2193CB5EA00C2741E /* BoardRecognizer.mm in Sources */,
+				6587DDD1193CB5EA00C2741E /* Util.mm in Sources */,
+				6587DDCF193CB5EA00C2741E /* UIImage+CaptureScreen.m in Sources */,
+				6587DDCD193CB5EA00C2741E /* TabletopView.mm in Sources */,
+				6587DDCE193CB5EA00C2741E /* TabletopViewController.mm in Sources */,
+				6587DD38193B1D1200C2741E /* ViewController.mm in Sources */,
+				6587DDDE193CBAE500C2741E /* MazeView.m in Sources */,
+				6587DDCB193CB5EA00C2741E /* PreviewableViewController.mm in Sources */,
+				6587DDCC193CB5EA00C2741E /* RotatedView.m in Sources */,
+				6587DDB3193CB5EA00C2741E /* BoardUtil.mm in Sources */,
+				6587DDB1193CB5EA00C2741E /* BoardCalibrator.mm in Sources */,
+				6587DDB5193CB5EA00C2741E /* CameraSession.mm in Sources */,
+				6587DDB4193CB5EA00C2741E /* BrickRecognizer.mm in Sources */,
+				6587DDBA193CB5EA00C2741E /* FakeCameraUtil.mm in Sources */,
+				6587DDB9193CB5EA00C2741E /* ExternalDisplay.m in Sources */,
+				6587DDB8193CB5EA00C2741E /* ExternalDislayCalibrationBorderView.m in Sources */,
+				6587DDB7193CB5EA00C2741E /* Constants.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,9 +639,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/daniel/projects/Interactive,
+					Tabletop,
+					Project/Interactive,
+					Tabletop,
+					Project,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tabletop Maze/Tabletop Maze-Prefix.pch";
 				INFOPLIST_FILE = "Tabletop Maze/Tabletop Maze-Info.plist";
+				OTHER_CFLAGS = "";
+				OTHER_CPLUSPLUSFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -389,9 +662,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/daniel/projects/Interactive,
+					Tabletop,
+					Project/Interactive,
+					Tabletop,
+					Project,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tabletop Maze/Tabletop Maze-Prefix.pch";
 				INFOPLIST_FILE = "Tabletop Maze/Tabletop Maze-Info.plist";
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -456,6 +738,7 @@
 				6587DD52193B1D1200C2741E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6587DD53193B1D1200C2741E /* Build configuration list for PBXNativeTarget "Tabletop MazeTests" */ = {
 			isa = XCConfigurationList;
@@ -464,6 +747,7 @@
 				6587DD55193B1D1200C2741E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -28,7 +28,7 @@
 #import "ExternalDisplay.h"
 #import "UIImage+CaptureScreen.h"
 #import "Constants.h"
-#import "SampleView.h"
+//#import "SampleView.h"
 
 @interface TabletopViewController () <BoardCalibratorDelegate>
 
@@ -57,8 +57,8 @@
     
     [[ExternalDisplay instance] initialize];
     [BoardCalibrator instance].delegate = self;
-    self.tabletopView = [[SampleView alloc] init];
 
+    //self.tabletopView = [[SampleView alloc] init];
     //[self setGridOfSize:CGSizeMake(30.0f, 20.0f)];
 }
 
@@ -85,13 +85,15 @@
 }
 
 - (IBAction)startButtonPressed:(id)sender {
-    [[ExternalDisplay instance] stopProjectorCalibration];
     [self start];
 }
 
 - (void)start {
-    super.overlayView.hidden = NO;
-    [self startUpdateTimer];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[ExternalDisplay instance] stopProjectorCalibration];
+        super.overlayView.hidden = NO;
+        [self startUpdateTimer];
+    });
 }
 
 - (void)startUpdateTimer {

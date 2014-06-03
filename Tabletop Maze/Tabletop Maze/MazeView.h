@@ -23,19 +23,8 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#import <UIKit/UIKit.h>
-
-#import "PreviewableViewController.h"
 #import "TabletopView.h"
 
-@interface TabletopViewController : PreviewableViewController
-
-- (void)setGridOfSize:(CGSize)size;
-
-- (void)start;
-
-@property (nonatomic, assign) CFTimeInterval updateInterval;
-
-@property (nonatomic, strong) TabletopView *tabletopView;
+@interface MazeView : TabletopView
 
 @end

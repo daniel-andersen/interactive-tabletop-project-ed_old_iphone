@@ -23,22 +23,18 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#import "ViewController.h"
+#import "MazeView.h"
 
-@interface ViewController ()
+@implementation MazeView
 
-@end
-
-@implementation ViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+- (id)init {
+    if (self = [super init]) {
+        self.backgroundColor = [UIColor redColor];
+    }
+    return self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)update {
 }
 
 @end

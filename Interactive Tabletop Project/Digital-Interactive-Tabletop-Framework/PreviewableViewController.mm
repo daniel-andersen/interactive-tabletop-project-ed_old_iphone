@@ -146,10 +146,12 @@ PreviewableViewController *previewInstance = nil;
 }
 
 - (IBAction)boardPreviewTap:(UIGestureRecognizer *)gestureRecognizer {
-    CGPoint p = [gestureRecognizer locationInView:boardPreview];
-    int x = (p.x / self.view.bounds.size.width) * [Constants instance].gridSize.width;
-    int y = (p.y / self.view.bounds.size.height) * [Constants instance].gridSize.height;
-    [[FakeCameraUtil instance] clickAtPoint:cv::Point(x, y)];
+    if ([Constants instance].gridSize.width > 0 && !boardPreview.hidden) {
+        CGPoint p = [gestureRecognizer locationInView:boardPreview];
+        int x = (p.x / self.view.bounds.size.width) * [Constants instance].gridSize.width;
+        int y = (p.y / self.view.bounds.size.height) * [Constants instance].gridSize.height;
+        [[FakeCameraUtil instance] clickAtPoint:cv::Point(x, y)];
+    }
 }
 
 - (UIButton *)addButtonWithText:(NSString *)text {
@@ -269,7 +271,7 @@ PreviewableViewController *previewInstance = nil;
 }
 
 - (void)previewBoard:(UIImage *)image {
-    if (boardPreview.hidden == NO) {
+    if (!boardPreview.hidden) {
         cv::Mat coloredImage;
         @synchronized([BoardCalibrator instance].boardImageLock) {
             cv::cvtColor([BoardCalibrator instance].boardImage, coloredImage, CV_GRAY2RGB);

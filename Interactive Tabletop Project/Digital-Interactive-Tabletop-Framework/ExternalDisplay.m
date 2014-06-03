@@ -92,18 +92,23 @@ ExternalDisplay *externalDisplayInstance = nil;
     [[ExternalDisplay instance].window addSubview:self.externalDislayCalibrationBorderView];
     [ExternalDisplay instance].window.hidden = [ExternalDisplay instance].externalDisplayFound ? NO : YES;
 
-    self.calibratorMinDuration = 5.0f;
+    self.calibratorMinDuration = 10.0f;
     self.calibratorStartTime = CFAbsoluteTimeGetCurrent();
 }
 
 - (void)stopProjectorCalibration {
-    CFTimeInterval remainingTime = MAX(0.0f, CFAbsoluteTimeGetCurrent() - (self.calibratorStartTime + self.calibratorMinDuration));
+    CFTimeInterval remainingTime = MAX(0.0f, (self.calibratorStartTime + self.calibratorMinDuration) - CFAbsoluteTimeGetCurrent());
     [self performSelector:@selector(hideCalibrationView) withObject:nil afterDelay:remainingTime];
+    NSLog(@"%f", remainingTime);
 }
 
 - (void)hideCalibrationView {
-    [self.externalDislayCalibrationBorderView removeFromSuperview];
-    self.externalDislayCalibrationBorderView = nil;
+    [UIView animateWithDuration:1.0f animations:^{
+        self.externalDislayCalibrationBorderView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        [self.externalDislayCalibrationBorderView removeFromSuperview];
+        self.externalDislayCalibrationBorderView = nil;
+    }];
 }
 
 - (bool)isCalibrating {

@@ -15,7 +15,6 @@
 		650D4221178C5E4300D89CEB /* FakeCameraUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 650D4220178C5E4200D89CEB /* FakeCameraUtil.mm */; };
 		650D4224178C92B700D89CEB /* PreviewableViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 650D4223178C92B700D89CEB /* PreviewableViewController.mm */; };
 		650D423A178DDF6700D89CEB /* BoardCalibrator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 650D4239178DDF6700D89CEB /* BoardCalibrator.mm */; };
-		650D4240178DEDAE00D89CEB /* trollsahead_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 650D423F178DEDAE00D89CEB /* trollsahead_logo.png */; };
 		650D4243178DF27800D89CEB /* RotatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 650D4242178DF27700D89CEB /* RotatedView.m */; };
 		650D429E178F41B400D89CEB /* BoardUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 650D429D178F41B300D89CEB /* BoardUtil.mm */; };
 		6552705B17B1733F00784CD7 /* border_bottom_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 6552705317B1733F00784CD7 /* border_bottom_left.png */; };
@@ -31,6 +30,7 @@
 		6587DD5F193B33B300C2741E /* TabletopView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD5E193B33B300C2741E /* TabletopView.mm */; };
 		6587DD62193B5D7400C2741E /* Constants.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD61193B5D7400C2741E /* Constants.mm */; };
 		6587DD65193BAE8100C2741E /* SampleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD64193BAE8100C2741E /* SampleView.m */; };
+		6587DDFF193E483900C2741E /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DDFE193E483900C2741E /* splash.png */; };
 		658AF18218058D0B00BFF6A4 /* fake_board_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 658AF17E18058D0B00BFF6A4 /* fake_board_2.png */; };
 		658AF18318058D0B00BFF6A4 /* fake_board_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 658AF17F18058D0B00BFF6A4 /* fake_board_3.png */; };
 		658AF18418058D0B00BFF6A4 /* fake_board_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 658AF18018058D0B00BFF6A4 /* fake_board_4.png */; };
@@ -76,7 +76,6 @@
 		650D4225178C9E7000D89CEB /* Util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		650D4238178DDF6700D89CEB /* BoardCalibrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardCalibrator.h; sourceTree = "<group>"; };
 		650D4239178DDF6700D89CEB /* BoardCalibrator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BoardCalibrator.mm; sourceTree = "<group>"; };
-		650D423F178DEDAE00D89CEB /* trollsahead_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = trollsahead_logo.png; path = intro/trollsahead_logo.png; sourceTree = "<group>"; };
 		650D4241178DF27600D89CEB /* RotatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotatedView.h; sourceTree = "<group>"; };
 		650D4242178DF27700D89CEB /* RotatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotatedView.m; sourceTree = "<group>"; };
 		650D429C178F41B100D89CEB /* BoardUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardUtil.h; sourceTree = "<group>"; };
@@ -98,6 +97,7 @@
 		6587DD61193B5D7400C2741E /* Constants.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Constants.mm; sourceTree = "<group>"; };
 		6587DD63193BAE8100C2741E /* SampleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleView.h; sourceTree = "<group>"; };
 		6587DD64193BAE8100C2741E /* SampleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleView.m; sourceTree = "<group>"; };
+		6587DDFE193E483900C2741E /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = splash/splash.png; sourceTree = "<group>"; };
 		658AF17E18058D0B00BFF6A4 /* fake_board_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_2.png; sourceTree = "<group>"; };
 		658AF17F18058D0B00BFF6A4 /* fake_board_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_3.png; sourceTree = "<group>"; };
 		658AF18018058D0B00BFF6A4 /* fake_board_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_4.png; sourceTree = "<group>"; };
@@ -170,14 +170,6 @@
 			name = "Game Engine";
 			sourceTree = "<group>";
 		};
-		650D4283178F365200D89CEB /* Logo */ = {
-			isa = PBXGroup;
-			children = (
-				650D423F178DEDAE00D89CEB /* trollsahead_logo.png */,
-			);
-			name = Logo;
-			sourceTree = "<group>";
-		};
 		6552705117B1733000784CD7 /* Board */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +183,14 @@
 				6552705A17B1733F00784CD7 /* border_top.png */,
 			);
 			name = Board;
+			sourceTree = "<group>";
+		};
+		6587DDEF193E151600C2741E /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				6587DDFE193E483900C2741E /* splash.png */,
+			);
+			name = Splash;
 			sourceTree = "<group>";
 		};
 		65B9306617806B4500312B88 = {
@@ -259,9 +259,9 @@
 		65B930AD17806BE800312B88 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				6587DDEF193E151600C2741E /* Splash */,
 				65DCC50B180427490082785F /* Simulator */,
 				6552705117B1733000784CD7 /* Board */,
-				650D4283178F365200D89CEB /* Logo */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -411,7 +411,6 @@
 				65B9308117806B4500312B88 /* InfoPlist.strings in Resources */,
 				658AF18318058D0B00BFF6A4 /* fake_board_3.png in Resources */,
 				65B9309017806B4500312B88 /* MainStoryboard_iPhone.storyboard in Resources */,
-				650D4240178DEDAE00D89CEB /* trollsahead_logo.png in Resources */,
 				658AF18218058D0B00BFF6A4 /* fake_board_2.png in Resources */,
 				65DCC50D180427490082785F /* fake_board_1.png in Resources */,
 				6552705B17B1733F00784CD7 /* border_bottom_left.png in Resources */,
@@ -426,6 +425,7 @@
 				6552706217B1733F00784CD7 /* border_top.png in Resources */,
 				658AF18418058D0B00BFF6A4 /* fake_board_4.png in Resources */,
 				658AF189180694DC00BFF6A4 /* fake_board_7.png in Resources */,
+				6587DDFF193E483900C2741E /* splash.png in Resources */,
 				658AF18518058D0B00BFF6A4 /* fake_board_5.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,6 +442,7 @@
 				65B9308717806B4500312B88 /* AppDelegate.m in Sources */,
 				65EA26461780C54B00E84BA4 /* UIImage+OpenCV.mm in Sources */,
 				65EA26781782038800E84BA4 /* BoardRecognizer.mm in Sources */,
+				65F6109417E2074700D8C0DF /* Util.mm in Sources */,
 				65EA267F1783520900E84BA4 /* ExternalDisplay.m in Sources */,
 				650D420F1789F38800D89CEB /* CameraSession.mm in Sources */,
 				6587DD59193B223800C2741E /* TabletopViewController.mm in Sources */,
@@ -455,7 +456,6 @@
 				65F5E2B817C1460F00303009 /* ExternalDislayCalibrationBorderView.m in Sources */,
 				6587DD65193BAE8100C2741E /* SampleView.m in Sources */,
 				6587DD5F193B33B300C2741E /* TabletopView.mm in Sources */,
-				65F6109417E2074700D8C0DF /* Util.mm in Sources */,
 				65F6109717E787EE00D8C0DF /* BrickRecognizer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

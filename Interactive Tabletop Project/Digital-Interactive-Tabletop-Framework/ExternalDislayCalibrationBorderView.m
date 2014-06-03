@@ -29,6 +29,12 @@
 
 @interface ExternalDislayCalibrationBorderView ()
 
+@property (nonatomic, strong) UIImage *trollsAheadImage;
+@property (nonatomic, assign) CGSize trollsAheadSize;
+
+@property (nonatomic, strong) UIImage *logoImage;
+@property (nonatomic, assign) CGSize logoSize;
+
 @end
 
 @implementation ExternalDislayCalibrationBorderView
@@ -41,26 +47,11 @@
 }
 
 - (void)initialize {
-    UIView *borderView = [[UIView alloc] initWithFrame:self.bounds];
-    borderView.backgroundColor = [UIColor clearColor];
-    
-    CAShapeLayer *borderLayer = [CAShapeLayer layer];
-    borderLayer.frame = self.bounds;
-    borderLayer.fillColor = [UIColor clearColor].CGColor;
-    borderLayer.strokeColor = [UIColor colorWithWhite:1.0f alpha:1.0f].CGColor;
-    borderLayer.backgroundColor = [UIColor clearColor].CGColor;
-    
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(0.0f, 0.0f)];
-    [path addLineToPoint:CGPointMake(self.bounds.size.width - 1.0f, 0.0f)];
-    [path addLineToPoint:CGPointMake(self.bounds.size.width - 1.0f, self.bounds.size.height - 1.0f)];
-    [path addLineToPoint:CGPointMake(0.0f, self.bounds.size.height - 1.0f)];
-    [path closePath];
-    
-    borderLayer.path = path.CGPath;
-    
-    [borderView.layer addSublayer:borderLayer];
-    [self addSubview:borderView];
+    self.backgroundColor = [UIColor blueColor];
+
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"splash.png"]];
+    imageView.frame = self.bounds;
+    [self addSubview:imageView];
 }
 
 @end

@@ -23,19 +23,20 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#import <UIKit/UIKit.h>
+#import "ViewController.h"
+#import "MazeView.h"
 
-#import "PreviewableViewController.h"
-#import "TabletopView.h"
+@interface ViewController ()
 
-@interface TabletopViewController : PreviewableViewController
+@end
 
-- (void)setGridOfSize:(CGSize)size;
+@implementation ViewController
 
-- (void)start;
-
-@property (nonatomic, assign) CFTimeInterval updateInterval;
-
-@property (nonatomic, strong) TabletopView *tabletopView;
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.tabletopView = [[MazeView alloc] init];
+    [self setGridOfSize:CGSizeMake(30.0f, 20.0f)];
+    [self start];
+}
 
 @end

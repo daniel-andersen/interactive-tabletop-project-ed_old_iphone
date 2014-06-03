@@ -25,6 +25,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+#import "TabletopViewController.h"
+
+@interface ViewController : TabletopViewController
 
 @end
