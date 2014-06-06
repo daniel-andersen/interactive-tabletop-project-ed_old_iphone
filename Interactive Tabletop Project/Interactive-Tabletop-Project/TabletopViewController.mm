@@ -29,7 +29,6 @@
 #import "ExternalDislayCalibrationView.h"
 #import "UIImage+CaptureScreen.h"
 #import "Constants.h"
-//#import "SampleView.h"
 
 @interface TabletopViewController () <BoardCalibratorDelegate, ExternalDisplayCalibrationViewDelegate>
 
@@ -53,10 +52,6 @@
     [self initialize];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
 - (void)initialize {
     self.updateInterval = 0.1f;
     
@@ -64,8 +59,6 @@
     [BoardCalibrator instance].delegate = self;
 
     [self startExternalDisplayCalibration];
-    //self.tabletopView = [[SampleView alloc] init];
-    //[self setGridOfSize:CGSizeMake(30.0f, 20.0f)];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -74,6 +67,7 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [[BoardCalibrator instance] stop];
 }
 
@@ -91,7 +85,7 @@
         [self calibrationViewDidHide];
         return;
     }
-    self.externalDislayCalibrationView = [[ExternalDislayCalibrationView alloc] initWithFrame:[ExternalDisplay instance].screen.bounds];
+    self.externalDislayCalibrationView = [[ExternalDislayCalibrationView alloc] initWithFrame:[ExternalDisplay instance].widescreenBounds];
     self.externalDislayCalibrationView.delegate = self;
     
     [[ExternalDisplay instance].window addSubview:self.externalDislayCalibrationView];

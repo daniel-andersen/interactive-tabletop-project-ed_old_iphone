@@ -25,6 +25,7 @@
 
 #import "ViewController.h"
 #import "MazeView.h"
+#import "TitleView.h"
 
 @interface ViewController ()
 
@@ -34,8 +35,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tabletopView = [[MazeView alloc] init];
-    [self setGridOfSize:CGSizeMake(30.0f, 20.0f)];
+    self.tabletopView = [[TitleView alloc] init];
+    //[self setGridOfSize:CGSizeMake(30.0f, 20.0f)];
     [self start];
 }
 

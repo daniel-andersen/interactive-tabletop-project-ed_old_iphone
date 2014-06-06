@@ -68,6 +68,8 @@ PreviewableViewController *previewInstance = nil;
 }
 
 - (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
     overlayView.frame = self.view.bounds;
     boardPreview.frame = self.view.bounds;
     cameraPreview.frame = self.view.bounds;
@@ -118,7 +120,6 @@ PreviewableViewController *previewInstance = nil;
     [Util removeSubViews:cameraPreview];
 
     [cameraPreview addSubview:view];
-    cameraPreview.transform = CGAffineTransformMakeRotation(-M_PI_2);
 
     if (simulatorBricksView == nil) {
         simulatorBricksView = [[UIImageView alloc] initWithFrame:cameraPreview.bounds];

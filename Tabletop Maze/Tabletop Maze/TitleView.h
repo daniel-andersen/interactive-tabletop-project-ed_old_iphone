@@ -24,28 +24,7 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "TabletopView.h"
-#import "ExternalDisplay.h"
-#import "Util.h"
 
-@implementation TabletopView
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.frame = [ExternalDisplay instance].widescreenBounds;
-}
-
-- (void)show {
-    [[ExternalDisplay instance].window insertSubview:self atIndex:0];
-    [self layoutSubviews];
-    
-}
-
-- (void)hide {
-    [self removeFromSuperview];
-}
-
-- (void)update {
-    [NSException raise:NSInternalInconsistencyException format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-}
+@interface TitleView : TabletopView
 
 @end

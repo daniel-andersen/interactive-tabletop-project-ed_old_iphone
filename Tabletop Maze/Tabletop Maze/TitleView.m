@@ -23,29 +23,38 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#import "TabletopView.h"
+#import "TitleView.h"
 #import "ExternalDisplay.h"
-#import "Util.h"
 
-@implementation TabletopView
+@interface TitleView ()
+
+@property (nonatomic, strong) UIImageView *titleImageView;
+
+@end
+
+@implementation TitleView
+
+- (id)init {
+    if (self = [super init]) {
+        [self initialize];
+    }
+    return self;
+}
+
+- (void)initialize {
+    self.backgroundColor = [UIColor blackColor];
+    
+    self.titleImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Title"]];
+    self.titleImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self addSubview:self.titleImageView];
+}
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.frame = [ExternalDisplay instance].widescreenBounds;
-}
-
-- (void)show {
-    [[ExternalDisplay instance].window insertSubview:self atIndex:0];
-    [self layoutSubviews];
-    
-}
-
-- (void)hide {
-    [self removeFromSuperview];
+    self.titleImageView.frame = self.bounds;
 }
 
 - (void)update {
-    [NSException raise:NSInternalInconsistencyException format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
 }
 
 @end
