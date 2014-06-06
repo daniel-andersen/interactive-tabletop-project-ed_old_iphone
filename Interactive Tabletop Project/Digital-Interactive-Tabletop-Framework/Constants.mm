@@ -46,10 +46,7 @@ Constants *constantsInstance = nil;
 }
 
 - (void)initialize {
-}
-
-- (void)calculateBorderSize {
-    self.borderSize = CGSizeMake(self.screenSize.width * 0.02f, self.screenSize.height * 0.02f);
+    self.borderSizePct = CGSizeMake(0.02f, 0.02f);
 }
 
 - (void)calculateBrickSize {

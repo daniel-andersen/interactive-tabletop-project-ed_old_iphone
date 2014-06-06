@@ -66,7 +66,8 @@ CameraSession *cameraSessionInstance = nil;
 - (void)initialize {
     initialized = NO;
     
-    delegateProcessFrameInterval = CAMERA_SESSION_DELEGATE_INTERVAL_DEFAULT;
+    //delegateProcessFrameInterval = CAMERA_SESSION_DELEGATE_INTERVAL_DEFAULT;
+    delegateProcessFrameInterval = CAMERA_SESSION_DELEGATE_INTERVAL_FAST;
 
     frameProcessQueue = dispatch_queue_create("dk.trollsahead.dystopia.CameraSession.ProcessFrame", NULL);
 

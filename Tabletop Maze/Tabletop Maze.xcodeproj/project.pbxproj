@@ -29,7 +29,6 @@
 		6587DDB5193CB5EA00C2741E /* CameraSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD82193CB5EA00C2741E /* CameraSession.mm */; };
 		6587DDB6193CB5EA00C2741E /* CameraUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD84193CB5EA00C2741E /* CameraUtil.mm */; };
 		6587DDB7193CB5EA00C2741E /* Constants.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD86193CB5EA00C2741E /* Constants.mm */; };
-		6587DDB8193CB5EA00C2741E /* ExternalDislayCalibrationBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD88193CB5EA00C2741E /* ExternalDislayCalibrationBorderView.m */; };
 		6587DDB9193CB5EA00C2741E /* ExternalDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD8A193CB5EA00C2741E /* ExternalDisplay.m */; };
 		6587DDBA193CB5EA00C2741E /* FakeCameraUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD8C193CB5EA00C2741E /* FakeCameraUtil.mm */; };
 		6587DDBB193CB5EA00C2741E /* border_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD90193CB5EA00C2741E /* border_bottom.png */; };
@@ -60,7 +59,9 @@
 		6587DDD9193CBA7300C2741E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DDD8193CBA7300C2741E /* AVFoundation.framework */; };
 		6587DDDB193CBA8800C2741E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DDDA193CBA8800C2741E /* CoreMedia.framework */; };
 		6587DDDE193CBAE500C2741E /* MazeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDDD193CBAE500C2741E /* MazeView.m */; };
-		6587DE01193E484D00C2741E /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE00193E484D00C2741E /* splash.png */; };
+		6587DE04193EEDA000C2741E /* splash_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE02193EEDA000C2741E /* splash_logo.png */; };
+		6587DE05193EEDA000C2741E /* splash_trollsahead.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE03193EEDA000C2741E /* splash_trollsahead.png */; };
+		6587DE0C193EF38400C2741E /* ExternalDislayCalibrationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DE0B193EF38400C2741E /* ExternalDislayCalibrationView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,8 +109,6 @@
 		6587DD84193CB5EA00C2741E /* CameraUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CameraUtil.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/CameraUtil.mm"; sourceTree = "<group>"; };
 		6587DD85193CB5EA00C2741E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Constants.h"; sourceTree = "<group>"; };
 		6587DD86193CB5EA00C2741E /* Constants.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Constants.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Constants.mm"; sourceTree = "<group>"; };
-		6587DD87193CB5EA00C2741E /* ExternalDislayCalibrationBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalDislayCalibrationBorderView.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/ExternalDislayCalibrationBorderView.h"; sourceTree = "<group>"; };
-		6587DD88193CB5EA00C2741E /* ExternalDislayCalibrationBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExternalDislayCalibrationBorderView.m; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/ExternalDislayCalibrationBorderView.m"; sourceTree = "<group>"; };
 		6587DD89193CB5EA00C2741E /* ExternalDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalDisplay.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/ExternalDisplay.h"; sourceTree = "<group>"; };
 		6587DD8A193CB5EA00C2741E /* ExternalDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExternalDisplay.m; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/ExternalDisplay.m"; sourceTree = "<group>"; };
 		6587DD8B193CB5EA00C2741E /* FakeCameraUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FakeCameraUtil.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/FakeCameraUtil.h"; sourceTree = "<group>"; };
@@ -151,7 +150,10 @@
 		6587DDDA193CBA8800C2741E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		6587DDDC193CBAE500C2741E /* MazeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeView.h; sourceTree = "<group>"; };
 		6587DDDD193CBAE500C2741E /* MazeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeView.m; sourceTree = "<group>"; };
-		6587DE00193E484D00C2741E /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Images/splash/splash.png"; sourceTree = "<group>"; };
+		6587DE02193EEDA000C2741E /* splash_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_logo.png; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Images/splash/splash_logo.png"; sourceTree = "<group>"; };
+		6587DE03193EEDA000C2741E /* splash_trollsahead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_trollsahead.png; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Images/splash/splash_trollsahead.png"; sourceTree = "<group>"; };
+		6587DE0A193EF38400C2741E /* ExternalDislayCalibrationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalDislayCalibrationView.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/ExternalDislayCalibrationView.h"; sourceTree = "<group>"; };
+		6587DE0B193EF38400C2741E /* ExternalDislayCalibrationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExternalDislayCalibrationView.m; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/ExternalDislayCalibrationView.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,6 +272,8 @@
 		6587DD76193CB5B100C2741E /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				6587DE0A193EF38400C2741E /* ExternalDislayCalibrationView.h */,
+				6587DE0B193EF38400C2741E /* ExternalDislayCalibrationView.m */,
 				6587DD79193CB5EA00C2741E /* BoardCalibrator.h */,
 				6587DD7A193CB5EA00C2741E /* BoardCalibrator.mm */,
 				6587DD7B193CB5EA00C2741E /* BoardRecognizer.h */,
@@ -284,8 +288,6 @@
 				6587DD84193CB5EA00C2741E /* CameraUtil.mm */,
 				6587DD85193CB5EA00C2741E /* Constants.h */,
 				6587DD86193CB5EA00C2741E /* Constants.mm */,
-				6587DD87193CB5EA00C2741E /* ExternalDislayCalibrationBorderView.h */,
-				6587DD88193CB5EA00C2741E /* ExternalDislayCalibrationBorderView.m */,
 				6587DD89193CB5EA00C2741E /* ExternalDisplay.h */,
 				6587DD8A193CB5EA00C2741E /* ExternalDisplay.m */,
 				6587DD8B193CB5EA00C2741E /* FakeCameraUtil.h */,
@@ -376,7 +378,8 @@
 		6587DDF7193E153700C2741E /* Splash */ = {
 			isa = PBXGroup;
 			children = (
-				6587DE00193E484D00C2741E /* splash.png */,
+				6587DE02193EEDA000C2741E /* splash_logo.png */,
+				6587DE03193EEDA000C2741E /* splash_trollsahead.png */,
 			);
 			name = Splash;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 				6587DDC4193CB5EA00C2741E /* fake_board_1.png in Resources */,
 				6587DDC7193CB5EA00C2741E /* fake_board_4.png in Resources */,
 				6587DDC5193CB5EA00C2741E /* fake_board_2.png in Resources */,
+				6587DE05193EEDA000C2741E /* splash_trollsahead.png in Resources */,
 				6587DDC1193CB5EA00C2741E /* border_top_left.png in Resources */,
 				6587DD2C193B1D1100C2741E /* InfoPlist.strings in Resources */,
 				6587DDC6193CB5EA00C2741E /* fake_board_3.png in Resources */,
@@ -470,11 +474,11 @@
 				6587DDC9193CB5EA00C2741E /* fake_board_6.png in Resources */,
 				6587DDC8193CB5EA00C2741E /* fake_board_5.png in Resources */,
 				6587DDBD193CB5EA00C2741E /* border_bottom_right.png in Resources */,
+				6587DE04193EEDA000C2741E /* splash_logo.png in Resources */,
 				6587DDBB193CB5EA00C2741E /* border_bottom.png in Resources */,
 				6587DDBF193CB5EA00C2741E /* border_right.png in Resources */,
 				6587DDC2193CB5EA00C2741E /* border_top_right.png in Resources */,
 				6587DDC0193CB5EA00C2741E /* border_top.png in Resources */,
-				6587DE01193E484D00C2741E /* splash.png in Resources */,
 				6587DD35193B1D1200C2741E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -511,9 +515,9 @@
 				6587DDB1193CB5EA00C2741E /* BoardCalibrator.mm in Sources */,
 				6587DDB5193CB5EA00C2741E /* CameraSession.mm in Sources */,
 				6587DDB4193CB5EA00C2741E /* BrickRecognizer.mm in Sources */,
+				6587DE0C193EF38400C2741E /* ExternalDislayCalibrationView.m in Sources */,
 				6587DDBA193CB5EA00C2741E /* FakeCameraUtil.mm in Sources */,
 				6587DDB9193CB5EA00C2741E /* ExternalDisplay.m in Sources */,
-				6587DDB8193CB5EA00C2741E /* ExternalDislayCalibrationBorderView.m in Sources */,
 				6587DDB7193CB5EA00C2741E /* Constants.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

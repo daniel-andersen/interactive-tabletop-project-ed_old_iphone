@@ -351,9 +351,7 @@ BoardRecognizer *boardRecognizerInstance = nil;
     minContourArea = (imageSize.width * 0.5) * (imageSize.height * 0.5f);
     minLineLength = MIN(imageSize.width, imageSize.height) * 0.1f;
     
-    borderSize = [Constants instance].borderSize;
-    borderSize.width *= 1.2f;
-    borderSize.height *= 1.2f;
+    borderSize = CGSizeMake(imageSize.width * [Constants instance].borderSizePct.width * 1.2f, imageSize.height * [Constants instance].borderSizePct.height * 1.2f);
     
     lineGroupPointDistanceAcceptMax = MAX(borderSize.width, borderSize.height) * 1.2f;
     
@@ -504,10 +502,18 @@ BoardRecognizer *boardRecognizerInstance = nil;
     if (intersectionPoints.size() < 4) {
         return undefinedPoints;
     }
+    if (intersectionPoints.size() > 15) {
+        return undefinedPoints;
+    }
     
     // Find best square points
     cv::vector<cv::Point> bestSquarePoints = [self findBestSquareFromPoints:intersectionPoints scoreFunction:^float(cv::vector<cv::Point> hull) {
-        return [self areContourConditionsSatisfied:hull] ? cv::contourArea(hull) : -1.0f;
+        if ([self areContourConditionsSatisfied:hull]) {
+            float score = cv::contourArea(hull) * (1.0f - [self maxCosineFromContour:hull]) * (1.0f / ABS([self aspectRatio:hull] - aspectRatioAcceptMax));
+            return score;
+        } else {
+            return -1.0f;
+        }
     }];
     if (bestSquarePoints.size() < 4) {
         return undefinedPoints;
@@ -557,26 +563,30 @@ BoardRecognizer *boardRecognizerInstance = nil;
     if ([self maxCosineFromContour:contour] > squareAngleAcceptMax * M_PI / 180.0f) {
         return NO;
     }
-    /*if (![self hasCorrectAspectRatio:contour]) {
+    if (![self hasCorrectAspectRatio:contour]) {
         return NO;
-    }*/
+    }
     return YES;
 }
 
 - (bool)hasCorrectAspectRatio:(cv::vector<cv::Point> &)contour {
+    float aspectRatio = [self aspectRatio:contour];
+    return ABS(aspectRatio - boardAspectRatio) <= aspectRatioAcceptMax;
+}
+
+- (float)aspectRatio:(cv::vector<cv::Point> &)contour {
     float averageWidth = 0.0f;
     float averageHeight = 0.0f;
     for (int i = 0; i < contour.size(); i++) {
         cv::Point p1 = contour[(i + 0) % contour.size()];
         cv::Point p2 = contour[(i + 1) % contour.size()];
-
+        
         averageWidth += ABS(p1.x - p2.x);
         averageHeight += ABS(p1.y - p2.y);
     }
     averageWidth /= (float)contour.size();
     averageHeight /= (float)contour.size();
-    float aspectRatio = MAX(averageWidth, averageHeight) / MIN(averageWidth, averageHeight);
-    return aspectRatio >= boardAspectRatio - aspectRatioAcceptMax && aspectRatio <= boardAspectRatio + aspectRatioAcceptMax;
+    return MAX(averageWidth, averageHeight) / MIN(averageWidth, averageHeight);
 }
 
 - (bool)isAngleVerticalOrHorizontal:(float)angle {
@@ -666,9 +676,9 @@ BoardRecognizer *boardRecognizerInstance = nil;
         int direction = [self lineDirection:lines[i]];
         bool addedLine = NO;
         for (int j = 0; j < lineGroups[direction].size(); j++) {
-            if (![self doesLine:lines[i] haveSameEndpointsAsLine:lineGroups[direction][j].minLine]) {
+            /*if (![self doesLine:lines[i] haveSameEndpointsAsLine:lineGroups[direction][j].minLine]) {
                 continue;
-            }
+            }*/
             if (![self isLine:lines[i] closeToLine:lineGroups[direction][j].minLine]) {
                 continue;
             }

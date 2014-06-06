@@ -36,6 +36,7 @@
 - (void)show {
     [[ExternalDisplay instance].window insertSubview:self atIndex:0];
     [self layoutSubviews];
+    
 }
 
 - (void)hide {

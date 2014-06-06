@@ -26,15 +26,20 @@
 #import "TabletopViewController.h"
 #import "BoardCalibrator.h"
 #import "ExternalDisplay.h"
+#import "ExternalDislayCalibrationView.h"
 #import "UIImage+CaptureScreen.h"
 #import "Constants.h"
 //#import "SampleView.h"
 
-@interface TabletopViewController () <BoardCalibratorDelegate>
+@interface TabletopViewController () <BoardCalibratorDelegate, ExternalDisplayCalibrationViewDelegate>
 
 @property (nonatomic, assign) bool isUpdating;
 
 @property (nonatomic, strong) NSTimer *updateTimer;
+
+@property (nonatomic, strong) ExternalDislayCalibrationView *externalDislayCalibrationView;
+@property (nonatomic, assign) CFAbsoluteTime calibratorStartTime;
+@property (nonatomic, assign) CFAbsoluteTime calibratorMinDuration;
 
 @end
 
@@ -58,6 +63,7 @@
     [[ExternalDisplay instance] initialize];
     [BoardCalibrator instance].delegate = self;
 
+    [self startExternalDisplayCalibration];
     //self.tabletopView = [[SampleView alloc] init];
     //[self setGridOfSize:CGSizeMake(30.0f, 20.0f)];
 }
@@ -74,8 +80,45 @@
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     [self.view bringSubviewToFront:super.overlayView];
-    super.overlayView.hidden = [[ExternalDisplay instance] isCalibrating];
-    [[ExternalDisplay instance] layoutSubviews];
+    super.overlayView.hidden = [self isCalibratingExternalDisplay];
+    if ([self isCalibratingExternalDisplay]) {
+        [[ExternalDisplay instance].window bringSubviewToFront:self.externalDislayCalibrationView];
+    }
+}
+
+- (void)startExternalDisplayCalibration {
+    if (![ExternalDisplay instance].externalDisplayFound) {
+        [self calibrationViewDidHide];
+        return;
+    }
+    self.externalDislayCalibrationView = [[ExternalDislayCalibrationView alloc] initWithFrame:[ExternalDisplay instance].screen.bounds];
+    self.externalDislayCalibrationView.delegate = self;
+    
+    [[ExternalDisplay instance].window addSubview:self.externalDislayCalibrationView];
+    
+    self.calibratorMinDuration = 8.0f;
+    self.calibratorStartTime = CFAbsoluteTimeGetCurrent();
+}
+
+- (void)stopExternalDisplayCalibration {
+    CFTimeInterval remainingTime = MAX(0.0f, (self.calibratorStartTime + self.calibratorMinDuration) - CFAbsoluteTimeGetCurrent());
+    [self performSelector:@selector(hideExternalDisplayCalibrationView) withObject:nil afterDelay:remainingTime];
+}
+
+- (void)hideExternalDisplayCalibrationView {
+    [self.externalDislayCalibrationView hideView];
+}
+
+- (void)calibrationViewDidHide {
+    [self.externalDislayCalibrationView removeFromSuperview];
+    self.externalDislayCalibrationView = nil;
+
+    super.overlayView.hidden = NO;
+    [self startUpdateTimer];
+}
+
+- (bool)isCalibratingExternalDisplay {
+    return self.externalDislayCalibrationView != nil;
 }
 
 - (void)setGridOfSize:(CGSize)size {
@@ -84,16 +127,8 @@
     [super addBoardGridLayer];
 }
 
-- (IBAction)startButtonPressed:(id)sender {
-    [self start];
-}
-
 - (void)start {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[ExternalDisplay instance] stopProjectorCalibration];
-        super.overlayView.hidden = NO;
-        [self startUpdateTimer];
-    });
+    [self stopExternalDisplayCalibration];
 }
 
 - (void)startUpdateTimer {

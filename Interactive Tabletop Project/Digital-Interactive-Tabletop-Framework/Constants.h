@@ -29,12 +29,11 @@
 
 + (Constants *)instance;
 
-- (void)calculateBorderSize;
 - (void)calculateBrickSize;
 
 @property (nonatomic, assign) CGSize screenSize;
 @property (nonatomic, assign) CGSize gridSize;
 @property (nonatomic, assign) CGSize brickSize;
-@property (nonatomic, assign) CGSize borderSize;
+@property (nonatomic, assign) CGSize borderSizePct;
 
 @end

@@ -25,6 +25,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ExternalDislayCalibrationBorderView : UIView
+@protocol ExternalDisplayCalibrationViewDelegate <NSObject>
+
+- (void)calibrationViewDidHide;
+
+@end
+
+@interface ExternalDislayCalibrationView : UIView
+
+- (void)hideView;
+
+@property (nonatomic, weak) id<ExternalDisplayCalibrationViewDelegate> delegate;
 
 @end

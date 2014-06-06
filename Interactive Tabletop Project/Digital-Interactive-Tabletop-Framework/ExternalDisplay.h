@@ -25,19 +25,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import "ExternalDislayCalibrationBorderView.h"
-
 @interface ExternalDisplay : NSObject
 
 + (ExternalDisplay *)instance;
 
 - (void)initialize;
-
-- (void)layoutSubviews;
-
-- (void)startProjectorCalibration;
-- (void)stopProjectorCalibration;
-- (bool)isCalibrating;
 
 @property (nonatomic, readonly) UIWindow *window;
 @property (nonatomic, readonly) UIScreen *screen;
@@ -45,7 +37,5 @@
 @property (nonatomic, readonly) bool externalDisplayFound;
 
 @property (nonatomic, readonly) CGRect widescreenBounds;
-
-@property (nonatomic, strong) ExternalDislayCalibrationBorderView *externalDislayCalibrationBorderView;
 
 @end

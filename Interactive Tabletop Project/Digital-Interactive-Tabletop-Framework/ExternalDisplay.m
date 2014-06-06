@@ -30,9 +30,6 @@ ExternalDisplay *externalDisplayInstance = nil;
 
 @interface ExternalDisplay ()
 
-@property (nonatomic, assign) CFAbsoluteTime calibratorStartTime;
-@property (nonatomic, assign) CFAbsoluteTime calibratorMinDuration;
-
 @end
 
 @implementation ExternalDisplay
@@ -77,42 +74,6 @@ ExternalDisplay *externalDisplayInstance = nil;
     window = [[UIWindow alloc] initWithFrame:screen.bounds];
     window.backgroundColor = [UIColor blackColor];
     window.screen = screen;
-    
-    [self startProjectorCalibration];
-}
-
-- (void)layoutSubviews {
-    if ([self isCalibrating]) {
-        [self.window bringSubviewToFront:self.externalDislayCalibrationBorderView];
-    }
-}
-
-- (void)startProjectorCalibration {
-    self.externalDislayCalibrationBorderView = [[ExternalDislayCalibrationBorderView alloc] initWithFrame:[ExternalDisplay instance].screen.bounds];
-    [[ExternalDisplay instance].window addSubview:self.externalDislayCalibrationBorderView];
-    [ExternalDisplay instance].window.hidden = [ExternalDisplay instance].externalDisplayFound ? NO : YES;
-
-    self.calibratorMinDuration = 10.0f;
-    self.calibratorStartTime = CFAbsoluteTimeGetCurrent();
-}
-
-- (void)stopProjectorCalibration {
-    CFTimeInterval remainingTime = MAX(0.0f, (self.calibratorStartTime + self.calibratorMinDuration) - CFAbsoluteTimeGetCurrent());
-    [self performSelector:@selector(hideCalibrationView) withObject:nil afterDelay:remainingTime];
-    NSLog(@"%f", remainingTime);
-}
-
-- (void)hideCalibrationView {
-    [UIView animateWithDuration:1.0f animations:^{
-        self.externalDislayCalibrationBorderView.alpha = 0.0f;
-    } completion:^(BOOL finished) {
-        [self.externalDislayCalibrationBorderView removeFromSuperview];
-        self.externalDislayCalibrationBorderView = nil;
-    }];
-}
-
-- (bool)isCalibrating {
-    return self.externalDislayCalibrationBorderView != nil;
 }
 
 - (void)setupWidescreenBounds {
