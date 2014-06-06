@@ -89,7 +89,7 @@
 		6552705817B1733F00784CD7 /* border_top_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = border_top_left.png; path = board/border/border_top_left.png; sourceTree = "<group>"; };
 		6552705917B1733F00784CD7 /* border_top_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = border_top_right.png; path = board/border/border_top_right.png; sourceTree = "<group>"; };
 		6552705A17B1733F00784CD7 /* border_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = border_top.png; path = board/border/border_top.png; sourceTree = "<group>"; };
-		6587DB331938A65900C2741E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Digital-Interactive-Tabletop-Framework/Images.xcassets"; sourceTree = SOURCE_ROOT; };
+		6587DB331938A65900C2741E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Interactive-Tabletop-Project/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		6587DD57193B223800C2741E /* TabletopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabletopViewController.h; sourceTree = "<group>"; };
 		6587DD58193B223800C2741E /* TabletopViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TabletopViewController.mm; sourceTree = "<group>"; };
 		6587DD5D193B33B300C2741E /* TabletopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabletopView.h; sourceTree = "<group>"; };
@@ -246,7 +246,7 @@
 				6587DB331938A65900C2741E /* Images.xcassets */,
 			);
 			name = "Interactive Tabletop Project";
-			path = "Digital-Interactive-Tabletop-Framework";
+			path = "Interactive-Tabletop-Project";
 			sourceTree = "<group>";
 		};
 		65B9307D17806B4500312B88 /* Supporting Files */ = {
@@ -556,8 +556,8 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Digital-Interactive-Tabletop-Framework/Interactive Tabletop Project-Prefix.pch";
-				INFOPLIST_FILE = "Digital-Interactive-Tabletop-Framework/Interactive Tabletop Project-Info.plist";
+				GCC_PREFIX_HEADER = "Interactive-Tabletop-Project/Interactive Tabletop Project-Prefix.pch";
+				INFOPLIST_FILE = "Interactive-Tabletop-Project/Interactive Tabletop Project-Info.plist";
 				PRODUCT_NAME = "Interactive Tabletop Project";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -577,8 +577,8 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Digital-Interactive-Tabletop-Framework/Interactive Tabletop Project-Prefix.pch";
-				INFOPLIST_FILE = "Digital-Interactive-Tabletop-Framework/Interactive Tabletop Project-Info.plist";
+				GCC_PREFIX_HEADER = "Interactive-Tabletop-Project/Interactive Tabletop Project-Prefix.pch";
+				INFOPLIST_FILE = "Interactive-Tabletop-Project/Interactive Tabletop Project-Info.plist";
 				PRODUCT_NAME = "Interactive Tabletop Project";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

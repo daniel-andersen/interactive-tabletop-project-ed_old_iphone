@@ -59,9 +59,9 @@
 		6587DDD9193CBA7300C2741E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DDD8193CBA7300C2741E /* AVFoundation.framework */; };
 		6587DDDB193CBA8800C2741E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DDDA193CBA8800C2741E /* CoreMedia.framework */; };
 		6587DDDE193CBAE500C2741E /* MazeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDDD193CBAE500C2741E /* MazeView.m */; };
-		6587DE04193EEDA000C2741E /* splash_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE02193EEDA000C2741E /* splash_logo.png */; };
-		6587DE05193EEDA000C2741E /* splash_trollsahead.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE03193EEDA000C2741E /* splash_trollsahead.png */; };
 		6587DE0C193EF38400C2741E /* ExternalDislayCalibrationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DE0B193EF38400C2741E /* ExternalDislayCalibrationView.m */; };
+		6587DE301941ED7000C2741E /* splash_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE2E1941ED7000C2741E /* splash_logo.png */; };
+		6587DE311941ED7000C2741E /* splash_trollsahead.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE2F1941ED7000C2741E /* splash_trollsahead.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,33 +95,32 @@
 		6587DD4A193B1D1200C2741E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6587DD4C193B1D1200C2741E /* Tabletop_MazeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tabletop_MazeTests.m; sourceTree = "<group>"; };
 		6587DD74193CB4CA00C2741E /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = "../Interactive Tabletop Project/opencv2.framework"; sourceTree = "<group>"; };
-		6587DD79193CB5EA00C2741E /* BoardCalibrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoardCalibrator.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BoardCalibrator.h"; sourceTree = "<group>"; };
-		6587DD7A193CB5EA00C2741E /* BoardCalibrator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BoardCalibrator.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BoardCalibrator.mm"; sourceTree = "<group>"; };
-		6587DD7B193CB5EA00C2741E /* BoardRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoardRecognizer.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BoardRecognizer.h"; sourceTree = "<group>"; };
-		6587DD7C193CB5EA00C2741E /* BoardRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BoardRecognizer.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BoardRecognizer.mm"; sourceTree = "<group>"; };
-		6587DD7D193CB5EA00C2741E /* BoardUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoardUtil.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BoardUtil.h"; sourceTree = "<group>"; };
-		6587DD7E193CB5EA00C2741E /* BoardUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BoardUtil.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BoardUtil.mm"; sourceTree = "<group>"; };
-		6587DD7F193CB5EA00C2741E /* BrickRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BrickRecognizer.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BrickRecognizer.h"; sourceTree = "<group>"; };
-		6587DD80193CB5EA00C2741E /* BrickRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BrickRecognizer.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/BrickRecognizer.mm"; sourceTree = "<group>"; };
-		6587DD81193CB5EA00C2741E /* CameraSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraSession.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/CameraSession.h"; sourceTree = "<group>"; };
-		6587DD82193CB5EA00C2741E /* CameraSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CameraSession.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/CameraSession.mm"; sourceTree = "<group>"; };
-		6587DD83193CB5EA00C2741E /* CameraUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraUtil.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/CameraUtil.h"; sourceTree = "<group>"; };
-		6587DD84193CB5EA00C2741E /* CameraUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CameraUtil.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/CameraUtil.mm"; sourceTree = "<group>"; };
-		6587DD85193CB5EA00C2741E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Constants.h"; sourceTree = "<group>"; };
-		6587DD86193CB5EA00C2741E /* Constants.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Constants.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Constants.mm"; sourceTree = "<group>"; };
-		6587DD89193CB5EA00C2741E /* ExternalDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalDisplay.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/ExternalDisplay.h"; sourceTree = "<group>"; };
-		6587DD8A193CB5EA00C2741E /* ExternalDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExternalDisplay.m; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/ExternalDisplay.m"; sourceTree = "<group>"; };
-		6587DD8B193CB5EA00C2741E /* FakeCameraUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FakeCameraUtil.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/FakeCameraUtil.h"; sourceTree = "<group>"; };
-		6587DD8C193CB5EA00C2741E /* FakeCameraUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FakeCameraUtil.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/FakeCameraUtil.mm"; sourceTree = "<group>"; };
-		6587DD90193CB5EA00C2741E /* border_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_bottom.png; sourceTree = "<group>"; };
-		6587DD91193CB5EA00C2741E /* border_bottom_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_bottom_left.png; sourceTree = "<group>"; };
-		6587DD92193CB5EA00C2741E /* border_bottom_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_bottom_right.png; sourceTree = "<group>"; };
-		6587DD93193CB5EA00C2741E /* border_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_left.png; sourceTree = "<group>"; };
-		6587DD94193CB5EA00C2741E /* border_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_right.png; sourceTree = "<group>"; };
-		6587DD95193CB5EA00C2741E /* border_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_top.png; sourceTree = "<group>"; };
-		6587DD96193CB5EA00C2741E /* border_top_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_top_left.png; sourceTree = "<group>"; };
-		6587DD97193CB5EA00C2741E /* border_top_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_top_right.png; sourceTree = "<group>"; };
-		6587DD99193CB5EA00C2741E /* trollsahead_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trollsahead_logo.png; sourceTree = "<group>"; };
+		6587DD79193CB5EA00C2741E /* BoardCalibrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoardCalibrator.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/BoardCalibrator.h"; sourceTree = "<group>"; };
+		6587DD7A193CB5EA00C2741E /* BoardCalibrator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BoardCalibrator.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/BoardCalibrator.mm"; sourceTree = "<group>"; };
+		6587DD7B193CB5EA00C2741E /* BoardRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoardRecognizer.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/BoardRecognizer.h"; sourceTree = "<group>"; };
+		6587DD7C193CB5EA00C2741E /* BoardRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BoardRecognizer.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/BoardRecognizer.mm"; sourceTree = "<group>"; };
+		6587DD7D193CB5EA00C2741E /* BoardUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoardUtil.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/BoardUtil.h"; sourceTree = "<group>"; };
+		6587DD7E193CB5EA00C2741E /* BoardUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BoardUtil.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/BoardUtil.mm"; sourceTree = "<group>"; };
+		6587DD7F193CB5EA00C2741E /* BrickRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BrickRecognizer.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/BrickRecognizer.h"; sourceTree = "<group>"; };
+		6587DD80193CB5EA00C2741E /* BrickRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BrickRecognizer.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/BrickRecognizer.mm"; sourceTree = "<group>"; };
+		6587DD81193CB5EA00C2741E /* CameraSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraSession.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/CameraSession.h"; sourceTree = "<group>"; };
+		6587DD82193CB5EA00C2741E /* CameraSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CameraSession.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/CameraSession.mm"; sourceTree = "<group>"; };
+		6587DD83193CB5EA00C2741E /* CameraUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraUtil.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/CameraUtil.h"; sourceTree = "<group>"; };
+		6587DD84193CB5EA00C2741E /* CameraUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CameraUtil.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/CameraUtil.mm"; sourceTree = "<group>"; };
+		6587DD85193CB5EA00C2741E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/Constants.h"; sourceTree = "<group>"; };
+		6587DD86193CB5EA00C2741E /* Constants.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Constants.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/Constants.mm"; sourceTree = "<group>"; };
+		6587DD89193CB5EA00C2741E /* ExternalDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalDisplay.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/ExternalDisplay.h"; sourceTree = "<group>"; };
+		6587DD8A193CB5EA00C2741E /* ExternalDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExternalDisplay.m; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/ExternalDisplay.m"; sourceTree = "<group>"; };
+		6587DD8B193CB5EA00C2741E /* FakeCameraUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FakeCameraUtil.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/FakeCameraUtil.h"; sourceTree = "<group>"; };
+		6587DD8C193CB5EA00C2741E /* FakeCameraUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FakeCameraUtil.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/FakeCameraUtil.mm"; sourceTree = "<group>"; };
+		6587DD90193CB5EA00C2741E /* border_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = border_bottom.png; path = border/border_bottom.png; sourceTree = "<group>"; };
+		6587DD91193CB5EA00C2741E /* border_bottom_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = border_bottom_left.png; path = border/border_bottom_left.png; sourceTree = "<group>"; };
+		6587DD92193CB5EA00C2741E /* border_bottom_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = border_bottom_right.png; path = border/border_bottom_right.png; sourceTree = "<group>"; };
+		6587DD93193CB5EA00C2741E /* border_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = border_left.png; path = border/border_left.png; sourceTree = "<group>"; };
+		6587DD94193CB5EA00C2741E /* border_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = border_right.png; path = border/border_right.png; sourceTree = "<group>"; };
+		6587DD95193CB5EA00C2741E /* border_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = border_top.png; path = border/border_top.png; sourceTree = "<group>"; };
+		6587DD96193CB5EA00C2741E /* border_top_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = border_top_left.png; path = border/border_top_left.png; sourceTree = "<group>"; };
+		6587DD97193CB5EA00C2741E /* border_top_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = border_top_right.png; path = border/border_top_right.png; sourceTree = "<group>"; };
 		6587DD9B193CB5EA00C2741E /* fake_board_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_1.png; sourceTree = "<group>"; };
 		6587DD9C193CB5EA00C2741E /* fake_board_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_2.png; sourceTree = "<group>"; };
 		6587DD9D193CB5EA00C2741E /* fake_board_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_3.png; sourceTree = "<group>"; };
@@ -129,20 +128,20 @@
 		6587DD9F193CB5EA00C2741E /* fake_board_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_5.png; sourceTree = "<group>"; };
 		6587DDA0193CB5EA00C2741E /* fake_board_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_6.png; sourceTree = "<group>"; };
 		6587DDA1193CB5EA00C2741E /* fake_board_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_7.png; sourceTree = "<group>"; };
-		6587DDA2193CB5EA00C2741E /* PreviewableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreviewableViewController.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/PreviewableViewController.h"; sourceTree = "<group>"; };
-		6587DDA3193CB5EA00C2741E /* PreviewableViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = PreviewableViewController.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/PreviewableViewController.mm"; sourceTree = "<group>"; };
-		6587DDA4193CB5EA00C2741E /* RotatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RotatedView.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/RotatedView.h"; sourceTree = "<group>"; };
-		6587DDA5193CB5EA00C2741E /* RotatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotatedView.m; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/RotatedView.m"; sourceTree = "<group>"; };
-		6587DDA6193CB5EA00C2741E /* TabletopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabletopView.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/TabletopView.h"; sourceTree = "<group>"; };
-		6587DDA7193CB5EA00C2741E /* TabletopView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TabletopView.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/TabletopView.mm"; sourceTree = "<group>"; };
-		6587DDA8193CB5EA00C2741E /* TabletopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabletopViewController.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/TabletopViewController.h"; sourceTree = "<group>"; };
-		6587DDA9193CB5EA00C2741E /* TabletopViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TabletopViewController.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/TabletopViewController.mm"; sourceTree = "<group>"; };
-		6587DDAA193CB5EA00C2741E /* UIImage+CaptureScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+CaptureScreen.h"; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/UIImage+CaptureScreen.h"; sourceTree = "<group>"; };
-		6587DDAB193CB5EA00C2741E /* UIImage+CaptureScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+CaptureScreen.m"; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/UIImage+CaptureScreen.m"; sourceTree = "<group>"; };
-		6587DDAC193CB5EA00C2741E /* UIImage+OpenCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+OpenCV.h"; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/UIImage+OpenCV.h"; sourceTree = "<group>"; };
-		6587DDAD193CB5EA00C2741E /* UIImage+OpenCV.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "UIImage+OpenCV.mm"; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/UIImage+OpenCV.mm"; sourceTree = "<group>"; };
-		6587DDAE193CB5EA00C2741E /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Util.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Util.h"; sourceTree = "<group>"; };
-		6587DDAF193CB5EA00C2741E /* Util.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Util.mm; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Util.mm"; sourceTree = "<group>"; };
+		6587DDA2193CB5EA00C2741E /* PreviewableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreviewableViewController.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/PreviewableViewController.h"; sourceTree = "<group>"; };
+		6587DDA3193CB5EA00C2741E /* PreviewableViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = PreviewableViewController.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/PreviewableViewController.mm"; sourceTree = "<group>"; };
+		6587DDA4193CB5EA00C2741E /* RotatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RotatedView.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/RotatedView.h"; sourceTree = "<group>"; };
+		6587DDA5193CB5EA00C2741E /* RotatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotatedView.m; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/RotatedView.m"; sourceTree = "<group>"; };
+		6587DDA6193CB5EA00C2741E /* TabletopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabletopView.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/TabletopView.h"; sourceTree = "<group>"; };
+		6587DDA7193CB5EA00C2741E /* TabletopView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TabletopView.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/TabletopView.mm"; sourceTree = "<group>"; };
+		6587DDA8193CB5EA00C2741E /* TabletopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabletopViewController.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/TabletopViewController.h"; sourceTree = "<group>"; };
+		6587DDA9193CB5EA00C2741E /* TabletopViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TabletopViewController.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/TabletopViewController.mm"; sourceTree = "<group>"; };
+		6587DDAA193CB5EA00C2741E /* UIImage+CaptureScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+CaptureScreen.h"; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/UIImage+CaptureScreen.h"; sourceTree = "<group>"; };
+		6587DDAB193CB5EA00C2741E /* UIImage+CaptureScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+CaptureScreen.m"; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/UIImage+CaptureScreen.m"; sourceTree = "<group>"; };
+		6587DDAC193CB5EA00C2741E /* UIImage+OpenCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+OpenCV.h"; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/UIImage+OpenCV.h"; sourceTree = "<group>"; };
+		6587DDAD193CB5EA00C2741E /* UIImage+OpenCV.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "UIImage+OpenCV.mm"; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/UIImage+OpenCV.mm"; sourceTree = "<group>"; };
+		6587DDAE193CB5EA00C2741E /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Util.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/Util.h"; sourceTree = "<group>"; };
+		6587DDAF193CB5EA00C2741E /* Util.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Util.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/Util.mm"; sourceTree = "<group>"; };
 		6587DDD2193CB98600C2741E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		6587DDD4193CBA3A00C2741E /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		6587DDD6193CBA6D00C2741E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -152,8 +151,10 @@
 		6587DDDD193CBAE500C2741E /* MazeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeView.m; sourceTree = "<group>"; };
 		6587DE02193EEDA000C2741E /* splash_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_logo.png; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Images/splash/splash_logo.png"; sourceTree = "<group>"; };
 		6587DE03193EEDA000C2741E /* splash_trollsahead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_trollsahead.png; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Images/splash/splash_trollsahead.png"; sourceTree = "<group>"; };
-		6587DE0A193EF38400C2741E /* ExternalDislayCalibrationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalDislayCalibrationView.h; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/ExternalDislayCalibrationView.h"; sourceTree = "<group>"; };
-		6587DE0B193EF38400C2741E /* ExternalDislayCalibrationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExternalDislayCalibrationView.m; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/ExternalDislayCalibrationView.m"; sourceTree = "<group>"; };
+		6587DE0A193EF38400C2741E /* ExternalDislayCalibrationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalDislayCalibrationView.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/ExternalDislayCalibrationView.h"; sourceTree = "<group>"; };
+		6587DE0B193EF38400C2741E /* ExternalDislayCalibrationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExternalDislayCalibrationView.m; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/ExternalDislayCalibrationView.m"; sourceTree = "<group>"; };
+		6587DE2E1941ED7000C2741E /* splash_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_logo.png; path = splash/splash_logo.png; sourceTree = "<group>"; };
+		6587DE2F1941ED7000C2741E /* splash_trollsahead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_trollsahead.png; path = splash/splash_trollsahead.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +273,7 @@
 		6587DD76193CB5B100C2741E /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				6587DD8D193CB5EA00C2741E /* Images */,
 				6587DE0A193EF38400C2741E /* ExternalDislayCalibrationView.h */,
 				6587DE0B193EF38400C2741E /* ExternalDislayCalibrationView.m */,
 				6587DD79193CB5EA00C2741E /* BoardCalibrator.h */,
@@ -292,7 +294,6 @@
 				6587DD8A193CB5EA00C2741E /* ExternalDisplay.m */,
 				6587DD8B193CB5EA00C2741E /* FakeCameraUtil.h */,
 				6587DD8C193CB5EA00C2741E /* FakeCameraUtil.mm */,
-				6587DD8D193CB5EA00C2741E /* Images */,
 				6587DDA2193CB5EA00C2741E /* PreviewableViewController.h */,
 				6587DDA3193CB5EA00C2741E /* PreviewableViewController.mm */,
 				6587DDA4193CB5EA00C2741E /* RotatedView.h */,
@@ -314,23 +315,15 @@
 		6587DD8D193CB5EA00C2741E /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				6587DD8E193CB5EA00C2741E /* board */,
-				6587DD98193CB5EA00C2741E /* intro */,
-				6587DD9A193CB5EA00C2741E /* simulator */,
+				6587DE2D1941ED6600C2741E /* Splash */,
+				6587DD8E193CB5EA00C2741E /* Board */,
+				6587DD9A193CB5EA00C2741E /* Simulator */,
 			);
 			name = Images;
-			path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Images";
+			path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/Images";
 			sourceTree = "<group>";
 		};
-		6587DD8E193CB5EA00C2741E /* board */ = {
-			isa = PBXGroup;
-			children = (
-				6587DD8F193CB5EA00C2741E /* border */,
-			);
-			path = board;
-			sourceTree = "<group>";
-		};
-		6587DD8F193CB5EA00C2741E /* border */ = {
+		6587DD8E193CB5EA00C2741E /* Board */ = {
 			isa = PBXGroup;
 			children = (
 				6587DD90193CB5EA00C2741E /* border_bottom.png */,
@@ -342,18 +335,11 @@
 				6587DD96193CB5EA00C2741E /* border_top_left.png */,
 				6587DD97193CB5EA00C2741E /* border_top_right.png */,
 			);
-			path = border;
+			name = Board;
+			path = board;
 			sourceTree = "<group>";
 		};
-		6587DD98193CB5EA00C2741E /* intro */ = {
-			isa = PBXGroup;
-			children = (
-				6587DD99193CB5EA00C2741E /* trollsahead_logo.png */,
-			);
-			path = intro;
-			sourceTree = "<group>";
-		};
-		6587DD9A193CB5EA00C2741E /* simulator */ = {
+		6587DD9A193CB5EA00C2741E /* Simulator */ = {
 			isa = PBXGroup;
 			children = (
 				6587DD9B193CB5EA00C2741E /* fake_board_1.png */,
@@ -364,6 +350,7 @@
 				6587DDA0193CB5EA00C2741E /* fake_board_6.png */,
 				6587DDA1193CB5EA00C2741E /* fake_board_7.png */,
 			);
+			name = Simulator;
 			path = simulator;
 			sourceTree = "<group>";
 		};
@@ -380,6 +367,15 @@
 			children = (
 				6587DE02193EEDA000C2741E /* splash_logo.png */,
 				6587DE03193EEDA000C2741E /* splash_trollsahead.png */,
+			);
+			name = Splash;
+			sourceTree = "<group>";
+		};
+		6587DE2D1941ED6600C2741E /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				6587DE2E1941ED7000C2741E /* splash_logo.png */,
+				6587DE2F1941ED7000C2741E /* splash_trollsahead.png */,
 			);
 			name = Splash;
 			sourceTree = "<group>";
@@ -460,13 +456,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6587DE311941ED7000C2741E /* splash_trollsahead.png in Resources */,
 				6587DDBE193CB5EA00C2741E /* border_left.png in Resources */,
 				6587DDCA193CB5EA00C2741E /* fake_board_7.png in Resources */,
 				6587DD3A193B1D1200C2741E /* Images.xcassets in Resources */,
 				6587DDC4193CB5EA00C2741E /* fake_board_1.png in Resources */,
 				6587DDC7193CB5EA00C2741E /* fake_board_4.png in Resources */,
 				6587DDC5193CB5EA00C2741E /* fake_board_2.png in Resources */,
-				6587DE05193EEDA000C2741E /* splash_trollsahead.png in Resources */,
 				6587DDC1193CB5EA00C2741E /* border_top_left.png in Resources */,
 				6587DD2C193B1D1100C2741E /* InfoPlist.strings in Resources */,
 				6587DDC6193CB5EA00C2741E /* fake_board_3.png in Resources */,
@@ -474,8 +470,8 @@
 				6587DDC9193CB5EA00C2741E /* fake_board_6.png in Resources */,
 				6587DDC8193CB5EA00C2741E /* fake_board_5.png in Resources */,
 				6587DDBD193CB5EA00C2741E /* border_bottom_right.png in Resources */,
-				6587DE04193EEDA000C2741E /* splash_logo.png in Resources */,
 				6587DDBB193CB5EA00C2741E /* border_bottom.png in Resources */,
+				6587DE301941ED7000C2741E /* splash_logo.png in Resources */,
 				6587DDBF193CB5EA00C2741E /* border_right.png in Resources */,
 				6587DDC2193CB5EA00C2741E /* border_top_right.png in Resources */,
 				6587DDC0193CB5EA00C2741E /* border_top.png in Resources */,
