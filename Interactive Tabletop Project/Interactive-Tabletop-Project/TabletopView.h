@@ -30,6 +30,11 @@
 - (void)show;
 - (void)hide;
 
+- (void)willAppear;
+- (void)didAppear;
+- (void)willDisappear;
+- (void)didDisappear;
+
 - (void)update;
 
 @end

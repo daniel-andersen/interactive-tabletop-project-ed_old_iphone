@@ -46,12 +46,23 @@
     
     self.titleImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Title"]];
     self.titleImageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.titleImageView.alpha = 0.0f;
+    self.titleImageView.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
     [self addSubview:self.titleImageView];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.titleImageView.frame = self.bounds;
+}
+
+- (void)didAppear {
+    [UIView animateWithDuration:3.0f animations:^{
+        self.titleImageView.alpha = 1.0f;
+    }];
+    [UIView animateWithDuration:3.0f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.titleImageView.transform = CGAffineTransformIdentity;
+    } completion:nil];
 }
 
 - (void)update {

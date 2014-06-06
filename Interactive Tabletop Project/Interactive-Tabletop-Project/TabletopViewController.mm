@@ -158,9 +158,9 @@
 }
 
 - (void)setTabletopView:(TabletopView *)tabletopView {
-    [_tabletopView hide];
+    [self hideCurrentTabletopView];
     _tabletopView = tabletopView;
-    [_tabletopView show];
+    [self showCurrentTabletopView];
     if (![CameraSession instance].initialized && ![ExternalDisplay instance].externalDisplayFound) {
         [super prepareSimulatorViewWithPreviewView:tabletopView];
     }
@@ -168,6 +168,18 @@
 
 - (TabletopView *)tabletopView {
     return _tabletopView;
+}
+
+- (void)hideCurrentTabletopView {
+    [_tabletopView willDisappear];
+    [_tabletopView hide];
+    [_tabletopView didDisappear];
+}
+
+- (void)showCurrentTabletopView {
+    [_tabletopView willAppear];
+    [_tabletopView show];
+    [_tabletopView didAppear];
 }
 
 - (void)setUpdateInterval:(CFTimeInterval)updateInterval {

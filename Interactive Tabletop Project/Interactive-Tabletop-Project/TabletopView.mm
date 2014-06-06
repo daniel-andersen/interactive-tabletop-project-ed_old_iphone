@@ -37,11 +37,23 @@
 - (void)show {
     [[ExternalDisplay instance].window insertSubview:self atIndex:0];
     [self layoutSubviews];
-    
 }
 
 - (void)hide {
     [self removeFromSuperview];
+}
+
+- (void)willAppear {
+    [self layoutSubviews];
+}
+
+- (void)didAppear {
+}
+
+- (void)willDisappear {
+}
+
+- (void)didDisappear {
 }
 
 - (void)update {
