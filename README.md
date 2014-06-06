@@ -1,20 +1,18 @@
-Dystopia
-========
+Interactive Tabletop Project:ed
+===============================
 
-Dystopia is an interactive, digital tabletop board game based on the board game [Kampen mod Dystopia (Danish)](http://trollsahead.dk/dystopia/index.html). It combines interaction between physical bricks and a digital board projected from a mini projector connected to an iPhone.
+Interactive Tabletop Project:ed is a framework for creating interactive, digital tabletop projects, focusing on board games with physical bricks. It thus combines interaction between physical bricks and a digital board projected from a mini projector connected to an iPhone.
 
-The project combines several interesting techniques, including computer vision, artificial intelligence and game engine design.
+See photos and videos below from the [Dystopia project](https://github.com/black-knight/dystopia).
 
-See photos and videos below.
+(TODO - this README has been migrated from the Dystopia project and should be updated!)
 
 Description
 -----------
 
-Dystopia itself is an iPhone app which - when run on an iPhone connected to a simple projector setup - creates an interactive, digital tabletop board game playable on any table.
+Interactive Tabletop Project:ed enables you to create iPhone apps which - when run on an actual phone connected to a simple projector setup - creates an interactive, digital tabletop board game playable on any table.
 
-By monitoring the projected board game from the camera of the iPhone, the app recognizes the board state by detecting the positions of the physical bricks. By interacting with the bricks the state changes and the board game evolves (eg. new rooms are revealed, monsters appear, etc.).
-
-The app also functions as Game Master by marking the movements of the monsters, deciding the outcome of fights, etc.
+By monitoring the projected board game from the camera of the iPhone, the framework recognizes the board state by detecting the positions of the physical bricks. By interacting with the bricks the state changes and the board game is capable of evolving according to this new state.
 
 The setup
 ---------
