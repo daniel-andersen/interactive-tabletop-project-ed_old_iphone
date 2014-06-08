@@ -53,7 +53,7 @@ ExternalDisplay *externalDisplayInstance = nil;
         UIScreenMode *bestScreenMode = nil;
         for (UIScreenMode *screenMode in screen.availableModes) {
             NSLog(@"Resolution: %f, %f", screenMode.size.width, screenMode.size.height);
-            if (bestScreenMode == nil || screenMode.size.width > bestScreenMode.size.width) {
+            if (bestScreenMode == nil || screenMode.size.width > bestScreenMode.size.width || (screenMode.size.width == bestScreenMode.size.width && screenMode.size.height > bestScreenMode.size.height)) {
                 bestScreenMode = screenMode;
             }
         }
@@ -74,6 +74,7 @@ ExternalDisplay *externalDisplayInstance = nil;
     window = [[UIWindow alloc] initWithFrame:screen.bounds];
     window.backgroundColor = [UIColor blackColor];
     window.screen = screen;
+    window.hidden = [ExternalDisplay instance].externalDisplayFound ? NO : YES;
 }
 
 - (void)setupWidescreenBounds {

@@ -29,9 +29,12 @@
 
 @implementation TabletopView
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.frame = [ExternalDisplay instance].widescreenBounds;
+- (id)init {
+    if (self = [super init]) {
+        self.frame = [ExternalDisplay instance].widescreenBounds;
+        self.backgroundColor = [UIColor blackColor];
+    }
+    return self;
 }
 
 - (void)show {

@@ -85,6 +85,7 @@
         [self calibrationViewDidHide];
         return;
     }
+    NSLog(@"Showing calibration view...");
     self.externalDislayCalibrationView = [[ExternalDislayCalibrationView alloc] initWithFrame:[ExternalDisplay instance].widescreenBounds];
     self.externalDislayCalibrationView.delegate = self;
     

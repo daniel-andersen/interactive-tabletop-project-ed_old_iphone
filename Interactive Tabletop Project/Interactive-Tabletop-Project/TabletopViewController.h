@@ -34,6 +34,8 @@
 
 - (void)start;
 
+- (void)calibrationViewDidHide;
+
 @property (nonatomic, assign) CFTimeInterval updateInterval;
 
 @property (nonatomic, strong) TabletopView *tabletopView;

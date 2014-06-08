@@ -35,9 +35,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tabletopView = [[TitleView alloc] init];
     //[self setGridOfSize:CGSizeMake(30.0f, 20.0f)];
     [self start];
+}
+
+- (void)calibrationViewDidHide {
+    [super calibrationViewDidHide];
+    self.tabletopView = [[TitleView alloc] init];
 }
 
 @end

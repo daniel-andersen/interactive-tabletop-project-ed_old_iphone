@@ -26,6 +26,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "ExternalDislayCalibrationView.h"
+#import "ExternalDisplay.h"
 
 @interface ExternalDislayCalibrationView ()
 
@@ -52,14 +53,14 @@
 
 - (void)showCalibrationBorder {
     [self addPixelAt:CGPointMake(0.0f, 0.0f)];
-    [self addPixelAt:CGPointMake(self.bounds.size.width - 1.0f, 0.0f)];
-    [self addPixelAt:CGPointMake(self.bounds.size.width - 1.0f, self.bounds.size.height - 1.0f)];
-    [self addPixelAt:CGPointMake(0.0f, self.bounds.size.height - 1.0f)];
+    [self addPixelAt:CGPointMake([ExternalDisplay instance].widescreenBounds.size.width - 1.0f, 0.0f)];
+    [self addPixelAt:CGPointMake([ExternalDisplay instance].widescreenBounds.size.width - 1.0f, [ExternalDisplay instance].widescreenBounds.size.height - 1.0f)];
+    [self addPixelAt:CGPointMake(0.0f, [ExternalDisplay instance].widescreenBounds.size.height - 1.0f)];
 }
 
 - (void)addPixelAt:(CGPoint)p {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(p.x, p.y, 1.0f, 1.0f)];
-    view.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
+    view.backgroundColor = [UIColor whiteColor];
     [self addSubview:view];
 }
 
@@ -79,7 +80,7 @@
     UIImage *logo = [UIImage imageNamed:@"splash_trollsahead.png"];
     
     float aspectRatio = logo.size.height / logo.size.width;
-    float logoWidth = self.bounds.size.width * 0.3f;
+    float logoWidth = self.bounds.size.width * 0.2f;
     float logoHeight = logoWidth * aspectRatio;
     
     self.trollsaheadImageView = [[UIImageView alloc] initWithImage:logo];
