@@ -26,6 +26,9 @@
 #import "ViewController.h"
 #import "MazeView.h"
 #import "TitleView.h"
+#import "ExternalDisplay.h"
+#import "MazeModel.h"
+#import "Constants.h"
 
 @interface ViewController ()
 
@@ -35,13 +38,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[self setGridOfSize:CGSizeMake(30.0f, 20.0f)];
+    [self setGridWithPixelApproxedSize:CGSizeMake(40.0f, 40.0f)];
+    [self createMaze];
     [self start];
 }
 
 - (void)calibrationViewDidHide {
     [super calibrationViewDidHide];
     self.tabletopView = [[TitleView alloc] init];
+}
+
+- (void)createMaze {
+    [MazeModel instance].width = (int)[Constants instance].gridSize.width;
+    [MazeModel instance].height = (int)[Constants instance].gridSize.height;
+
+    [[MazeModel instance] createRandomMaze];
 }
 
 @end

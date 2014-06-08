@@ -63,6 +63,7 @@
 		6587DE301941ED7000C2741E /* splash_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE2E1941ED7000C2741E /* splash_logo.png */; };
 		6587DE311941ED7000C2741E /* splash_trollsahead.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE2F1941ED7000C2741E /* splash_trollsahead.png */; };
 		6587DE34194244BE00C2741E /* TitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DE33194244BE00C2741E /* TitleView.m */; };
+		6587DE371944EBD700C2741E /* MazeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DE361944EBD700C2741E /* MazeModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +159,8 @@
 		6587DE2F1941ED7000C2741E /* splash_trollsahead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_trollsahead.png; path = splash/splash_trollsahead.png; sourceTree = "<group>"; };
 		6587DE32194244BE00C2741E /* TitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleView.h; sourceTree = "<group>"; };
 		6587DE33194244BE00C2741E /* TitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleView.m; sourceTree = "<group>"; };
+		6587DE351944EBD700C2741E /* MazeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeModel.h; sourceTree = "<group>"; };
+		6587DE361944EBD700C2741E /* MazeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +243,8 @@
 				6587DE33194244BE00C2741E /* TitleView.m */,
 				6587DDDC193CBAE500C2741E /* MazeView.h */,
 				6587DDDD193CBAE500C2741E /* MazeView.m */,
+				6587DE351944EBD700C2741E /* MazeModel.h */,
+				6587DE361944EBD700C2741E /* MazeModel.m */,
 				6587DD39193B1D1200C2741E /* Images.xcassets */,
 				6587DD28193B1D1100C2741E /* Supporting Files */,
 			);
@@ -506,6 +511,7 @@
 				6587DDB2193CB5EA00C2741E /* BoardRecognizer.mm in Sources */,
 				6587DDD1193CB5EA00C2741E /* Util.mm in Sources */,
 				6587DDCF193CB5EA00C2741E /* UIImage+CaptureScreen.m in Sources */,
+				6587DE371944EBD700C2741E /* MazeModel.m in Sources */,
 				6587DDCD193CB5EA00C2741E /* TabletopView.mm in Sources */,
 				6587DDCE193CB5EA00C2741E /* TabletopViewController.mm in Sources */,
 				6587DE34194244BE00C2741E /* TitleView.m in Sources */,

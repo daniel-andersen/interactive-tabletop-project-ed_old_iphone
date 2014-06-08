@@ -122,6 +122,11 @@
     [super addBoardGridLayer];
 }
 
+- (void)setGridWithPixelApproxedSize:(CGSize)size {
+    [self setGridOfSize:CGSizeMake((int)([ExternalDisplay instance].widescreenBounds.size.width  / size.width ),
+                                   (int)([ExternalDisplay instance].widescreenBounds.size.height / size.height))];
+}
+
 - (void)start {
     [self stopExternalDisplayCalibration];
 }

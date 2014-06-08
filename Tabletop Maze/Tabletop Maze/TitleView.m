@@ -52,6 +52,7 @@
 }
 
 - (void)didAppear {
+    [super didAppear];
     [UIView animateWithDuration:1.0f animations:^{
         self.titleImageView.alpha = 1.0f;
     }];
