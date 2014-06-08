@@ -40,38 +40,44 @@
     if (self = [super init]) {
         self.backgroundColor = [UIColor redColor];
 
-        self.leftBorderView = [[UIView alloc] init];
+        float borderSize = 6.0f;
+
+        self.leftBorderView = [[UIView alloc] initWithFrameCGRectMake(1.0f, 1.0f, borderSize, self.frame.size.height - 2.0f)];
         self.leftBorderView.backgroundColor = [UIColor grayColor];
         [self addSubview:self.leftBorderView];
         
-        self.rightBorderView = [[UIView alloc] init];
+        self.rightBorderView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width - borderSize - 1.0f, 1.0f, borderSize, self.frame.size.height - 2.0f)];
         self.rightBorderView.backgroundColor = [UIColor grayColor];
         [self addSubview:self.rightBorderView];
 
-        self.topBorderView = [[UIView alloc] init];
+        self.topBorderView = [[UIView alloc] initWithFrame:CGRectMake(1.0f, 1.0f, self.frame.size.width - 2.0f, borderSize)];
         self.topBorderView.backgroundColor = [UIColor grayColor];
         [self addSubview:self.topBorderView];
 
-        self.bottomBorderView = [[UIView alloc] init];
+        self.bottomBorderView = [[UIView alloc] initWithFrame:CGRectMake(1.0f, self.frame.size.height - borderSize - 1.0f, self.frame.size.width - 2.0f, borderSize)];
         self.bottomBorderView.backgroundColor = [UIColor grayColor];
         [self addSubview:self.bottomBorderView];
     }
     return self;
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    float borderSize = 6.0f;
+- (void)willAppear {
+    [super willAppear];
+}
 
-    self.leftBorderView.frame = CGRectMake(1.0f, 1.0f, borderSize, self.frame.size.height - 2.0f);
-    self.rightBorderView.frame = CGRectMake(self.frame.size.width - borderSize - 1.0f, 1.0f, borderSize, self.frame.size.height - 2.0f);
-    self.topBorderView.frame = CGRectMake(1.0f, 1.0f, self.frame.size.width - 2.0f, borderSize);
-    self.bottomBorderView.frame = CGRectMake(1.0f, self.frame.size.height - borderSize - 1.0f, self.frame.size.width - 2.0f, borderSize);
+- (void)didAppear {
+    [super didAppear];
+}
+
+- (void)willDisappear {
+    [super willDisappear];
+}
+
+- (void)didDisappear {
+    [super didDisappear];
 }
 
 - (void)update {
-    
 }
 
 @end
