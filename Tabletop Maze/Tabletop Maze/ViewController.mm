@@ -31,20 +31,32 @@
 
 @interface ViewController ()
 
+@property (nonatomic, strong) MazeView *mazeView;
+
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setGridWithPixelApproxedSize:CGSizeMake(40.0f, 40.0f)];
-    [self createMaze];
+    [self setGridWithApproxedPixelSize:CGSizeMake(40.0f, 40.0f)];
     [self start];
 }
 
 - (void)calibrationViewDidHide {
     [super calibrationViewDidHide];
-    self.tabletopView = [[MazeView alloc] init];
+    [self createMazeView];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [self createMaze];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self didGenerateMaze];
+        });
+    });
+}
+
+- (void)createMazeView {
+    self.mazeView = [[MazeView alloc] init];
+    self.tabletopView = self.mazeView;
 }
 
 - (void)createMaze {
@@ -52,6 +64,15 @@
     [MazeModel instance].height = (int)[Constants instance].gridSize.height;
 
     [[MazeModel instance] createRandomMaze];
+}
+
+- (void)didGenerateMaze {
+    [self.mazeView drawMaze];
+    [self.mazeView showMaze];
+}
+
+- (void)initializePlayers {
+    
 }
 
 @end
