@@ -32,8 +32,14 @@
 - (void)calculateBrickSize;
 
 @property (nonatomic, assign) CGSize screenSize;
+
 @property (nonatomic, assign) CGSize gridSize;
+
 @property (nonatomic, assign) CGSize brickSize;
+@property (nonatomic, assign) CGSize roundedBrickSize;
+
+@property (nonatomic, assign) CGRect roundedGridRect;
+
 @property (nonatomic, assign) CGSize borderSizePct;
 
 @end

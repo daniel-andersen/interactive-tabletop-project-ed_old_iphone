@@ -50,7 +50,7 @@
 - (void)initialize {
     self.backgroundColor = [UIColor blackColor];
     
-    self.mazeImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+    self.mazeImageView = [[UIImageView alloc] initWithFrame:[Constants instance].roundedGridRect];
     self.mazeImageView.contentMode = UIViewContentModeScaleToFill;
     self.mazeImageView.alpha = 0.0f;
     [self addSubview:self.mazeImageView];
@@ -61,8 +61,7 @@
     self.titleImageView.alpha = 0.0f;
     [self addSubview:self.titleImageView];
     
-    self.borderSize = CGSizeMake(MAX(2.0f, [Constants instance].brickSize.width * 0.1f),
-                                 MAX(2.0f, [Constants instance].brickSize.height * 0.1f));
+    self.borderSize = CGSizeMake(2.0f, 2.0f);
 }
 
 - (void)didAppear {
@@ -108,59 +107,116 @@
 }
 
 - (void)drawWallForEntry:(MazeEntry *)entry withContext:(CGContextRef)context {
-    CGRect rect = [self rectForEntry:entry];
-
     MazeEntry *leftEntry = [[MazeModel instance] entryAtX:(entry.x - 1) y:entry.y];
     MazeEntry *rightEntry = [[MazeModel instance] entryAtX:(entry.x + 1) y:entry.y];
     MazeEntry *upEntry = [[MazeModel instance] entryAtX:entry.x y:(entry.y - 1)];
     MazeEntry *downEntry = [[MazeModel instance] entryAtX:entry.x y:(entry.y + 1)];
     
+    bool brickBorders[3][3];
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            brickBorders[i][j] = NO;
+        }
+    }
+    
     // Left
     if ([entry hasBorder:BORDER_LEFT]) {
-        CGContextFillRect(context, CGRectMake(rect.origin.x, rect.origin.y, self.borderSize.width, rect.size.height));
+        brickBorders[0][0] = YES;
+        brickBorders[1][0] = YES;
+        brickBorders[2][0] = YES;
     }
     
     // Right
     if ([entry hasBorder:BORDER_RIGHT]) {
-        CGContextFillRect(context, CGRectMake(rect.origin.x + rect.size.width - self.borderSize.width, rect.origin.y, self.borderSize.width, rect.size.height));
+        brickBorders[0][2] = YES;
+        brickBorders[1][2] = YES;
+        brickBorders[2][2] = YES;
     }
 
     // Top
     if ([entry hasBorder:BORDER_UP]) {
-        CGContextFillRect(context, CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, self.borderSize.height));
+        brickBorders[0][0] = YES;
+        brickBorders[0][1] = YES;
+        brickBorders[0][2] = YES;
     }
 
     // Bottom
     if ([entry hasBorder:BORDER_DOWN]) {
-        CGContextFillRect(context, CGRectMake(rect.origin.x, rect.origin.y + rect.size.height - self.borderSize.height, rect.size.width, self.borderSize.height));
+        brickBorders[2][0] = YES;
+        brickBorders[2][1] = YES;
+        brickBorders[2][2] = YES;
     }
     
     // Corner left/top
     if ([leftEntry hasBorder:BORDER_UP] || [upEntry hasBorder:BORDER_LEFT]) {
-        CGContextFillRect(context, CGRectMake(rect.origin.x, rect.origin.y, self.borderSize.width, self.borderSize.height));
+        brickBorders[0][0] = YES;
     }
 
     // Corner right/top
     if ([rightEntry hasBorder:BORDER_UP] || [upEntry hasBorder:BORDER_RIGHT]) {
-        CGContextFillRect(context, CGRectMake(rect.origin.x + rect.size.width - self.borderSize.width, rect.origin.y, self.borderSize.width, self.borderSize.height));
+        brickBorders[0][2] = YES;
     }
 
     // Corner left/bottom
     if ([leftEntry hasBorder:BORDER_DOWN] || [downEntry hasBorder:BORDER_LEFT]) {
-        CGContextFillRect(context, CGRectMake(rect.origin.x, rect.origin.y + rect.size.height - self.borderSize.height, self.borderSize.width, self.borderSize.height));
+        brickBorders[2][0] = YES;
     }
     
     // Corner right/bottom
     if ([rightEntry hasBorder:BORDER_DOWN] || [downEntry hasBorder:BORDER_RIGHT]) {
-        CGContextFillRect(context, CGRectMake(rect.origin.x + rect.size.width - self.borderSize.width, rect.origin.y + rect.size.height - self.borderSize.height, self.borderSize.width, self.borderSize.height));
+        brickBorders[2][2] = YES;
+    }
+    
+    // Draw borders
+    CGRect brickRect = [self rectForEntry:entry];
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (!brickBorders[i][j] || (i == 1 && j == 1)) {
+                continue;
+            }
+            CGRect borderRect = [self rectForBorderAtX:j y:i brickRect:brickRect];
+            borderRect.origin.x -= 1.0f;
+            borderRect.origin.y -= 1.0f;
+            borderRect.size.width += 2.0f;
+            borderRect.size.height += 2.0f;
+            
+            borderRect = CGRectIntersection(borderRect, brickRect);
+
+            CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+            CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
+            CGContextFillRect(context, borderRect);
+        }
+    }
+
+    // Draw filling
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (!brickBorders[i][j] || (i == 1 && j == 1)) {
+                continue;
+            }
+            CGRect borderRect = [self rectForBorderAtX:j y:i brickRect:brickRect];
+            borderRect = CGRectIntersection(borderRect, brickRect);
+            
+            CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
+            CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
+            CGContextFillRect(context, borderRect);
+        }
     }
 }
 
+- (CGRect)rectForBorderAtX:(int)x y:(int)y brickRect:(CGRect)brickRect {
+    return CGRectMake(brickRect.origin.x + (x == 0 ? 0.0f : (x == 2 ? brickRect.size.width - self.borderSize.width : self.borderSize.width)),
+                      brickRect.origin.y + (y == 0 ? 0.0f : (y == 2 ? brickRect.size.height - self.borderSize.height : self.borderSize.height)),
+                      x == 0 || x == 2 ? self.borderSize.width : (brickRect.size.width - (self.borderSize.width * 2.0f)),
+                      y == 0 || y == 2 ? self.borderSize.height : (brickRect.size.height - (self.borderSize.height * 2.0f)));
+}
+
 - (CGRect)rectForEntry:(MazeEntry *)entry {
-    return CGRectMake(entry.x * [Constants instance].brickSize.width,
-                      entry.y * [Constants instance].brickSize.height,
-                      [Constants instance].brickSize.width,
-                      [Constants instance].brickSize.height);
+    return CGRectMake(entry.x * [Constants instance].roundedBrickSize.width,
+                      entry.y * [Constants instance].roundedBrickSize.height,
+                      [Constants instance].roundedBrickSize.width,
+                      [Constants instance].roundedBrickSize.height);
 }
 
 - (void)showMaze {

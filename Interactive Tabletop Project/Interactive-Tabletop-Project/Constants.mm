@@ -51,6 +51,13 @@ Constants *constantsInstance = nil;
 
 - (void)calculateBrickSize {
     self.brickSize = CGSizeMake(self.screenSize.width / self.gridSize.width, self.screenSize.height / self.gridSize.height);
+    self.roundedBrickSize = CGSizeMake((int)self.brickSize.width, (int)self.brickSize.height);
+
+    CGSize roundedRectSize = CGSizeMake(self.roundedBrickSize.width * self.gridSize.width, self.roundedBrickSize.height * self.gridSize.height);
+    self.roundedGridRect = CGRectMake((self.screenSize.width  - roundedRectSize.width ) / 2.0f,
+                                      (self.screenSize.height - roundedRectSize.height) / 2.0f,
+                                      roundedRectSize.width,
+                                      roundedRectSize.height);
 }
 
 @end

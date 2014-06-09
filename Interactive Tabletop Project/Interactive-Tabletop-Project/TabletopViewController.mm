@@ -82,7 +82,9 @@
 
 - (void)startExternalDisplayCalibration {
     if (![ExternalDisplay instance].externalDisplayFound) {
-        [self calibrationViewDidHide];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self calibrationViewDidHide];
+        });
         return;
     }
     NSLog(@"Showing calibration view...");
