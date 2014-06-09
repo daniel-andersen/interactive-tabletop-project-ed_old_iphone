@@ -25,6 +25,6 @@
 
 #import "TabletopView.h"
 
-@interface TitleView : TabletopView
+@interface MazeView : TabletopView
 
 @end

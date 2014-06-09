@@ -23,16 +23,16 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#import "TitleView.h"
+#import "MazeView.h"
 #import "ExternalDisplay.h"
 
-@interface TitleView ()
+@interface MazeView ()
 
 @property (nonatomic, strong) UIImageView *titleImageView;
 
 @end
 
-@implementation TitleView
+@implementation MazeView
 
 - (id)init {
     if (self = [super init]) {

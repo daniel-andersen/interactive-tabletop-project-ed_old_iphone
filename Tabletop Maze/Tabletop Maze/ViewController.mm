@@ -25,7 +25,6 @@
 
 #import "ViewController.h"
 #import "MazeView.h"
-#import "TitleView.h"
 #import "ExternalDisplay.h"
 #import "MazeModel.h"
 #import "Constants.h"
@@ -45,7 +44,7 @@
 
 - (void)calibrationViewDidHide {
     [super calibrationViewDidHide];
-    self.tabletopView = [[TitleView alloc] init];
+    self.tabletopView = [[MazeView alloc] init];
 }
 
 - (void)createMaze {
