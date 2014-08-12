@@ -29,16 +29,17 @@
 
 + (Constants *)instance;
 
-- (void)calculateBrickSize;
-
-@property (nonatomic, assign) CGSize screenSize;
+- (void)recalculateConstants;
 
 @property (nonatomic, assign) CGSize gridSize;
 
-@property (nonatomic, assign) CGSize brickSize;
-@property (nonatomic, assign) CGSize roundedBrickSize;
+@property (nonatomic, assign) CGRect gridRect;
+@property (nonatomic, assign) CGRect gridScreenRect;
+@property (nonatomic, assign) CGRect gridCameraRect;
 
-@property (nonatomic, assign) CGRect roundedGridRect;
+@property (nonatomic, assign) CGSize brickSize;
+@property (nonatomic, assign) CGSize brickScreenSize;
+@property (nonatomic, assign) CGSize brickCameraSize;
 
 @property (nonatomic, assign) CGSize borderSizePct;
 

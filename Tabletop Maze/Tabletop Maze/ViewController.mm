@@ -39,7 +39,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setGridWithApproxedPixelSize:CGSizeMake(40.0f, 40.0f)];
+    [self setGridWithPixelSize:CGSizeMake(40.0f, 40.0f)];
     [self start];
 }
 

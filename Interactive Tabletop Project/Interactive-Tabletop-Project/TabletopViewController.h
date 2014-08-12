@@ -31,7 +31,7 @@
 @interface TabletopViewController : PreviewableViewController
 
 - (void)setGridOfSize:(CGSize)size;
-- (void)setGridWithApproxedPixelSize:(CGSize)size;
+- (void)setGridWithPixelSize:(CGSize)size;
 
 - (void)start;
 

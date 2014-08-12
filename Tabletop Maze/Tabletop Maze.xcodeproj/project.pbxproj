@@ -21,7 +21,6 @@
 		6587DD43193B1D1200C2741E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DD25193B1D1100C2741E /* UIKit.framework */; };
 		6587DD4B193B1D1200C2741E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6587DD49193B1D1200C2741E /* InfoPlist.strings */; };
 		6587DD4D193B1D1200C2741E /* Tabletop_MazeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD4C193B1D1200C2741E /* Tabletop_MazeTests.m */; };
-		6587DD75193CB4CA00C2741E /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DD74193CB4CA00C2741E /* opencv2.framework */; };
 		6587DDB1193CB5EA00C2741E /* BoardCalibrator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD7A193CB5EA00C2741E /* BoardCalibrator.mm */; };
 		6587DDB2193CB5EA00C2741E /* BoardRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD7C193CB5EA00C2741E /* BoardRecognizer.mm */; };
 		6587DDB3193CB5EA00C2741E /* BoardUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD7E193CB5EA00C2741E /* BoardUtil.mm */; };
@@ -63,6 +62,7 @@
 		6587DE311941ED7000C2741E /* splash_trollsahead.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE2F1941ED7000C2741E /* splash_trollsahead.png */; };
 		6587DE34194244BE00C2741E /* MazeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DE33194244BE00C2741E /* MazeView.m */; };
 		6587DE371944EBD700C2741E /* MazeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DE361944EBD700C2741E /* MazeModel.m */; };
+		65FAF0A1199A8CE100B45084 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FAF0A0199A8CE100B45084 /* opencv2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,7 +95,6 @@
 		6587DD48193B1D1200C2741E /* Tabletop MazeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tabletop MazeTests-Info.plist"; sourceTree = "<group>"; };
 		6587DD4A193B1D1200C2741E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6587DD4C193B1D1200C2741E /* Tabletop_MazeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tabletop_MazeTests.m; sourceTree = "<group>"; };
-		6587DD74193CB4CA00C2741E /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = "../Interactive Tabletop Project/opencv2.framework"; sourceTree = "<group>"; };
 		6587DD79193CB5EA00C2741E /* BoardCalibrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoardCalibrator.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/BoardCalibrator.h"; sourceTree = "<group>"; };
 		6587DD7A193CB5EA00C2741E /* BoardCalibrator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BoardCalibrator.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/BoardCalibrator.mm"; sourceTree = "<group>"; };
 		6587DD7B193CB5EA00C2741E /* BoardRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoardRecognizer.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/BoardRecognizer.h"; sourceTree = "<group>"; };
@@ -158,6 +157,7 @@
 		6587DE33194244BE00C2741E /* MazeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeView.m; sourceTree = "<group>"; };
 		6587DE351944EBD700C2741E /* MazeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeModel.h; sourceTree = "<group>"; };
 		6587DE361944EBD700C2741E /* MazeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeModel.m; sourceTree = "<group>"; };
+		65FAF0A0199A8CE100B45084 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = "../Interactive Tabletop Project/opencv2.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65FAF0A1199A8CE100B45084 /* opencv2.framework in Frameworks */,
 				6587DDDB193CBA8800C2741E /* CoreMedia.framework in Frameworks */,
 				6587DDD9193CBA7300C2741E /* AVFoundation.framework in Frameworks */,
 				6587DDD7193CBA6D00C2741E /* QuartzCore.framework in Frameworks */,
@@ -172,7 +173,6 @@
 				6587DDD3193CB98600C2741E /* libz.dylib in Frameworks */,
 				6587DD24193B1D1100C2741E /* CoreGraphics.framework in Frameworks */,
 				6587DD26193B1D1100C2741E /* UIKit.framework in Frameworks */,
-				6587DD75193CB4CA00C2741E /* opencv2.framework in Frameworks */,
 				6587DD22193B1D1100C2741E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,12 +212,12 @@
 		6587DD20193B1D1100C2741E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65FAF0A0199A8CE100B45084 /* opencv2.framework */,
 				6587DDDA193CBA8800C2741E /* CoreMedia.framework */,
 				6587DDD8193CBA7300C2741E /* AVFoundation.framework */,
 				6587DDD6193CBA6D00C2741E /* QuartzCore.framework */,
 				6587DDD4193CBA3A00C2741E /* CoreImage.framework */,
 				6587DDD2193CB98600C2741E /* libz.dylib */,
-				6587DD74193CB4CA00C2741E /* opencv2.framework */,
 				6587DD21193B1D1100C2741E /* Foundation.framework */,
 				6587DD23193B1D1100C2741E /* CoreGraphics.framework */,
 				6587DD25193B1D1100C2741E /* UIKit.framework */,
@@ -652,6 +652,11 @@
 					Project/Interactive,
 					Tabletop,
 					Project,
+					/Users/daniel/projects/Interactive,
+					Tabletop,
+					Project/Interactive,
+					Tabletop,
+					Project,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tabletop Maze/Tabletop Maze-Prefix.pch";
@@ -670,6 +675,11 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					/Users/daniel/projects/Interactive,
+					Tabletop,
+					Project/Interactive,
+					Tabletop,
+					Project,
 					/Users/daniel/projects/Interactive,
 					Tabletop,
 					Project/Interactive,

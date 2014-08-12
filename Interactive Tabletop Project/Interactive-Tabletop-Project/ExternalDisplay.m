@@ -69,8 +69,6 @@ ExternalDisplay *externalDisplayInstance = nil;
 
     [self setupWidescreenBounds];
 
-    [Constants instance].screenSize = self.widescreenBounds.size;
-
     window = [[UIWindow alloc] initWithFrame:screen.bounds];
     window.backgroundColor = [UIColor blackColor];
     window.screen = screen;

@@ -74,7 +74,8 @@ PreviewableViewController *previewInstance = nil;
     boardPreview.frame = self.view.bounds;
     cameraPreview.frame = self.view.bounds;
     boardBoundsLayer.frame = self.view.bounds;
-    boardGridLayer.frame = self.view.bounds;
+    boardGridLayer.frame = [Constants instance].gridScreenRect;
+    NSLog(@"%f, %f - %f, %f", [Constants instance].gridScreenRect.size.width, [Constants instance].gridScreenRect.size.height, [Constants instance].gridRect.size.width, [Constants instance].gridRect.size.height);
     
     [self setButtonFrame:boardButton x:75.0f];
     [self setButtonFrame:cameraPreviewButton x:(self.view.bounds.size.width - 75.0f)];
@@ -122,9 +123,9 @@ PreviewableViewController *previewInstance = nil;
     [cameraPreview addSubview:view];
 
     if (simulatorBricksView == nil) {
-        simulatorBricksView = [[UIImageView alloc] initWithFrame:cameraPreview.bounds];
+        simulatorBricksView = [[UIImageView alloc] initWithFrame:[Constants instance].gridScreenRect];
     }
-    [cameraPreview addSubview:simulatorBricksView];
+    [boardPreview addSubview:simulatorBricksView];
 }
 
 - (void)boardButtonPressed:(id)sender {
@@ -149,8 +150,10 @@ PreviewableViewController *previewInstance = nil;
 - (IBAction)boardPreviewTap:(UIGestureRecognizer *)gestureRecognizer {
     if ([Constants instance].gridSize.width > 0 && !boardPreview.hidden) {
         CGPoint p = [gestureRecognizer locationInView:boardPreview];
-        int x = (p.x / self.view.bounds.size.width) * [Constants instance].gridSize.width;
-        int y = (p.y / self.view.bounds.size.height) * [Constants instance].gridSize.height;
+        p.x -= boardGridLayer.frame.origin.x;
+        p.y -= boardGridLayer.frame.origin.y;
+        int x = (p.x / boardGridLayer.bounds.size.width ) * [Constants instance].gridSize.width;
+        int y = (p.y / boardGridLayer.bounds.size.height) * [Constants instance].gridSize.height;
         [[FakeCameraUtil instance] clickAtPoint:cv::Point(x, y)];
     }
 }
@@ -216,14 +219,14 @@ PreviewableViewController *previewInstance = nil;
 
 - (UIBezierPath *)calculateBoardGrid {
     UIBezierPath *boardGridPath = [UIBezierPath bezierPath];
-    CGSize brickSize = CGSizeMake(self.view.bounds.size.width / [Constants instance].gridSize.width, self.view.bounds.size.height / [Constants instance].gridSize.height);
-    for (int i = 0; i < [Constants instance].gridSize.width; i++) {
+    CGSize brickSize = CGSizeMake(boardGridLayer.bounds.size.width / [Constants instance].gridSize.width, boardGridLayer.bounds.size.height / [Constants instance].gridSize.height);
+    for (int i = 0; i <= [Constants instance].gridSize.width; i++) {
         [boardGridPath moveToPoint:CGPointMake(i * brickSize.width, 0.0f)];
-        [boardGridPath addLineToPoint:CGPointMake(i * brickSize.width, self.view.bounds.size.height)];
+        [boardGridPath addLineToPoint:CGPointMake(i * brickSize.width, boardGridLayer.bounds.size.height)];
     }
-    for (int i = 0; i < [Constants instance].gridSize.height; i++) {
+    for (int i = 0; i <= [Constants instance].gridSize.height; i++) {
         [boardGridPath moveToPoint:CGPointMake(0.0f, i * brickSize.height)];
-        [boardGridPath addLineToPoint:CGPointMake(self.view.bounds.size.width, i * brickSize.height)];
+        [boardGridPath addLineToPoint:CGPointMake(boardGridLayer.bounds.size.width, i * brickSize.height)];
     }
     return boardGridPath;
 }
@@ -262,10 +265,13 @@ PreviewableViewController *previewInstance = nil;
 }
 
 - (void)previewCamera:(UIImage *)image {
-    if (cameraPreview.hidden == NO) {
+    if (!cameraPreview.hidden) {
         if ([CameraSession instance].initialized) {
             cameraPreview.image = image;
-        } else if ([Constants instance].gridSize.width > 0) {
+        }
+    }
+    if (!boardPreview.hidden) {
+        if (![CameraSession instance].initialized && [Constants instance].gridSize.width > 0) {
             simulatorBricksView.image = [[FakeCameraUtil instance] drawBricksWithSize:simulatorBricksView.frame.size];
         }
     }

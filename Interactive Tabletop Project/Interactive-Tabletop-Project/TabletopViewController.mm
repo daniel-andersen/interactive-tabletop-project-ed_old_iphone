@@ -120,11 +120,11 @@
 
 - (void)setGridOfSize:(CGSize)size {
     [Constants instance].gridSize = size;
-    [[Constants instance] calculateBrickSize];
+    [[Constants instance] recalculateConstants];
     [super addBoardGridLayer];
 }
 
-- (void)setGridWithApproxedPixelSize:(CGSize)size {
+- (void)setGridWithPixelSize:(CGSize)size {
     [self setGridOfSize:CGSizeMake((int)([ExternalDisplay instance].widescreenBounds.size.width  / size.width ),
                                    (int)([ExternalDisplay instance].widescreenBounds.size.height / size.height))];
 }

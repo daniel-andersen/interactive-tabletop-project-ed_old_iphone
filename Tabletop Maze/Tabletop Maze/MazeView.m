@@ -50,7 +50,7 @@
 - (void)initialize {
     self.backgroundColor = [UIColor blackColor];
     
-    self.mazeImageView = [[UIImageView alloc] initWithFrame:[Constants instance].roundedGridRect];
+    self.mazeImageView = [[UIImageView alloc] initWithFrame:[Constants instance].gridRect];
     self.mazeImageView.contentMode = UIViewContentModeScaleToFill;
     self.mazeImageView.alpha = 0.0f;
     [self addSubview:self.mazeImageView];
@@ -213,10 +213,10 @@
 }
 
 - (CGRect)rectForEntry:(MazeEntry *)entry {
-    return CGRectMake(entry.x * [Constants instance].roundedBrickSize.width,
-                      entry.y * [Constants instance].roundedBrickSize.height,
-                      [Constants instance].roundedBrickSize.width,
-                      [Constants instance].roundedBrickSize.height);
+    return CGRectMake(entry.x * [Constants instance].brickSize.width,
+                      entry.y * [Constants instance].brickSize.height,
+                      [Constants instance].brickSize.width,
+                      [Constants instance].brickSize.height);
 }
 
 - (void)showMaze {

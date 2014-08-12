@@ -42,7 +42,7 @@
 
         float borderSize = 6.0f;
 
-        self.leftBorderView = [[UIView alloc] initWithFrameCGRectMake(1.0f, 1.0f, borderSize, self.frame.size.height - 2.0f)];
+        self.leftBorderView = [[UIView alloc] initWithFrame:CGRectMake(1.0f, 1.0f, borderSize, self.frame.size.height - 2.0f)];
         self.leftBorderView.backgroundColor = [UIColor grayColor];
         [self addSubview:self.leftBorderView];
         

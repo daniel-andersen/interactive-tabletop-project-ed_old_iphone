@@ -24,6 +24,8 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "Constants.h"
+#import "ExternalDisplay.h"
+#import "CameraSession.h"
 
 Constants *constantsInstance = nil;
 
@@ -49,15 +51,30 @@ Constants *constantsInstance = nil;
     self.borderSizePct = CGSizeMake(0.02f, 0.02f);
 }
 
-- (void)calculateBrickSize {
-    self.brickSize = CGSizeMake(self.screenSize.width / self.gridSize.width, self.screenSize.height / self.gridSize.height);
-    self.roundedBrickSize = CGSizeMake((int)self.brickSize.width, (int)self.brickSize.height);
+- (void)recalculateConstants {
+    CGSize screenSize = CGSizeMake([UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
+    CGSize cameraCaptureSize = CGSizeMake(640.0f, 480.0f); // TODO! Hardcoded camera capture size!
+    
+    self.brickSize = [self brickSizeWithScreenSize:[ExternalDisplay instance].widescreenBounds.size];
+    self.brickScreenSize = [self brickSizeWithScreenSize:screenSize];
+    self.brickCameraSize = [self brickSizeWithScreenSize:cameraCaptureSize];
 
-    CGSize roundedRectSize = CGSizeMake(self.roundedBrickSize.width * self.gridSize.width, self.roundedBrickSize.height * self.gridSize.height);
-    self.roundedGridRect = CGRectMake((self.screenSize.width  - roundedRectSize.width ) / 2.0f,
-                                      (self.screenSize.height - roundedRectSize.height) / 2.0f,
-                                      roundedRectSize.width,
-                                      roundedRectSize.height);
+    self.gridRect = [self gridRectWithBrickSize:self.brickSize screenSize:[ExternalDisplay instance].widescreenBounds.size];
+    self.gridScreenRect = [self gridRectWithBrickSize:self.brickScreenSize screenSize:screenSize];
+    self.gridCameraRect = [self gridRectWithBrickSize:self.brickCameraSize screenSize:cameraCaptureSize];
+}
+
+- (CGSize)brickSizeWithScreenSize:(CGSize)screenSize {
+    return CGSizeMake((int)(screenSize.width  / self.gridSize.width),
+                      (int)(screenSize.height / self.gridSize.height));
+}
+
+- (CGRect)gridRectWithBrickSize:(CGSize)brickSize screenSize:(CGSize)screenSize {
+    CGSize rectSize = CGSizeMake(brickSize.width * self.gridSize.width, brickSize.height * self.gridSize.height);
+    return CGRectMake((screenSize.width  - rectSize.width ) / 2.0f,
+                      (screenSize.height - rectSize.height) / 2.0f,
+                      rectSize.width,
+                      rectSize.height);
 }
 
 @end
