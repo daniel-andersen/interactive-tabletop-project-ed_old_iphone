@@ -40,6 +40,7 @@ The following features have been implemented:
 
 * Board recognition
 * Brick recognition
+* First sample almost done: Interactive Tabletop Project:ed MAZE
 
 What's up next?
 ---------------
