@@ -62,8 +62,8 @@
 		6587DE311941ED7000C2741E /* splash_trollsahead.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE2F1941ED7000C2741E /* splash_trollsahead.png */; };
 		6587DE34194244BE00C2741E /* MazeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DE33194244BE00C2741E /* MazeView.mm */; };
 		6587DE371944EBD700C2741E /* MazeModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DE361944EBD700C2741E /* MazeModel.mm */; };
-		65FAF0A1199A8CE100B45084 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FAF0A0199A8CE100B45084 /* opencv2.framework */; };
 		65FAF0B2199A907A00B45084 /* MazeConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FAF0B1199A907A00B45084 /* MazeConstants.m */; };
+		65FAF0BE199E27DC00B45084 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FAF0A0199A8CE100B45084 /* opencv2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,7 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65FAF0A1199A8CE100B45084 /* opencv2.framework in Frameworks */,
+				65FAF0BE199E27DC00B45084 /* opencv2.framework in Frameworks */,
 				6587DDDB193CBA8800C2741E /* CoreMedia.framework in Frameworks */,
 				6587DDD9193CBA7300C2741E /* AVFoundation.framework in Frameworks */,
 				6587DDD7193CBA6D00C2741E /* QuartzCore.framework in Frameworks */,
@@ -659,6 +659,11 @@
 					Project/Interactive,
 					Tabletop,
 					Project,
+					/Users/daniel/projects/Interactive,
+					Tabletop,
+					Project/Interactive,
+					Tabletop,
+					Project,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tabletop Maze/Tabletop Maze-Prefix.pch";
@@ -677,6 +682,11 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					/Users/daniel/projects/Interactive,
+					Tabletop,
+					Project/Interactive,
+					Tabletop,
+					Project,
 					/Users/daniel/projects/Interactive,
 					Tabletop,
 					Project/Interactive,
