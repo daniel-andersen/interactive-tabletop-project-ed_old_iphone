@@ -1,11 +1,9 @@
 Interactive Tabletop Project:ed
 ===============================
 
-Interactive Tabletop Project:ed is a framework for creating interactive, digital tabletop projects, focusing on board games with physical bricks. It thus combines interaction between physical bricks and a digital board projected from a mini projector connected to an iPhone.
+Interactive Tabletop Project:ed is a framework for creating interactive, digital tabletop projects, focusing mainly on board games with physical bricks. It thus combines interaction between physical bricks and a digital board projected from a mini projector connected to an iPhone.
 
-See photos and videos below from the [Dystopia project](https://github.com/black-knight/dystopia).
-
-(TODO - this README has been migrated from the Dystopia project and should be updated!)
+See photos and videos below from the original [Dystopia project](https://github.com/black-knight/dystopia).
 
 Description
 -----------
@@ -31,9 +29,9 @@ Getting started
 
 Simple enough:
 
-Install the app, plug in the projector and the iPhone in the stand; connect the iPhone to the projector and start the app. As soon as the app recognizes the board on the table it will place markers for the heroes in the starting room. Now place a brick on a hero marker. A red circle will appear as soon as the brick has been recognized.
+Install one of the sample apps, plug in the projector and the iPhone in the stand; connect the iPhone to the projector and start the app. The app will now recognize the game board on the table and the game will begin.
 
-Or, you can simply run the app from the iPhone simulator and click any piece on the board to simulate a brick placement.
+Alternatively, you can simply run the app from the iPhone simulator and click any piece on the board to simulate a brick placement.
 
 Current state
 -------------
@@ -42,18 +40,12 @@ The following features have been implemented:
 
 * Board recognition
 * Brick recognition
-* Detection of brick movements
-* Revealing of new rooms
-* Simple turn based game engine
 
 What's up next?
 ---------------
 
-* Simple AI to control monsters
-* More advanced game mechanics, like fights
-* Methods for players to make descisions not only by moving bricks
-
-See the issue list for further info.
+* Simple geometric figure recognition, fx. triangles, stars, etc.
+* Hand/finger recognition
 
 Articles
 --------

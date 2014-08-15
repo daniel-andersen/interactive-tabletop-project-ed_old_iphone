@@ -105,4 +105,8 @@
     }
 }
 
++ (int)randomIntFrom:(int)lowerValue to:(int)higherValue {
+    return lowerValue + (rand() % (higherValue - lowerValue));
+}
+
 @end

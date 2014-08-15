@@ -43,6 +43,9 @@
 
 - (MazeEntry *)entryAtX:(int)x y:(int)y;
 
+- (cv::Point2i)positionOfPlayer:(int)player;
+- (cv::Point2i)positionOfTreasure;
+
 @property (nonatomic, assign) int width;
 @property (nonatomic, assign) int height;
 

@@ -55,4 +55,6 @@ typedef struct {
 
 + (void)removeSubViews:(UIView *)containerView;
 
++ (int)randomIntFrom:(int)lowerValue to:(int)higherValue;
+
 @end

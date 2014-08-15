@@ -26,6 +26,7 @@
 #import "MazeView.h"
 #import "MazeModel.h"
 #import "Constants.h"
+#import "Util.h"
 
 #define BRICK_TYPE_COUNT 6
 
@@ -75,6 +76,8 @@
 }
 
 - (void)drawMaze {
+    NSLog(@"%i, %i", [[MazeModel instance] positionOfTreasure].x, [[MazeModel instance] positionOfTreasure].y);
+    
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 1.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
@@ -84,7 +87,7 @@
     // Draw tiles
     for (int i = 0; i < [MazeModel instance].height; i++) {
         for (int j = 0; j < [MazeModel instance].width; j++) {
-            int type = rand() % BRICK_TYPE_COUNT;
+            int type = [Util randomIntFrom:0 to:BRICK_TYPE_COUNT];
             UIImage *tileImage = [UIImage imageNamed:[NSString stringWithFormat:@"Brick %i", type + 1]];
             MazeEntry *entry = [[MazeModel instance] entryAtX:j y:i];
             CGContextDrawImage(context, [self rectForEntry:entry], tileImage.CGImage);

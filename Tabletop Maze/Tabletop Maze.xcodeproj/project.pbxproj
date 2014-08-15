@@ -60,9 +60,10 @@
 		6587DE0C193EF38400C2741E /* ExternalDislayCalibrationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DE0B193EF38400C2741E /* ExternalDislayCalibrationView.m */; };
 		6587DE301941ED7000C2741E /* splash_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE2E1941ED7000C2741E /* splash_logo.png */; };
 		6587DE311941ED7000C2741E /* splash_trollsahead.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE2F1941ED7000C2741E /* splash_trollsahead.png */; };
-		6587DE34194244BE00C2741E /* MazeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DE33194244BE00C2741E /* MazeView.m */; };
-		6587DE371944EBD700C2741E /* MazeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DE361944EBD700C2741E /* MazeModel.m */; };
+		6587DE34194244BE00C2741E /* MazeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DE33194244BE00C2741E /* MazeView.mm */; };
+		6587DE371944EBD700C2741E /* MazeModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DE361944EBD700C2741E /* MazeModel.mm */; };
 		65FAF0A1199A8CE100B45084 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FAF0A0199A8CE100B45084 /* opencv2.framework */; };
+		65FAF0B2199A907A00B45084 /* MazeConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FAF0B1199A907A00B45084 /* MazeConstants.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,17 +148,17 @@
 		6587DDD6193CBA6D00C2741E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6587DDD8193CBA7300C2741E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6587DDDA193CBA8800C2741E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		6587DE02193EEDA000C2741E /* splash_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_logo.png; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Images/splash/splash_logo.png"; sourceTree = "<group>"; };
-		6587DE03193EEDA000C2741E /* splash_trollsahead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_trollsahead.png; path = "../../Interactive Tabletop Project/Digital-Interactive-Tabletop-Framework/Images/splash/splash_trollsahead.png"; sourceTree = "<group>"; };
 		6587DE0A193EF38400C2741E /* ExternalDislayCalibrationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalDislayCalibrationView.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/ExternalDislayCalibrationView.h"; sourceTree = "<group>"; };
 		6587DE0B193EF38400C2741E /* ExternalDislayCalibrationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExternalDislayCalibrationView.m; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/ExternalDislayCalibrationView.m"; sourceTree = "<group>"; };
 		6587DE2E1941ED7000C2741E /* splash_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_logo.png; path = splash/splash_logo.png; sourceTree = "<group>"; };
 		6587DE2F1941ED7000C2741E /* splash_trollsahead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_trollsahead.png; path = splash/splash_trollsahead.png; sourceTree = "<group>"; };
 		6587DE32194244BE00C2741E /* MazeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeView.h; sourceTree = "<group>"; };
-		6587DE33194244BE00C2741E /* MazeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeView.m; sourceTree = "<group>"; };
+		6587DE33194244BE00C2741E /* MazeView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MazeView.mm; sourceTree = "<group>"; };
 		6587DE351944EBD700C2741E /* MazeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeModel.h; sourceTree = "<group>"; };
-		6587DE361944EBD700C2741E /* MazeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeModel.m; sourceTree = "<group>"; };
+		6587DE361944EBD700C2741E /* MazeModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MazeModel.mm; sourceTree = "<group>"; };
 		65FAF0A0199A8CE100B45084 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = "../Interactive Tabletop Project/opencv2.framework"; sourceTree = "<group>"; };
+		65FAF0B0199A907A00B45084 /* MazeConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeConstants.h; sourceTree = "<group>"; };
+		65FAF0B1199A907A00B45084 /* MazeConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeConstants.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,19 +230,18 @@
 		6587DD27193B1D1100C2741E /* Tabletop Maze */ = {
 			isa = PBXGroup;
 			children = (
+				6587DD28193B1D1100C2741E /* Supporting Files */,
 				6587DDF6193E152F00C2741E /* Images */,
 				6587DD76193CB5B100C2741E /* Framework */,
-				6587DD30193B1D1100C2741E /* AppDelegate.h */,
-				6587DD31193B1D1100C2741E /* AppDelegate.m */,
+				65FAF0A2199A8FA800B45084 /* Common */,
 				6587DD33193B1D1100C2741E /* Main.storyboard */,
 				6587DD36193B1D1200C2741E /* ViewController.h */,
 				6587DD37193B1D1200C2741E /* ViewController.mm */,
 				6587DE32194244BE00C2741E /* MazeView.h */,
-				6587DE33194244BE00C2741E /* MazeView.m */,
+				6587DE33194244BE00C2741E /* MazeView.mm */,
 				6587DE351944EBD700C2741E /* MazeModel.h */,
-				6587DE361944EBD700C2741E /* MazeModel.m */,
+				6587DE361944EBD700C2741E /* MazeModel.mm */,
 				6587DD39193B1D1200C2741E /* Images.xcassets */,
-				6587DD28193B1D1100C2741E /* Supporting Files */,
 			);
 			path = "Tabletop Maze";
 			sourceTree = "<group>";
@@ -362,18 +362,8 @@
 		6587DDF6193E152F00C2741E /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				6587DDF7193E153700C2741E /* Splash */,
 			);
 			name = Images;
-			sourceTree = "<group>";
-		};
-		6587DDF7193E153700C2741E /* Splash */ = {
-			isa = PBXGroup;
-			children = (
-				6587DE02193EEDA000C2741E /* splash_logo.png */,
-				6587DE03193EEDA000C2741E /* splash_trollsahead.png */,
-			);
-			name = Splash;
 			sourceTree = "<group>";
 		};
 		6587DE2D1941ED6600C2741E /* Splash */ = {
@@ -383,6 +373,17 @@
 				6587DE2F1941ED7000C2741E /* splash_trollsahead.png */,
 			);
 			name = Splash;
+			sourceTree = "<group>";
+		};
+		65FAF0A2199A8FA800B45084 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				6587DD30193B1D1100C2741E /* AppDelegate.h */,
+				6587DD31193B1D1100C2741E /* AppDelegate.m */,
+				65FAF0B0199A907A00B45084 /* MazeConstants.h */,
+				65FAF0B1199A907A00B45084 /* MazeConstants.m */,
+			);
+			name = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -500,16 +501,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				6587DDB6193CB5EA00C2741E /* CameraUtil.mm in Sources */,
+				65FAF0B2199A907A00B45084 /* MazeConstants.m in Sources */,
 				6587DD2E193B1D1100C2741E /* main.m in Sources */,
 				6587DD32193B1D1100C2741E /* AppDelegate.m in Sources */,
 				6587DDD0193CB5EA00C2741E /* UIImage+OpenCV.mm in Sources */,
 				6587DDB2193CB5EA00C2741E /* BoardRecognizer.mm in Sources */,
 				6587DDD1193CB5EA00C2741E /* Util.mm in Sources */,
 				6587DDCF193CB5EA00C2741E /* UIImage+CaptureScreen.m in Sources */,
-				6587DE371944EBD700C2741E /* MazeModel.m in Sources */,
+				6587DE371944EBD700C2741E /* MazeModel.mm in Sources */,
 				6587DDCD193CB5EA00C2741E /* TabletopView.mm in Sources */,
 				6587DDCE193CB5EA00C2741E /* TabletopViewController.mm in Sources */,
-				6587DE34194244BE00C2741E /* MazeView.m in Sources */,
+				6587DE34194244BE00C2741E /* MazeView.mm in Sources */,
 				6587DD38193B1D1200C2741E /* ViewController.mm in Sources */,
 				6587DDCB193CB5EA00C2741E /* PreviewableViewController.mm in Sources */,
 				6587DDCC193CB5EA00C2741E /* RotatedView.m in Sources */,
