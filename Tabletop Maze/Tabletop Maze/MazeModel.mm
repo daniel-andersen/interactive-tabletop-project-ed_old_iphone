@@ -66,28 +66,6 @@ MazeModel *mazeModelInstance = nil;
 - (void)placeTreasureAndPlayers {
     [self recursivelyCreatePlayerPositionMapFromEntry:self.firstDiggedEntry distanceFromStart:0];
     [self findPlayerPositionsFromMap];
-
-    //
-    for (int i = 0; i < self.height; i++) {
-        NSString *rowStr = @"";
-        for (int j = 0; j < self.width; j++) {
-            MazeEntry *entry = [self entryAtX:j y:i];
-            NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
-            NSString *s;
-            if (distanceFromStart == nil) {
-                s = @"    ";
-            } else if ([distanceFromStart intValue] < 10) {
-                s = [NSString stringWithFormat:@"%i   ", [distanceFromStart intValue]];
-            } else if ([distanceFromStart intValue] < 100) {
-                s = [NSString stringWithFormat:@"%i  ", [distanceFromStart intValue]];
-            } else {
-                s = [NSString stringWithFormat:@"%i ", [distanceFromStart intValue]];
-            }
-            rowStr = [rowStr stringByAppendingString:s];
-        }
-        NSLog(@"%@", rowStr);
-    }
-    //
 }
 
 - (void)findPlayerPositionsFromMap {
