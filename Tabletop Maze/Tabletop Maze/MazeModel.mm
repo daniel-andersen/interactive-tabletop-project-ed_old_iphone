@@ -54,11 +54,12 @@ MazeModel *mazeModelInstance = nil;
     [self resetMaze];
     [self chooseRandomStartingPosition];
     [self recursivelyCreateMazeFromCurrentEntry:self.firstDiggedEntry];
-    [self resetMazeBags];
     
     NSLog(@"Placing treasure and players");
-    self.firstDiggedEntry = [self entryAtX:(self.width / 2) y:(self.height / 2)];
+    [self resetMazeBags];
     [self placeTreasureAndPlayers];
+
+    NSLog(@"Generated maze!");
     [self resetMazeBags];
 }
 
@@ -90,43 +91,88 @@ MazeModel *mazeModelInstance = nil;
 }
 
 - (void)findPlayerPositionsFromMap {
-    int maxDistanceFromStart = 0;
-    for (int i = 0; i < self.height; i++) {
-        for (int j = 0; j < self.width; j++) {
-            if (i == 0 || j == 0 || i == self.height - 1 || j == self.width - 1) {
-                MazeEntry *entry = [self entryAtX:j y:i];
-                NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
-                if (distanceFromStart != nil) {
-                    maxDistanceFromStart = MAX(maxDistanceFromStart, distanceFromStart.intValue);
-                }
-            }
+    int maxBorderDistance[4];
+    
+    // Left max distance
+    for (int i = 1; i < self.height - 1; i++) {
+        MazeEntry *entry = [self entryAtX:0 y:i];
+        NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
+        if (distanceFromStart != nil) {
+            maxBorderDistance[0] = MAX(maxBorderDistance[0], distanceFromStart.intValue);
         }
     }
-    if (maxDistanceFromStart <= 0) {
-        return;
-    }
-    int distanceCount[maxDistanceFromStart];
-    for (int i = 0; i < maxDistanceFromStart; i++) {
-        distanceCount[i] = 0;
-    }
-    for (int i = 0; i < self.height; i++) {
-        for (int j = 0; j < self.width; j++) {
-            if (i == 0 || j == 0 || i == self.height - 1 || j == self.width - 1) {
-                MazeEntry *entry = [self entryAtX:j y:i];
-                NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
-                if (distanceFromStart != nil) {
-                    distanceCount[distanceFromStart.intValue]++;
-                }
-            }
+
+    // Right max distance
+    for (int i = 1; i < self.height - 1; i++) {
+        MazeEntry *entry = [self entryAtX:(self.width - 1) y:i];
+        NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
+        if (distanceFromStart != nil) {
+            maxBorderDistance[1] = MAX(maxBorderDistance[1], distanceFromStart.intValue);
         }
     }
-    for (int i = maxDistanceFromStart - 1; i >= 0; i--) {
-        if (distanceCount[i] < 4) {
-            continue;
+
+    // Top max distance
+    for (int i = 1; i < self.width - 1; i++) {
+        MazeEntry *entry = [self entryAtX:i y:0];
+        NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
+        if (distanceFromStart != nil) {
+            maxBorderDistance[2] = MAX(maxBorderDistance[2], distanceFromStart.intValue);
         }
-        NSLog(@"----------> %i", i);
-        return;
     }
+
+    // Bottom max distance
+    for (int i = 1; i < self.width - 1; i++) {
+        MazeEntry *entry = [self entryAtX:i y:(self.height - 1)];
+        NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
+        if (distanceFromStart != nil) {
+            maxBorderDistance[3] = MAX(maxBorderDistance[3], distanceFromStart.intValue);
+        }
+    }
+    
+    // Find minimum border distance per border
+    int minBorderDistance = 1000000;
+    for (int i = 0; i < 4; i++) {
+        minBorderDistance = MIN(maxBorderDistance[i], minBorderDistance);
+    }
+    
+    // Find nearest border location to minimum distance for all players
+    MazeEntry *leftStartingEntry = nil;
+    MazeEntry *rightStartingEntry = nil;
+    for (int i = 1; i < self.height - 1; i++) {
+        leftStartingEntry = [self updateBestStartingEntry:leftStartingEntry candidateEntry:[self entryAtX:0 y:i] targetDistanceFromStart:minBorderDistance];
+        rightStartingEntry = [self updateBestStartingEntry:rightStartingEntry candidateEntry:[self entryAtX:(self.width - 1) y:i] targetDistanceFromStart:minBorderDistance];
+    }
+
+    MazeEntry *topStartingEntry = nil;
+    MazeEntry *bottomStartingEntry = nil;
+    for (int i = 1; i < self.width - 1; i++) {
+        topStartingEntry = [self updateBestStartingEntry:topStartingEntry candidateEntry:[self entryAtX:i y:0] targetDistanceFromStart:minBorderDistance];
+        bottomStartingEntry = [self updateBestStartingEntry:bottomStartingEntry candidateEntry:[self entryAtX:i y:(self.height - 1)] targetDistanceFromStart:minBorderDistance];
+    }
+    
+    playerPosition[0] = cv::Point2i(leftStartingEntry.x, leftStartingEntry.y);
+    playerPosition[1] = cv::Point2i(rightStartingEntry.x, rightStartingEntry.y);
+    playerPosition[2] = cv::Point2i(topStartingEntry.x, topStartingEntry.y);
+    playerPosition[3] = cv::Point2i(bottomStartingEntry.x, bottomStartingEntry.y);
+}
+
+- (MazeEntry *)updateBestStartingEntry:(MazeEntry *)currentEntry candidateEntry:(MazeEntry *)candidateEntry targetDistanceFromStart:(int)targetDistanceFromStart {
+    if (currentEntry == nil || [currentEntry.bag objectForKey:@"distanceFromStart"] == nil) {
+        return candidateEntry;
+    }
+    NSNumber *currentDistanceFromStart = [currentEntry.bag objectForKey:@"distanceFromStart"];
+    NSNumber *candidateDistanceFromStart = [candidateEntry.bag objectForKey:@"distanceFromStart"];
+
+    int currentDelta = ABS(targetDistanceFromStart - currentDistanceFromStart.intValue);
+    int candidateDelta = ABS(targetDistanceFromStart - candidateDistanceFromStart.intValue);
+    
+    if (candidateDelta > currentDelta) {
+        return currentEntry;
+    }
+    if (candidateDelta == currentDelta && [Util randomIntFrom:0 to:10] < 5) {
+        return currentEntry;
+    }
+    return candidateEntry;
 }
 
 - (void)recursivelyCreatePlayerPositionMapFromEntry:(MazeEntry *)entry distanceFromStart:(int)newDistanceFromStart {
@@ -197,7 +243,13 @@ MazeModel *mazeModelInstance = nil;
 }
 
 - (void)chooseRandomStartingPosition {
-    self.firstDiggedEntry = [self randomUnvisitedEntry];
+    int deltaX = self.width / 4;
+    int deltaY = self.height / 4;
+
+    int x = [Util randomIntFrom:((self.width - deltaX) / 2) to:((self.width + deltaX) / 2)];
+    int y = [Util randomIntFrom:((self.height - deltaY) / 2) to:((self.height + deltaY) / 2)];
+    
+    self.firstDiggedEntry = [self entryAtX:x y:y];
 }
 
 - (MazeEntry *)randomUnvisitedEntry {

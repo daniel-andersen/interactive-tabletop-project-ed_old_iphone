@@ -76,8 +76,6 @@
 }
 
 - (void)drawMaze {
-    NSLog(@"%i, %i", [[MazeModel instance] positionOfTreasure].x, [[MazeModel instance] positionOfTreasure].y);
-    
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 1.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
