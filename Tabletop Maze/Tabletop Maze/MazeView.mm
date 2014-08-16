@@ -118,13 +118,26 @@
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 1.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:0.0f].CGColor);
+    CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:0.3f].CGColor);
     CGContextFillRect(context, self.bounds);
-    
+
+    for (int i = 0; i < 4; i++) {
+        [self drawMaskForPlayerNumber:i context:context];
+    }
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
 
     self.mazeMask.contents = (id)image.CGImage;
     UIGraphicsEndImageContext();
+}
+
+- (void)drawMaskForPlayerNumber:(int)player context:(CGContextRef)context {
+    CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:1.0f].CGColor);
+
+    NSArray *reachableEntries = [[MazeModel instance] reachableEntriesForPlayer:player];
+    for (MazeEntry *entry in reachableEntries) {
+        CGContextFillRect(context, [self rectForEntry:entry]);
+        
+    }
 }
 
 - (void)drawWallForEntry:(MazeEntry *)entry withContext:(CGContextRef)context {

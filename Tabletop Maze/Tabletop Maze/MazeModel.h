@@ -25,6 +25,8 @@
 @property (nonatomic, assign) int x;
 @property (nonatomic, assign) int y;
 
+@property (nonatomic, assign) cv::Point2i position;
+
 @property (nonatomic, assign) int borderMask;
 
 @property (nonatomic, strong) NSMutableDictionary *bag;
@@ -39,14 +41,15 @@
 
 - (void)createRandomMaze;
 
-- (void)removeWallBetween:(MazeEntry *)entry1 andEntry:(MazeEntry *)entry2;
-
 - (MazeEntry *)entryAtX:(int)x y:(int)y;
 
 - (cv::Point2i)positionOfPlayer:(int)player;
 - (cv::Point2i)positionOfTreasure;
 
+- (NSArray *)reachableEntriesForPlayer:(int)player;
+
 @property (nonatomic, assign) int width;
 @property (nonatomic, assign) int height;
+@property (nonatomic, assign) int playerReachDistance;
 
 @end

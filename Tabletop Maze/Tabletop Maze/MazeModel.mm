@@ -47,6 +47,7 @@ MazeModel *mazeModelInstance = nil;
 - (void)initialize {
     self.width = 30;
     self.height = 20;
+    self.playerReachDistance = 5;
 }
 
 - (void)createRandomMaze {
@@ -66,6 +67,47 @@ MazeModel *mazeModelInstance = nil;
 - (void)placeTreasureAndPlayers {
     [self recursivelyCreatePlayerPositionMapFromEntry:self.firstDiggedEntry distanceFromStart:0];
     [self findPlayerPositionsFromMap];
+}
+
+- (NSArray *)reachableEntriesForPlayer:(int)player {
+    [self resetMazeBags];
+
+    [self recursivelyFindPlayerDistanceFromEntry:[self entryAtX:playerPosition[player].x y:playerPosition[player].y] distanceFromPlayer:0];
+    
+    NSMutableArray *reachableEntries = [NSMutableArray array];
+    for (int i = 0; i < self.height; i++) {
+        for (int j = 0; j < self.width; j++) {
+            MazeEntry *entry = [self entryAtX:j y:i];
+            NSNumber *distanceFromPlayer = [entry.bag objectForKey:@"distanceFromPlayer"];
+            if (distanceFromPlayer != nil && distanceFromPlayer.intValue <= self.playerReachDistance) {
+                [reachableEntries addObject:entry];
+            }
+        }
+    }
+    return reachableEntries;
+}
+
+- (void)recursivelyFindPlayerDistanceFromEntry:(MazeEntry *)entry distanceFromPlayer:(int)distanceFromPlayer {
+    if (entry == nil || distanceFromPlayer > self.playerReachDistance) {
+        return;
+    }
+    NSNumber *currentEntryDistanceFromPlayer = [entry.bag objectForKey:@"distanceFromPlayer"];
+    if (currentEntryDistanceFromPlayer != nil && currentEntryDistanceFromPlayer.intValue < distanceFromPlayer) {
+        return;
+    }
+    [entry.bag setObject:[NSNumber numberWithInt:distanceFromPlayer] forKey:@"distanceFromPlayer"];
+    if (![entry hasBorder:BORDER_LEFT]) {
+        [self recursivelyFindPlayerDistanceFromEntry:[self entryAtX:(entry.x - 1) y:entry.y] distanceFromPlayer:(distanceFromPlayer + 1)];
+    }
+    if (![entry hasBorder:BORDER_RIGHT]) {
+        [self recursivelyFindPlayerDistanceFromEntry:[self entryAtX:(entry.x + 1) y:entry.y] distanceFromPlayer:(distanceFromPlayer + 1)];
+    }
+    if (![entry hasBorder:BORDER_UP]) {
+        [self recursivelyFindPlayerDistanceFromEntry:[self entryAtX:entry.x y:(entry.y - 1)] distanceFromPlayer:(distanceFromPlayer + 1)];
+    }
+    if (![entry hasBorder:BORDER_DOWN]) {
+        [self recursivelyFindPlayerDistanceFromEntry:[self entryAtX:entry.x y:(entry.y + 1)] distanceFromPlayer:(distanceFromPlayer + 1)];
+    }
 }
 
 - (void)findPlayerPositionsFromMap {
@@ -128,10 +170,10 @@ MazeModel *mazeModelInstance = nil;
         bottomStartingEntry = [self updateBestStartingEntry:bottomStartingEntry candidateEntry:[self entryAtX:i y:(self.height - 1)] targetDistanceFromStart:minBorderDistance];
     }
     
-    playerPosition[0] = cv::Point2i(leftStartingEntry.x, leftStartingEntry.y);
-    playerPosition[1] = cv::Point2i(rightStartingEntry.x, rightStartingEntry.y);
-    playerPosition[2] = cv::Point2i(topStartingEntry.x, topStartingEntry.y);
-    playerPosition[3] = cv::Point2i(bottomStartingEntry.x, bottomStartingEntry.y);
+    playerPosition[0] = leftStartingEntry.position;
+    playerPosition[1] = rightStartingEntry.position;
+    playerPosition[2] = topStartingEntry.position;
+    playerPosition[3] = bottomStartingEntry.position;
 }
 
 - (MazeEntry *)updateBestStartingEntry:(MazeEntry *)currentEntry candidateEntry:(MazeEntry *)candidateEntry targetDistanceFromStart:(int)targetDistanceFromStart {
@@ -290,6 +332,10 @@ MazeModel *mazeModelInstance = nil;
     return [columnArray objectAtIndex:x];
 }
 
+- (cv::Point2i)entryAtPosition:(cv::Point2i)position {
+    return [self entryAtX:position.x y:position.y].position;
+}
+
 - (cv::Point2i)positionOfPlayer:(int)player {
     return playerPosition[player];
 }
@@ -324,6 +370,10 @@ MazeModel *mazeModelInstance = nil;
 
 - (void)removeBorder:(int)borderMask {
     self.borderMask &= ~borderMask;
+}
+
+- (cv::Point2i)position {
+    return cv::Point2i(self.x, self.y);
 }
 
 @end
