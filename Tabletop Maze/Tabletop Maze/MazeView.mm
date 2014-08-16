@@ -35,6 +35,8 @@
 @property (nonatomic, strong) UIImageView *titleImageView;
 @property (nonatomic, strong) UIImageView *mazeImageView;
 
+@property (nonatomic, strong) CALayer *mazeMask;
+
 @property (nonatomic, assign) CGSize borderSize;
 
 @end
@@ -50,7 +52,7 @@
 
 - (void)initialize {
     self.backgroundColor = [UIColor blackColor];
-    
+
     self.mazeImageView = [[UIImageView alloc] initWithFrame:[Constants instance].gridRect];
     self.mazeImageView.contentMode = UIViewContentModeScaleToFill;
     self.mazeImageView.alpha = 0.0f;
@@ -63,6 +65,11 @@
     [self addSubview:self.titleImageView];
     
     self.borderSize = CGSizeMake(2.0f, 2.0f);
+
+    self.mazeMask = [CALayer layer];
+    self.mazeMask.anchorPoint = CGPointMake(0.0f, 0.0f);
+    self.mazeMask.bounds = self.mazeImageView.bounds;
+    self.mazeImageView.layer.mask = self.mazeMask;
 }
 
 - (void)didAppear {
@@ -104,6 +111,19 @@
     }
     
     self.mazeImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+}
+
+- (void)drawMask {
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 1.0f);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:0.0f].CGColor);
+    CGContextFillRect(context, self.bounds);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+
+    self.mazeMask.contents = (id)image.CGImage;
     UIGraphicsEndImageContext();
 }
 

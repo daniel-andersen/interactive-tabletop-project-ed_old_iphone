@@ -75,7 +75,6 @@ PreviewableViewController *previewInstance = nil;
     cameraPreview.frame = self.view.bounds;
     boardBoundsLayer.frame = self.view.bounds;
     boardGridLayer.frame = [Constants instance].gridScreenRect;
-    NSLog(@"%f, %f - %f, %f", [Constants instance].gridScreenRect.size.width, [Constants instance].gridScreenRect.size.height, [Constants instance].gridRect.size.width, [Constants instance].gridRect.size.height);
     
     [self setButtonFrame:boardButton x:75.0f];
     [self setButtonFrame:cameraPreviewButton x:(self.view.bounds.size.width - 75.0f)];
