@@ -33,6 +33,9 @@
 - (void)setGridOfSize:(CGSize)size;
 - (void)setGridWithPixelSize:(CGSize)size;
 
+- (void)showBorderAnimated:(bool)animated;
+- (void)hideBorderAnimated:(bool)animated;
+
 - (void)start;
 
 - (void)calibrationViewDidHide;

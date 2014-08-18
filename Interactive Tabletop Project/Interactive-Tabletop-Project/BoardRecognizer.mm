@@ -351,7 +351,7 @@ BoardRecognizer *boardRecognizerInstance = nil;
     minContourArea = (imageSize.width * 0.5) * (imageSize.height * 0.5f);
     minLineLength = MIN(imageSize.width, imageSize.height) * 0.1f;
     
-    borderSize = CGSizeMake(imageSize.width * [Constants instance].borderSizePct.width * 1.2f, imageSize.height * [Constants instance].borderSizePct.height * 1.2f);
+    borderSize = CGSizeMake(imageSize.width * [Constants instance].borderRecognizedSizePct.width * 1.2f, imageSize.height * [Constants instance].borderRecognizedSizePct.height * 1.2f);
     
     lineGroupPointDistanceAcceptMax = MAX(borderSize.width, borderSize.height) * 1.2f;
     

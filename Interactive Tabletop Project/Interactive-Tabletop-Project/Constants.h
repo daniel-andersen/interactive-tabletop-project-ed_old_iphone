@@ -33,6 +33,10 @@
 
 @property (nonatomic, assign) CGSize gridSize;
 
+@property (nonatomic, assign) CGRect canvasRect;
+@property (nonatomic, assign) CGRect canvasScreenRect;
+@property (nonatomic, assign) CGRect canvasCameraRect;
+
 @property (nonatomic, assign) CGRect gridRect;
 @property (nonatomic, assign) CGRect gridScreenRect;
 @property (nonatomic, assign) CGRect gridCameraRect;
@@ -41,6 +45,8 @@
 @property (nonatomic, assign) CGSize brickScreenSize;
 @property (nonatomic, assign) CGSize brickCameraSize;
 
-@property (nonatomic, assign) CGSize borderSizePct;
+@property (nonatomic, assign) bool borderEnabled;
+@property (nonatomic, assign) CGSize borderViewSizePct;
+@property (nonatomic, assign) CGSize borderRecognizedSizePct;
 
 @end

@@ -125,8 +125,16 @@
 }
 
 - (void)setGridWithPixelSize:(CGSize)size {
-    [self setGridOfSize:CGSizeMake((int)([ExternalDisplay instance].widescreenBounds.size.width  / size.width ),
-                                   (int)([ExternalDisplay instance].widescreenBounds.size.height / size.height))];
+    [self setGridOfSize:CGSizeMake((int)([Constants instance].canvasRect.size.width  / size.width ),
+                                   (int)([Constants instance].canvasRect.size.height / size.height))];
+}
+
+- (void)showBorderAnimated:(bool)animated {
+    [Constants instance].borderEnabled = YES;
+}
+
+- (void)hideBorderAnimated:(bool)animated {
+    [Constants instance].borderEnabled = NO;
 }
 
 - (void)start {

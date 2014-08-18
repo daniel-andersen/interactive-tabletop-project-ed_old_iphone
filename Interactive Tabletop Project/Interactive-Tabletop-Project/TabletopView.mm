@@ -25,13 +25,14 @@
 
 #import "TabletopView.h"
 #import "ExternalDisplay.h"
+#import "Constants.h"
 #import "Util.h"
 
 @implementation TabletopView
 
 - (id)init {
     if (self = [super init]) {
-        self.frame = [ExternalDisplay instance].widescreenBounds;
+        self.frame = [Constants instance].canvasRect;
         self.backgroundColor = [UIColor blackColor];
     }
     return self;

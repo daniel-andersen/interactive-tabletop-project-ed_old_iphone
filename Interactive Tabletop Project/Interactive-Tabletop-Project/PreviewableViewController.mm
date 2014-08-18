@@ -74,7 +74,7 @@ PreviewableViewController *previewInstance = nil;
     boardPreview.frame = self.view.bounds;
     cameraPreview.frame = self.view.bounds;
     boardBoundsLayer.frame = self.view.bounds;
-    boardGridLayer.frame = [Constants instance].gridScreenRect;
+    boardGridLayer.frame = [Constants instance].canvasScreenRect;
     
     [self setButtonFrame:boardButton x:75.0f];
     [self setButtonFrame:cameraPreviewButton x:(self.view.bounds.size.width - 75.0f)];
@@ -122,7 +122,7 @@ PreviewableViewController *previewInstance = nil;
     [cameraPreview addSubview:view];
 
     if (simulatorBricksView == nil) {
-        simulatorBricksView = [[UIImageView alloc] initWithFrame:[Constants instance].gridScreenRect];
+        simulatorBricksView = [[UIImageView alloc] initWithFrame:[Constants instance].canvasScreenRect];
     }
     [boardPreview addSubview:simulatorBricksView];
 }

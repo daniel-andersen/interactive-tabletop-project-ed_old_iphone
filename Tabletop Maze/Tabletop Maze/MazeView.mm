@@ -83,10 +83,10 @@
 }
 
 - (void)drawMaze {
-    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 1.0f);
+    UIGraphicsBeginImageContextWithOptions(self.mazeImageView.frame.size, NO, 1.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
+    CGContextSetFillColorWithColor(context, [UIColor redColor].CGColor);
     CGContextFillRect(context, self.bounds);
 
     // Draw tiles
@@ -115,7 +115,7 @@
 }
 
 - (void)drawMask {
-    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 1.0f);
+    UIGraphicsBeginImageContextWithOptions(self.mazeImageView.frame.size, NO, 1.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:0.3f].CGColor);
