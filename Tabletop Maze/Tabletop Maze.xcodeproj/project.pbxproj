@@ -46,7 +46,6 @@
 		6587DDC9193CB5EA00C2741E /* fake_board_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DDA0193CB5EA00C2741E /* fake_board_6.png */; };
 		6587DDCA193CB5EA00C2741E /* fake_board_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DDA1193CB5EA00C2741E /* fake_board_7.png */; };
 		6587DDCB193CB5EA00C2741E /* PreviewableViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDA3193CB5EA00C2741E /* PreviewableViewController.mm */; };
-		6587DDCC193CB5EA00C2741E /* RotatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDA5193CB5EA00C2741E /* RotatedView.m */; };
 		6587DDCD193CB5EA00C2741E /* TabletopView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDA7193CB5EA00C2741E /* TabletopView.mm */; };
 		6587DDCE193CB5EA00C2741E /* TabletopViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDA9193CB5EA00C2741E /* TabletopViewController.mm */; };
 		6587DDCF193CB5EA00C2741E /* UIImage+CaptureScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DDAB193CB5EA00C2741E /* UIImage+CaptureScreen.m */; };
@@ -131,8 +130,6 @@
 		6587DDA1193CB5EA00C2741E /* fake_board_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_7.png; sourceTree = "<group>"; };
 		6587DDA2193CB5EA00C2741E /* PreviewableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreviewableViewController.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/PreviewableViewController.h"; sourceTree = "<group>"; };
 		6587DDA3193CB5EA00C2741E /* PreviewableViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = PreviewableViewController.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/PreviewableViewController.mm"; sourceTree = "<group>"; };
-		6587DDA4193CB5EA00C2741E /* RotatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RotatedView.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/RotatedView.h"; sourceTree = "<group>"; };
-		6587DDA5193CB5EA00C2741E /* RotatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotatedView.m; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/RotatedView.m"; sourceTree = "<group>"; };
 		6587DDA6193CB5EA00C2741E /* TabletopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabletopView.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/TabletopView.h"; sourceTree = "<group>"; };
 		6587DDA7193CB5EA00C2741E /* TabletopView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TabletopView.mm; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/TabletopView.mm"; sourceTree = "<group>"; };
 		6587DDA8193CB5EA00C2741E /* TabletopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabletopViewController.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/TabletopViewController.h"; sourceTree = "<group>"; };
@@ -301,8 +298,6 @@
 				6587DD8C193CB5EA00C2741E /* FakeCameraUtil.mm */,
 				6587DDA2193CB5EA00C2741E /* PreviewableViewController.h */,
 				6587DDA3193CB5EA00C2741E /* PreviewableViewController.mm */,
-				6587DDA4193CB5EA00C2741E /* RotatedView.h */,
-				6587DDA5193CB5EA00C2741E /* RotatedView.m */,
 				6587DDA6193CB5EA00C2741E /* TabletopView.h */,
 				6587DDA7193CB5EA00C2741E /* TabletopView.mm */,
 				6587DDA8193CB5EA00C2741E /* TabletopViewController.h */,
@@ -514,7 +509,6 @@
 				6587DE34194244BE00C2741E /* MazeView.mm in Sources */,
 				6587DD38193B1D1200C2741E /* ViewController.mm in Sources */,
 				6587DDCB193CB5EA00C2741E /* PreviewableViewController.mm in Sources */,
-				6587DDCC193CB5EA00C2741E /* RotatedView.m in Sources */,
 				6587DDB3193CB5EA00C2741E /* BoardUtil.mm in Sources */,
 				6587DDB1193CB5EA00C2741E /* BoardCalibrator.mm in Sources */,
 				6587DDB5193CB5EA00C2741E /* CameraSession.mm in Sources */,

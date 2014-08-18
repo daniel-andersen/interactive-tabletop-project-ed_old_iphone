@@ -15,7 +15,6 @@
 		650D4221178C5E4300D89CEB /* FakeCameraUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 650D4220178C5E4200D89CEB /* FakeCameraUtil.mm */; };
 		650D4224178C92B700D89CEB /* PreviewableViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 650D4223178C92B700D89CEB /* PreviewableViewController.mm */; };
 		650D423A178DDF6700D89CEB /* BoardCalibrator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 650D4239178DDF6700D89CEB /* BoardCalibrator.mm */; };
-		650D4243178DF27800D89CEB /* RotatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 650D4242178DF27700D89CEB /* RotatedView.m */; };
 		650D429E178F41B400D89CEB /* BoardUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 650D429D178F41B300D89CEB /* BoardUtil.mm */; };
 		6552705B17B1733F00784CD7 /* border_bottom_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 6552705317B1733F00784CD7 /* border_bottom_left.png */; };
 		6552705C17B1733F00784CD7 /* border_bottom_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 6552705417B1733F00784CD7 /* border_bottom_right.png */; };
@@ -77,8 +76,6 @@
 		650D4225178C9E7000D89CEB /* Util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		650D4238178DDF6700D89CEB /* BoardCalibrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardCalibrator.h; sourceTree = "<group>"; };
 		650D4239178DDF6700D89CEB /* BoardCalibrator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BoardCalibrator.mm; sourceTree = "<group>"; };
-		650D4241178DF27600D89CEB /* RotatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotatedView.h; sourceTree = "<group>"; };
-		650D4242178DF27700D89CEB /* RotatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotatedView.m; sourceTree = "<group>"; };
 		650D429C178F41B100D89CEB /* BoardUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardUtil.h; sourceTree = "<group>"; };
 		650D429D178F41B300D89CEB /* BoardUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BoardUtil.mm; sourceTree = "<group>"; };
 		6552705317B1733F00784CD7 /* border_bottom_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = border_bottom_left.png; path = board/border/border_bottom_left.png; sourceTree = "<group>"; };
@@ -343,8 +340,6 @@
 				650D4211178A057600D89CEB /* CameraUtil.mm */,
 				650D421F178C5E4100D89CEB /* FakeCameraUtil.h */,
 				650D4220178C5E4200D89CEB /* FakeCameraUtil.mm */,
-				650D4241178DF27600D89CEB /* RotatedView.h */,
-				650D4242178DF27700D89CEB /* RotatedView.m */,
 				650D4225178C9E7000D89CEB /* Util.h */,
 				65F6109317E2074700D8C0DF /* Util.mm */,
 				650D429C178F41B100D89CEB /* BoardUtil.h */,
@@ -455,7 +450,6 @@
 				650D4221178C5E4300D89CEB /* FakeCameraUtil.mm in Sources */,
 				650D4224178C92B700D89CEB /* PreviewableViewController.mm in Sources */,
 				650D423A178DDF6700D89CEB /* BoardCalibrator.mm in Sources */,
-				650D4243178DF27800D89CEB /* RotatedView.m in Sources */,
 				650D429E178F41B400D89CEB /* BoardUtil.mm in Sources */,
 				65F5E2B817C1460F00303009 /* ExternalDislayCalibrationView.m in Sources */,
 				6587DD65193BAE8100C2741E /* SampleView.m in Sources */,
