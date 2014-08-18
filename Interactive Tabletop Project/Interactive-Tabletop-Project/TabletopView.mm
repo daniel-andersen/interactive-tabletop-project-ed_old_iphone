@@ -28,6 +28,10 @@
 #import "Constants.h"
 #import "Util.h"
 
+@interface TabletopView ()
+
+@end
+
 @implementation TabletopView
 
 - (id)init {

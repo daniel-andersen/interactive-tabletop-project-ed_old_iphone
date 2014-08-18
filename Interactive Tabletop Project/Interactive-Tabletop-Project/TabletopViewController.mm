@@ -131,10 +131,39 @@
 
 - (void)showBorderAnimated:(bool)animated {
     [Constants instance].borderEnabled = YES;
+
+    if (self.tabletopBorderView == nil) {
+        self.tabletopBorderView = [[TabletopBorderView alloc] initWithImages:[NSArray arrayWithObjects:
+                                                                              [UIImage imageNamed:@"border_top_left.png"],
+                                                                              [UIImage imageNamed:@"border_top.png"],
+                                                                              [UIImage imageNamed:@"border_top_right.png"],
+                                                                              [UIImage imageNamed:@"border_right.png"],
+                                                                              [UIImage imageNamed:@"border_bottom_right.png"],
+                                                                              [UIImage imageNamed:@"border_bottom.png"],
+                                                                              [UIImage imageNamed:@"border_bottom_left.png"],
+                                                                              [UIImage imageNamed:@"border_left.png"],
+                                                                              nil]];
+    } else {
+        [self.tabletopBorderView removeFromSuperview];
+    }
+    self.tabletopBorderView.hidden = NO;
+    self.tabletopBorderView.alpha = 0.0f;
+    
+    [[ExternalDisplay instance].window insertSubview:self.tabletopBorderView atIndex:0];
+    
+    [UIView animateWithDuration:(animated ? [Constants instance].defaultViewAnimationDuration : 0.0f) animations:^{
+        self.tabletopBorderView.alpha = 1.0f;
+    }];
 }
 
 - (void)hideBorderAnimated:(bool)animated {
     [Constants instance].borderEnabled = NO;
+
+    [UIView animateWithDuration:(animated ? [Constants instance].defaultViewAnimationDuration : 0.0f) animations:^{
+        self.tabletopBorderView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        [self.tabletopBorderView removeFromSuperview];
+    }];
 }
 
 - (void)start {
@@ -156,7 +185,26 @@
 }
 
 - (UIImage *)requestSimulatedImageIfNoCamera {
-    return [UIImage imageWithView:self.tabletopView];
+    if (self.tabletopBorderView == nil) {
+        return [UIImage imageWithView:self.tabletopView];
+    } else {
+        return [self simulatedBorderedImage];
+    }
+}
+
+- (UIImage *)simulatedBorderedImage {
+    CGSize size = CGSizeMake(self.tabletopBorderView.frame.size.width * 1.2f, self.tabletopBorderView.frame.size.height * 1.2f);
+    UIGraphicsBeginImageContextWithOptions(size, NO, 1.0f);
+    
+    CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(), [UIColor blackColor].CGColor);
+    CGContextFillRect(UIGraphicsGetCurrentContext(), CGRectMake(0.0f, 0.0f, size.width, size.height));
+    
+    [[UIImage imageWithView:self.tabletopBorderView] drawInRect:CGRectMake((size.width - self.tabletopBorderView.bounds.size.width) / 2.0f, (size.height - self.tabletopBorderView.bounds.size.height) / 2.0f, self.tabletopBorderView.bounds.size.width, self.tabletopBorderView.bounds.size.height)];
+    [[UIImage imageWithView:self.tabletopView] drawInRect:CGRectMake((size.width - self.tabletopView.bounds.size.width) / 2.0f, (size.height - self.tabletopView.bounds.size.height) / 2.0f, self.tabletopView.bounds.size.width, self.tabletopView.bounds.size.height)];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
 - (void)update {
@@ -178,7 +226,7 @@
     _tabletopView = tabletopView;
     [self showCurrentTabletopView];
     if (![CameraSession instance].initialized && ![ExternalDisplay instance].externalDisplayFound) {
-        [super prepareSimulatorViewWithPreviewView:tabletopView];
+        [self prepareSimulatorViewWithPreviewView:tabletopView borderView:self.tabletopBorderView];
     }
 }
 

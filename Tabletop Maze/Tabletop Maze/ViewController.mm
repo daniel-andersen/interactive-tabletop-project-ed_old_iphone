@@ -39,25 +39,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     [self showBorderAnimated:NO];
     [self setGridWithPixelSize:CGSizeMake(20.0f, 20.0f)];
+    
     [self start];
 }
 
 - (void)calibrationViewDidHide {
     [super calibrationViewDidHide];
-    [self createMazeView];
+
+    self.mazeView = [[MazeView alloc] init];
+    self.tabletopView = self.mazeView;
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [self createMaze];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self didGenerateMaze];
         });
     });
-}
-
-- (void)createMazeView {
-    self.mazeView = [[MazeView alloc] init];
-    self.tabletopView = self.mazeView;
 }
 
 - (void)createMaze {

@@ -25,6 +25,6 @@
 
 #import "TabletopView.h"
 
-@interface SampleView : TabletopView
+@interface SampleTabletopView : TabletopView
 
 @end

@@ -49,9 +49,11 @@ Constants *constantsInstance = nil;
 
 - (void)initialize {
     self.borderEnabled = NO;
-    self.borderRecognizedSizePct = CGSizeMake(0.02f, 0.02f);
-    self.borderViewSizePct = CGSizeMake(self.borderRecognizedSizePct.width * 1.1f, self.borderRecognizedSizePct.height * 1.1f);
+    self.borderRecognizedSizePct = CGSizeMake(0.04f, 0.04f);
+    self.borderViewSizePct = CGSizeMake(0.5f, 0.5f);
     [self recalculateConstants];
+    
+    self.defaultViewAnimationDuration = 0.3f;
 }
 
 - (void)setBorderEnabled:(bool)borderEnabled {
@@ -103,8 +105,8 @@ Constants *constantsInstance = nil;
 - (CGSize)screenSizeWithoutBorder:(CGSize)screenSize {
     CGSize borderSize = CGSizeMake(0.0f, 0.0f);
     if (self.borderEnabled) {
-        borderSize = CGSizeMake(screenSize.width  * [Constants instance].borderViewSizePct.width,
-                                screenSize.height * [Constants instance].borderViewSizePct.height);
+        borderSize = CGSizeMake(screenSize.width  * [Constants instance].borderRecognizedSizePct.width,
+                                screenSize.height * [Constants instance].borderRecognizedSizePct.height);
     }
     
     return CGSizeMake(screenSize.width  - (borderSize.width  * 2.0f),

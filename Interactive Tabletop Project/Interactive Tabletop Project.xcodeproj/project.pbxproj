@@ -28,7 +28,7 @@
 		6587DD59193B223800C2741E /* TabletopViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD58193B223800C2741E /* TabletopViewController.mm */; };
 		6587DD5F193B33B300C2741E /* TabletopView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD5E193B33B300C2741E /* TabletopView.mm */; };
 		6587DD62193B5D7400C2741E /* Constants.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD61193B5D7400C2741E /* Constants.mm */; };
-		6587DD65193BAE8100C2741E /* SampleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD64193BAE8100C2741E /* SampleView.m */; };
+		6587DD65193BAE8100C2741E /* SampleTabletopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6587DD64193BAE8100C2741E /* SampleTabletopView.m */; };
 		6587DE08193EEDAC00C2741E /* splash_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE06193EEDAC00C2741E /* splash_logo.png */; };
 		6587DE09193EEDAC00C2741E /* splash_trollsahead.png in Resources */ = {isa = PBXBuildFile; fileRef = 6587DE07193EEDAC00C2741E /* splash_trollsahead.png */; };
 		658AF18218058D0B00BFF6A4 /* fake_board_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 658AF17E18058D0B00BFF6A4 /* fake_board_2.png */; };
@@ -58,6 +58,7 @@
 		65F5E2B817C1460F00303009 /* ExternalDislayCalibrationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F5E2B717C1460F00303009 /* ExternalDislayCalibrationView.m */; };
 		65F6109417E2074700D8C0DF /* Util.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65F6109317E2074700D8C0DF /* Util.mm */; };
 		65F6109717E787EE00D8C0DF /* BrickRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65F6109617E787EE00D8C0DF /* BrickRecognizer.mm */; };
+		65FAF0C119A2742B00B45084 /* TabletopBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FAF0C019A2742B00B45084 /* TabletopBorderView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,8 +94,8 @@
 		6587DD5E193B33B300C2741E /* TabletopView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TabletopView.mm; sourceTree = "<group>"; };
 		6587DD60193B5D7400C2741E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		6587DD61193B5D7400C2741E /* Constants.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Constants.mm; sourceTree = "<group>"; };
-		6587DD63193BAE8100C2741E /* SampleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleView.h; sourceTree = "<group>"; };
-		6587DD64193BAE8100C2741E /* SampleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleView.m; sourceTree = "<group>"; };
+		6587DD63193BAE8100C2741E /* SampleTabletopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTabletopView.h; sourceTree = "<group>"; };
+		6587DD64193BAE8100C2741E /* SampleTabletopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleTabletopView.m; sourceTree = "<group>"; };
 		6587DE06193EEDAC00C2741E /* splash_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_logo.png; path = splash/splash_logo.png; sourceTree = "<group>"; };
 		6587DE07193EEDAC00C2741E /* splash_trollsahead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_trollsahead.png; path = splash/splash_trollsahead.png; sourceTree = "<group>"; };
 		658AF17E18058D0B00BFF6A4 /* fake_board_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fake_board_2.png; sourceTree = "<group>"; };
@@ -133,6 +134,8 @@
 		65F6109317E2074700D8C0DF /* Util.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Util.mm; sourceTree = "<group>"; };
 		65F6109517E787EE00D8C0DF /* BrickRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrickRecognizer.h; sourceTree = "<group>"; };
 		65F6109617E787EE00D8C0DF /* BrickRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BrickRecognizer.mm; sourceTree = "<group>"; };
+		65FAF0BF19A2742B00B45084 /* TabletopBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabletopBorderView.h; sourceTree = "<group>"; };
+		65FAF0C019A2742B00B45084 /* TabletopBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabletopBorderView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,15 +161,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		650D423E178DE8C800D89CEB /* Game Engine */ = {
+		650D423E178DE8C800D89CEB /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				6587DD5D193B33B300C2741E /* TabletopView.h */,
 				6587DD5E193B33B300C2741E /* TabletopView.mm */,
-				6587DD63193BAE8100C2741E /* SampleView.h */,
-				6587DD64193BAE8100C2741E /* SampleView.m */,
+				6587DD63193BAE8100C2741E /* SampleTabletopView.h */,
+				6587DD64193BAE8100C2741E /* SampleTabletopView.m */,
+				65FAF0BF19A2742B00B45084 /* TabletopBorderView.h */,
+				65FAF0C019A2742B00B45084 /* TabletopBorderView.m */,
 			);
-			name = "Game Engine";
+			name = Views;
 			sourceTree = "<group>";
 		};
 		6552705117B1733000784CD7 /* Board */ = {
@@ -239,7 +244,7 @@
 				65EA26811783531C00E84BA4 /* Util */,
 				65EA264B1780C89500E84BA4 /* Recognizers */,
 				65B930BA17806D6600312B88 /* View Controllers */,
-				650D423E178DE8C800D89CEB /* Game Engine */,
+				650D423E178DE8C800D89CEB /* Views */,
 				6587DB331938A65900C2741E /* Images.xcassets */,
 			);
 			name = "Interactive Tabletop Project";
@@ -448,11 +453,12 @@
 				6587DD62193B5D7400C2741E /* Constants.mm in Sources */,
 				650D421E178B45A800D89CEB /* UIImage+CaptureScreen.m in Sources */,
 				650D4221178C5E4300D89CEB /* FakeCameraUtil.mm in Sources */,
+				65FAF0C119A2742B00B45084 /* TabletopBorderView.m in Sources */,
 				650D4224178C92B700D89CEB /* PreviewableViewController.mm in Sources */,
 				650D423A178DDF6700D89CEB /* BoardCalibrator.mm in Sources */,
 				650D429E178F41B400D89CEB /* BoardUtil.mm in Sources */,
 				65F5E2B817C1460F00303009 /* ExternalDislayCalibrationView.m in Sources */,
-				6587DD65193BAE8100C2741E /* SampleView.m in Sources */,
+				6587DD65193BAE8100C2741E /* SampleTabletopView.m in Sources */,
 				6587DD5F193B33B300C2741E /* TabletopView.mm in Sources */,
 				65F6109717E787EE00D8C0DF /* BrickRecognizer.mm in Sources */,
 			);

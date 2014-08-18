@@ -23,15 +23,10 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-#ifndef __MAZECONSTANTS_H__
-#define __MAZECONSTANTS_H__
+@interface TabletopBorderView : UIView
 
-#define MAX_PLAYERS 4
-
-#endif
-
-@interface MazeConstants : NSObject
+- (id)initWithImages:(NSArray *)images;
 
 @end

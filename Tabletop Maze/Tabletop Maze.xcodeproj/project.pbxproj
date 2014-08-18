@@ -63,6 +63,7 @@
 		6587DE371944EBD700C2741E /* MazeModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6587DE361944EBD700C2741E /* MazeModel.mm */; };
 		65FAF0B2199A907A00B45084 /* MazeConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FAF0B1199A907A00B45084 /* MazeConstants.m */; };
 		65FAF0BE199E27DC00B45084 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FAF0A0199A8CE100B45084 /* opencv2.framework */; };
+		65FAF0C419A27DE600B45084 /* TabletopBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FAF0C319A27DE600B45084 /* TabletopBorderView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +157,8 @@
 		65FAF0A0199A8CE100B45084 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = "../Interactive Tabletop Project/opencv2.framework"; sourceTree = "<group>"; };
 		65FAF0B0199A907A00B45084 /* MazeConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeConstants.h; sourceTree = "<group>"; };
 		65FAF0B1199A907A00B45084 /* MazeConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeConstants.m; sourceTree = "<group>"; };
+		65FAF0C219A27DE600B45084 /* TabletopBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabletopBorderView.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/TabletopBorderView.h"; sourceTree = "<group>"; };
+		65FAF0C319A27DE600B45084 /* TabletopBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabletopBorderView.m; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/TabletopBorderView.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +303,8 @@
 				6587DDA3193CB5EA00C2741E /* PreviewableViewController.mm */,
 				6587DDA6193CB5EA00C2741E /* TabletopView.h */,
 				6587DDA7193CB5EA00C2741E /* TabletopView.mm */,
+				65FAF0C219A27DE600B45084 /* TabletopBorderView.h */,
+				65FAF0C319A27DE600B45084 /* TabletopBorderView.m */,
 				6587DDA8193CB5EA00C2741E /* TabletopViewController.h */,
 				6587DDA9193CB5EA00C2741E /* TabletopViewController.mm */,
 				6587DDAA193CB5EA00C2741E /* UIImage+CaptureScreen.h */,
@@ -514,6 +519,7 @@
 				6587DDB5193CB5EA00C2741E /* CameraSession.mm in Sources */,
 				6587DDB4193CB5EA00C2741E /* BrickRecognizer.mm in Sources */,
 				6587DE0C193EF38400C2741E /* ExternalDislayCalibrationView.m in Sources */,
+				65FAF0C419A27DE600B45084 /* TabletopBorderView.m in Sources */,
 				6587DDBA193CB5EA00C2741E /* FakeCameraUtil.mm in Sources */,
 				6587DDB9193CB5EA00C2741E /* ExternalDisplay.m in Sources */,
 				6587DDB7193CB5EA00C2741E /* Constants.mm in Sources */,

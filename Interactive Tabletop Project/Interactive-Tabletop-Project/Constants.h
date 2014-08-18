@@ -49,4 +49,6 @@
 @property (nonatomic, assign) CGSize borderViewSizePct;
 @property (nonatomic, assign) CGSize borderRecognizedSizePct;
 
+@property (nonatomic, assign) float defaultViewAnimationDuration;
+
 @end

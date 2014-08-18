@@ -27,6 +27,7 @@
 
 #import "PreviewableViewController.h"
 #import "TabletopView.h"
+#import "TabletopBorderView.h"
 
 @interface TabletopViewController : PreviewableViewController
 
@@ -43,5 +44,6 @@
 @property (nonatomic, assign) CFTimeInterval updateInterval;
 
 @property (nonatomic, strong) TabletopView *tabletopView;
+@property (nonatomic, strong) TabletopBorderView *tabletopBorderView;
 
 @end

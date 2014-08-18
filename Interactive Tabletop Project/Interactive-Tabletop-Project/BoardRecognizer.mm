@@ -355,11 +355,7 @@ BoardRecognizer *boardRecognizerInstance = nil;
     
     lineGroupPointDistanceAcceptMax = MAX(borderSize.width, borderSize.height) * 1.2f;
     
-    if ([ExternalDisplay instance].externalDisplayFound) {
-        boardAspectRatio = [ExternalDisplay instance].widescreenBounds.size.width / [ExternalDisplay instance].widescreenBounds.size.height;
-    } else {
-        boardAspectRatio = 1.5f;
-    }
+    boardAspectRatio = [ExternalDisplay instance].widescreenBounds.size.width / [ExternalDisplay instance].widescreenBounds.size.height;
 }
 
 - (cv::Mat)calculateHistogramFromImage:(cv::Mat)image {

@@ -116,9 +116,12 @@ PreviewableViewController *previewInstance = nil;
     cameraPreviewButton.enabled = NO;
 }
 
-- (void)prepareSimulatorViewWithPreviewView:(UIView *)view {
+- (void)prepareSimulatorViewWithPreviewView:(UIView *)view borderView:(UIView *)borderView {
     [Util removeSubViews:cameraPreview];
 
+    if (borderView != nil) {
+        [cameraPreview addSubview:borderView];
+    }
     [cameraPreview addSubview:view];
 
     if (simulatorBricksView == nil) {
