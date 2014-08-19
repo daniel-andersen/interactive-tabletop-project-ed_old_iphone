@@ -150,25 +150,31 @@
     for (int i = 0; i < [MazeModel instance].height; i++) {
         for (int j = 0; j < [MazeModel instance].width; j++) {
             MazeEntry *entry = [[MazeModel instance] entryAtX:j y:i];
+            int alphaBit = maskMap[i][j];
             int maskBit = 0;
             if (maskMap[i][j] > 0) {
                 maskBit = 16;
             } else {
                 if (![entry hasBorder:BORDER_UP] && maskMap[i - 1][j] > 0) {
                     maskBit |= (1 << 0);
+                    alphaBit = MAX(alphaBit, maskMap[i - 1][j]);
                 }
                 if (![entry hasBorder:BORDER_RIGHT] && maskMap[i][j + 1] > 0) {
                     maskBit |= (1 << 1);
+                    alphaBit = MAX(alphaBit, maskMap[i][j + 1]);
                 }
                 if (![entry hasBorder:BORDER_DOWN] && maskMap[i + 1][j] > 0) {
                     maskBit |= (1 << 2);
+                    alphaBit = MAX(alphaBit, maskMap[i + 1][j]);
                 }
                 if (![entry hasBorder:BORDER_LEFT] && maskMap[i][j - 1] > 0) {
                     maskBit |= (1 << 3);
+                    alphaBit = MAX(alphaBit, maskMap[i][j - 1]);
                 }
             }
+            float alpha = alphaBit == 0 ? 0.0f : (alphaBit == 1 ? 0.2f : 1.0f);
             UIImage *image = [self.maskImages objectAtIndex:maskBit];
-            [image drawInRect:[self rectForEntry:entry]];
+            [image drawInRect:[self rectForEntry:entry] blendMode:kCGBlendModeNormal alpha:alpha];
         }
     }
     
@@ -176,14 +182,6 @@
 
     self.mazeMask.contents = (id)image.CGImage;
     UIGraphicsEndImageContext();
-}
-
-- (void)drawMaskForEntries:(NSArray *)entries brightness:(float)brightness context:(CGContextRef)context {
-    CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:1.0f].CGColor);
-
-    for (MazeEntry *entry in entries) {
-        CGContextFillRect(context, [self rectForEntry:entry]);
-    }
 }
 
 - (void)drawWallForEntry:(MazeEntry *)entry withContext:(CGContextRef)context {
