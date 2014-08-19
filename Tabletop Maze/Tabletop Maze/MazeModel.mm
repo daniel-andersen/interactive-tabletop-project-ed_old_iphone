@@ -33,6 +33,7 @@ MazeModel *mazeModelInstance = nil;
 
 @interface MazeModel () {
     cv::Point2i playerPosition[MAX_PLAYERS];
+    bool playerEnabled[MAX_PLAYERS];
 }
 
 @property (nonatomic, strong) NSMutableArray *maze;
@@ -64,7 +65,11 @@ MazeModel *mazeModelInstance = nil;
 - (void)initialize {
     self.width = 30;
     self.height = 20;
-    self.playerReachDistance = 5;
+    self.playerReachDistance = 4;
+    self.currentPlayer = 0;
+    for (int i = 0; i < MAX_PLAYERS; i++) {
+        playerEnabled[i] = YES;
+    }
 }
 
 - (void)createRandomMaze {
@@ -130,8 +135,11 @@ MazeModel *mazeModelInstance = nil;
 - (void)findPlayerPositionsFromMap {
     int maxBorderDistance[4];
     
+    int verticalMargin = (int)((float)self.height * 0.25f);
+    int horizontalMargin = (int)((float)self.width * 0.25f);
+    
     // Left max distance
-    for (int i = 1; i < self.height - 1; i++) {
+    for (int i = verticalMargin; i < self.height - verticalMargin; i++) {
         MazeEntry *entry = [self entryAtX:0 y:i];
         NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
         if (distanceFromStart != nil) {
@@ -140,7 +148,7 @@ MazeModel *mazeModelInstance = nil;
     }
 
     // Right max distance
-    for (int i = 1; i < self.height - 1; i++) {
+    for (int i = verticalMargin; i < self.height - verticalMargin; i++) {
         MazeEntry *entry = [self entryAtX:(self.width - 1) y:i];
         NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
         if (distanceFromStart != nil) {
@@ -149,7 +157,7 @@ MazeModel *mazeModelInstance = nil;
     }
 
     // Top max distance
-    for (int i = 1; i < self.width - 1; i++) {
+    for (int i = horizontalMargin; i < self.width - horizontalMargin; i++) {
         MazeEntry *entry = [self entryAtX:i y:0];
         NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
         if (distanceFromStart != nil) {
@@ -158,7 +166,7 @@ MazeModel *mazeModelInstance = nil;
     }
 
     // Bottom max distance
-    for (int i = 1; i < self.width - 1; i++) {
+    for (int i = horizontalMargin; i < self.width - horizontalMargin; i++) {
         MazeEntry *entry = [self entryAtX:i y:(self.height - 1)];
         NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
         if (distanceFromStart != nil) {
@@ -175,14 +183,14 @@ MazeModel *mazeModelInstance = nil;
     // Find nearest border location to minimum distance for all players
     MazeEntry *leftStartingEntry = nil;
     MazeEntry *rightStartingEntry = nil;
-    for (int i = 1; i < self.height - 1; i++) {
+    for (int i = verticalMargin; i < self.height - verticalMargin; i++) {
         leftStartingEntry = [self updateBestStartingEntry:leftStartingEntry candidateEntry:[self entryAtX:0 y:i] targetDistanceFromStart:minBorderDistance];
         rightStartingEntry = [self updateBestStartingEntry:rightStartingEntry candidateEntry:[self entryAtX:(self.width - 1) y:i] targetDistanceFromStart:minBorderDistance];
     }
 
     MazeEntry *topStartingEntry = nil;
     MazeEntry *bottomStartingEntry = nil;
-    for (int i = 1; i < self.width - 1; i++) {
+    for (int i = horizontalMargin; i < self.width - horizontalMargin; i++) {
         topStartingEntry = [self updateBestStartingEntry:topStartingEntry candidateEntry:[self entryAtX:i y:0] targetDistanceFromStart:minBorderDistance];
         bottomStartingEntry = [self updateBestStartingEntry:bottomStartingEntry candidateEntry:[self entryAtX:i y:(self.height - 1)] targetDistanceFromStart:minBorderDistance];
     }
@@ -361,6 +369,9 @@ MazeModel *mazeModelInstance = nil;
     return cv::Point2i(self.firstDiggedEntry.x, self.firstDiggedEntry.y);
 }
 
+- (bool)isPlayerEnabled:(int)player {
+    return playerEnabled[player];
+}
 @end
 
 

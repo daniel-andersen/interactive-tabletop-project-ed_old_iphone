@@ -63,10 +63,15 @@
 - (cv::Point2i)positionOfPlayer:(int)player;
 - (cv::Point2i)positionOfTreasure;
 
+- (bool)isPlayerEnabled:(int)player;
+
 - (NSArray *)reachableEntriesForPlayer:(int)player;
 
 @property (nonatomic, assign) int width;
 @property (nonatomic, assign) int height;
+
 @property (nonatomic, assign) int playerReachDistance;
+
+@property (nonatomic, assign) int currentPlayer;
 
 @end

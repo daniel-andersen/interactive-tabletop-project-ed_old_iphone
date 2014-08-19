@@ -25,6 +25,7 @@
 
 #import "MazeView.h"
 #import "MazeModel.h"
+#import "MazeConstants.h"
 #import "Constants.h"
 #import "Util.h"
 
@@ -38,6 +39,8 @@
 @property (nonatomic, strong) CALayer *mazeMask;
 
 @property (nonatomic, assign) CGSize borderSize;
+
+@property (nonatomic, strong) NSArray *maskImages;
 
 @end
 
@@ -70,6 +73,12 @@
     self.mazeMask.anchorPoint = CGPointMake(0.0f, 0.0f);
     self.mazeMask.bounds = self.mazeImageView.bounds;
     self.mazeImageView.layer.mask = self.mazeMask;
+    
+    NSMutableArray *images = [NSMutableArray array];
+    for (int i = 0; i < 17; i++) {
+        [images addObject:[UIImage imageNamed:[NSString stringWithFormat:@"Brick Mask %i", i]]];
+    }
+    self.maskImages = [images copy];
 }
 
 - (void)didAppear {
@@ -115,28 +124,65 @@
 }
 
 - (void)drawMask {
+    int maskMap[[MazeModel instance].height][[MazeModel instance].width];
+    for (int i = 0; i < [MazeModel instance].height; i++) {
+        for (int j = 0; j < [MazeModel instance].width; j++) {
+            maskMap[i][j] = 0;
+        }
+    }
+    for (int i = 0; i < MAX_PLAYERS; i++) {
+        if (![[MazeModel instance] isPlayerEnabled:i]) {
+            continue;
+        }
+        int mask = i == [MazeModel instance].currentPlayer ? 2 : 1;
+        NSArray *reachableEntries = [[MazeModel instance] reachableEntriesForPlayer:i];
+        for (MazeEntry *entry in reachableEntries) {
+            maskMap[entry.y][entry.x] = MAX(mask, maskMap[entry.y][entry.x]);
+        }
+    }
+
     UIGraphicsBeginImageContextWithOptions(self.mazeImageView.frame.size, NO, 1.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:0.3f].CGColor);
+    CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:0.0f].CGColor);
     CGContextFillRect(context, self.bounds);
 
-    for (int i = 0; i < 4; i++) {
-        [self drawMaskForPlayerNumber:i context:context];
+    for (int i = 0; i < [MazeModel instance].height; i++) {
+        for (int j = 0; j < [MazeModel instance].width; j++) {
+            MazeEntry *entry = [[MazeModel instance] entryAtX:j y:i];
+            int maskBit = 0;
+            if (maskMap[i][j] > 0) {
+                maskBit = 16;
+            } else {
+                if (![entry hasBorder:BORDER_UP] && maskMap[i - 1][j] > 0) {
+                    maskBit |= (1 << 0);
+                }
+                if (![entry hasBorder:BORDER_RIGHT] && maskMap[i][j + 1] > 0) {
+                    maskBit |= (1 << 1);
+                }
+                if (![entry hasBorder:BORDER_DOWN] && maskMap[i + 1][j] > 0) {
+                    maskBit |= (1 << 2);
+                }
+                if (![entry hasBorder:BORDER_LEFT] && maskMap[i][j - 1] > 0) {
+                    maskBit |= (1 << 3);
+                }
+            }
+            UIImage *image = [self.maskImages objectAtIndex:maskBit];
+            [image drawInRect:[self rectForEntry:entry]];
+        }
     }
+    
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
 
     self.mazeMask.contents = (id)image.CGImage;
     UIGraphicsEndImageContext();
 }
 
-- (void)drawMaskForPlayerNumber:(int)player context:(CGContextRef)context {
+- (void)drawMaskForEntries:(NSArray *)entries brightness:(float)brightness context:(CGContextRef)context {
     CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:1.0f].CGColor);
 
-    NSArray *reachableEntries = [[MazeModel instance] reachableEntriesForPlayer:player];
-    for (MazeEntry *entry in reachableEntries) {
+    for (MazeEntry *entry in entries) {
         CGContextFillRect(context, [self rectForEntry:entry]);
-        
     }
 }
 
