@@ -64,6 +64,7 @@
 		65FAF0B2199A907A00B45084 /* MazeConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FAF0B1199A907A00B45084 /* MazeConstants.m */; };
 		65FAF0BE199E27DC00B45084 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FAF0A0199A8CE100B45084 /* opencv2.framework */; };
 		65FAF0C419A27DE600B45084 /* TabletopBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FAF0C319A27DE600B45084 /* TabletopBorderView.m */; };
+		65FAF0C719A4D8A200B45084 /* MazeContainerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FAF0C619A4D8A200B45084 /* MazeContainerView.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +160,8 @@
 		65FAF0B1199A907A00B45084 /* MazeConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeConstants.m; sourceTree = "<group>"; };
 		65FAF0C219A27DE600B45084 /* TabletopBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabletopBorderView.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/TabletopBorderView.h"; sourceTree = "<group>"; };
 		65FAF0C319A27DE600B45084 /* TabletopBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabletopBorderView.m; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/TabletopBorderView.m"; sourceTree = "<group>"; };
+		65FAF0C519A4D8A200B45084 /* MazeContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeContainerView.h; sourceTree = "<group>"; };
+		65FAF0C619A4D8A200B45084 /* MazeContainerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MazeContainerView.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +242,8 @@
 				6587DD37193B1D1200C2741E /* ViewController.mm */,
 				6587DE32194244BE00C2741E /* MazeView.h */,
 				6587DE33194244BE00C2741E /* MazeView.mm */,
+				65FAF0C519A4D8A200B45084 /* MazeContainerView.h */,
+				65FAF0C619A4D8A200B45084 /* MazeContainerView.mm */,
 				6587DE351944EBD700C2741E /* MazeModel.h */,
 				6587DE361944EBD700C2741E /* MazeModel.mm */,
 				6587DD39193B1D1200C2741E /* Images.xcassets */,
@@ -501,6 +506,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6587DDB6193CB5EA00C2741E /* CameraUtil.mm in Sources */,
+				65FAF0C719A4D8A200B45084 /* MazeContainerView.mm in Sources */,
 				65FAF0B2199A907A00B45084 /* MazeConstants.m in Sources */,
 				6587DD2E193B1D1100C2741E /* main.m in Sources */,
 				6587DD32193B1D1100C2741E /* AppDelegate.m in Sources */,

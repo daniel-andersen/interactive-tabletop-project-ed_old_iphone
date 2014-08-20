@@ -25,6 +25,28 @@
 
 #import "MazeConstants.h"
 
+MazeConstants *mazeConstantsInstance = nil;
+
 @implementation MazeConstants
+
++ (MazeConstants *)instance {
+    @synchronized(self) {
+        if (mazeConstantsInstance == nil) {
+            mazeConstantsInstance = [[MazeConstants alloc] init];
+        }
+        return mazeConstantsInstance;
+    }
+}
+
+- (id)init {
+    if (self = [super init]) {
+        [self initialize];
+    }
+    return self;
+}
+
+- (void)initialize {
+    self.defaultAnimationDuration = 1.0f;
+}
 
 @end

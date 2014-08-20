@@ -59,13 +59,17 @@
 - (void)createRandomMaze;
 
 - (MazeEntry *)entryAtX:(int)x y:(int)y;
+- (MazeEntry *)entryAtPosition:(cv::Point2i)position;
 
 - (cv::Point2i)positionOfPlayer:(int)player;
 - (cv::Point2i)positionOfTreasure;
 
+- (MazeEntry *)entryForPlayer:(int)player;
+
 - (bool)isPlayerEnabled:(int)player;
 
 - (NSArray *)reachableEntriesForPlayer:(int)player;
+- (NSArray *)reachableEntriesForPlayer:(int)player reachDistance:(int)reachDistance;
 
 @property (nonatomic, assign) int width;
 @property (nonatomic, assign) int height;

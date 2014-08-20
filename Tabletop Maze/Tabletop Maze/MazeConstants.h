@@ -34,4 +34,8 @@
 
 @interface MazeConstants : NSObject
 
++ (MazeConstants *)instance;
+
+@property (nonatomic, assign) float defaultAnimationDuration;
+
 @end

@@ -24,6 +24,7 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "MazeView.h"
+#import "MazeContainerView.h"
 #import "MazeModel.h"
 #import "MazeConstants.h"
 #import "Constants.h"
@@ -34,13 +35,17 @@
 @interface MazeView ()
 
 @property (nonatomic, strong) UIImageView *titleImageView;
-@property (nonatomic, strong) UIImageView *mazeImageView;
-
-@property (nonatomic, strong) CALayer *mazeMask;
 
 @property (nonatomic, assign) CGSize borderSize;
 
 @property (nonatomic, strong) NSArray *maskImages;
+
+@property (nonatomic, strong) MazeContainerView *currentMazeView;
+@property (nonatomic, strong) MazeContainerView *otherMazeView;
+
+@property (nonatomic, strong) UIView *overlayView;
+
+@property (nonatomic, strong) NSArray *brickMarkers;
 
 @end
 
@@ -56,10 +61,13 @@
 - (void)initialize {
     self.backgroundColor = [UIColor blackColor];
 
-    self.mazeImageView = [[UIImageView alloc] initWithFrame:[Constants instance].gridRect];
-    self.mazeImageView.contentMode = UIViewContentModeScaleToFill;
-    self.mazeImageView.alpha = 0.0f;
-    [self addSubview:self.mazeImageView];
+    self.borderSize = CGSizeMake(2.0f, 2.0f);
+
+    self.otherMazeView = [[MazeContainerView alloc] init];
+    [self addSubview:self.otherMazeView];
+
+    self.currentMazeView = [[MazeContainerView alloc] init];
+    [self addSubview:self.currentMazeView];
 
     self.titleImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Title"]];
     self.titleImageView.frame = self.bounds;
@@ -67,23 +75,31 @@
     self.titleImageView.alpha = 0.0f;
     [self addSubview:self.titleImageView];
     
-    self.borderSize = CGSizeMake(2.0f, 2.0f);
-
-    self.mazeMask = [CALayer layer];
-    self.mazeMask.anchorPoint = CGPointMake(0.0f, 0.0f);
-    self.mazeMask.bounds = self.mazeImageView.bounds;
-    self.mazeImageView.layer.mask = self.mazeMask;
-    
     NSMutableArray *images = [NSMutableArray array];
     for (int i = 0; i < 17; i++) {
         [images addObject:[UIImage imageNamed:[NSString stringWithFormat:@"Brick Mask %i", i]]];
     }
     self.maskImages = [images copy];
+    
+    self.overlayView = [[UIView alloc] initWithFrame:[Constants instance].gridRect];
+    self.overlayView.backgroundColor = [UIColor clearColor];
+    [self addSubview:self.overlayView];
+    
+    UIImage *brickMarkerImage = [UIImage imageNamed:@"Brick Marker"];
+    NSMutableArray *markers = [NSMutableArray array];
+    for (int i = 0; i < MAX_PLAYERS; i++) {
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:brickMarkerImage];
+        imageView.contentMode = UIViewContentModeScaleToFill;
+        imageView.alpha = 0.0f;
+        [markers addObject:imageView];
+        [self.overlayView addSubview:imageView];
+    }
+    self.brickMarkers = [markers copy];
 }
 
 - (void)didAppear {
     [super didAppear];
-    [UIView animateWithDuration:1.0f animations:^{
+    [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
         self.titleImageView.alpha = 1.0f;
     }];
 }
@@ -92,7 +108,7 @@
 }
 
 - (void)drawMaze {
-    UIGraphicsBeginImageContextWithOptions(self.mazeImageView.frame.size, NO, 1.0f);
+    UIGraphicsBeginImageContextWithOptions(self.currentMazeView.mazeImageView.frame.size, NO, 1.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextSetFillColorWithColor(context, [UIColor redColor].CGColor);
@@ -119,11 +135,15 @@
         }
     }
     
-    self.mazeImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    self.currentMazeView.mazeImageView.image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 }
 
 - (void)drawMask {
+    [self drawMaskWithReachDistance:[MazeModel instance].playerReachDistance];
+}
+
+- (void)drawMaskWithReachDistance:(int)reachDistance {
     int maskMap[[MazeModel instance].height][[MazeModel instance].width];
     for (int i = 0; i < [MazeModel instance].height; i++) {
         for (int j = 0; j < [MazeModel instance].width; j++) {
@@ -134,14 +154,14 @@
         if (![[MazeModel instance] isPlayerEnabled:i]) {
             continue;
         }
-        int mask = i == [MazeModel instance].currentPlayer ? 2 : 1;
-        NSArray *reachableEntries = [[MazeModel instance] reachableEntriesForPlayer:i];
+        NSArray *reachableEntries = [[MazeModel instance] reachableEntriesForPlayer:i reachDistance:reachDistance];
         for (MazeEntry *entry in reachableEntries) {
+            int mask = i == [MazeModel instance].currentPlayer || [MazeModel instance].currentPlayer == -1 ? 2 : 1;
             maskMap[entry.y][entry.x] = MAX(mask, maskMap[entry.y][entry.x]);
         }
     }
 
-    UIGraphicsBeginImageContextWithOptions(self.mazeImageView.frame.size, NO, 1.0f);
+    UIGraphicsBeginImageContextWithOptions(self.currentMazeView.mazeImageView.frame.size, NO, 1.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:0.0f].CGColor);
@@ -180,7 +200,7 @@
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
 
-    self.mazeMask.contents = (id)image.CGImage;
+    self.currentMazeView.maskLayer.contents = (id)image.CGImage;
     UIGraphicsEndImageContext();
 }
 
@@ -297,9 +317,44 @@
                       [Constants instance].brickSize.height);
 }
 
-- (void)showMaze {
-    [UIView animateWithDuration:1.0f animations:^{
-        self.mazeImageView.alpha = 1.0f;
+- (void)showInitialPlacement {
+    [self drawMaskWithReachDistance:1];
+    [self showBrickMarkers];
+    [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
+        self.currentMazeView.alpha = 1.0f;
+    }];
+}
+
+- (void)showBrickMarkers {
+    for (int i = 0; i < MAX_PLAYERS; i++) {
+        [self showBrickMarker:i];
+    }
+}
+
+- (void)hideBrickMarkers {
+    for (int i = 0; i < MAX_PLAYERS; i++) {
+        [self hideBrickMarker:i];
+    }
+}
+
+- (void)showBrickMarker:(int)player {
+    UIImageView *markerView = [self.brickMarkers objectAtIndex:player];
+
+    markerView.frame = [self rectForEntry:[[MazeModel instance] entryForPlayer:player]];
+    markerView.alpha = 0.0f;
+    markerView.hidden = NO;
+
+    [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
+        markerView.alpha = 1.0f;
+    }];
+}
+
+- (void)hideBrickMarker:(int)player {
+    UIImageView *markerView = [self.brickMarkers objectAtIndex:player];
+    [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
+        markerView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        markerView.hidden = YES;
     }];
 }
 

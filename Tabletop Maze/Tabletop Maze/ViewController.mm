@@ -69,8 +69,7 @@
 
 - (void)didGenerateMaze {
     [self.mazeView drawMaze];
-    [self.mazeView drawMask];
-    [self.mazeView showMaze];
+    [self.mazeView showInitialPlacement];
 }
 
 - (void)initializePlayers {
