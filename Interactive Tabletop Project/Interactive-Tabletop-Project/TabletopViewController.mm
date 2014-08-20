@@ -27,6 +27,7 @@
 #import "BoardCalibrator.h"
 #import "ExternalDisplay.h"
 #import "ExternalDislayCalibrationView.h"
+#import "FakeCameraUtil.h"
 #import "UIImage+CaptureScreen.h"
 #import "Constants.h"
 
@@ -194,16 +195,23 @@
 
 - (UIImage *)simulatedBorderedImage {
     CGSize size = CGSizeMake(self.tabletopBorderView.frame.size.width * 1.2f, self.tabletopBorderView.frame.size.height * 1.2f);
+
+    CGRect tabletopRect = CGRectMake((size.width - self.tabletopBorderView.bounds.size.width) / 2.0f, (size.height - self.tabletopBorderView.bounds.size.height) / 2.0f, self.tabletopBorderView.bounds.size.width, self.tabletopBorderView.bounds.size.height);
+
     UIGraphicsBeginImageContextWithOptions(size, NO, 1.0f);
     
     CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(), [UIColor blackColor].CGColor);
     CGContextFillRect(UIGraphicsGetCurrentContext(), CGRectMake(0.0f, 0.0f, size.width, size.height));
     
-    [[UIImage imageWithView:self.tabletopBorderView] drawInRect:CGRectMake((size.width - self.tabletopBorderView.bounds.size.width) / 2.0f, (size.height - self.tabletopBorderView.bounds.size.height) / 2.0f, self.tabletopBorderView.bounds.size.width, self.tabletopBorderView.bounds.size.height)];
+    [[UIImage imageWithView:self.tabletopBorderView] drawInRect:tabletopRect];
     [[UIImage imageWithView:self.tabletopView] drawInRect:CGRectMake((size.width - self.tabletopView.bounds.size.width) / 2.0f, (size.height - self.tabletopView.bounds.size.height) / 2.0f, self.tabletopView.bounds.size.width, self.tabletopView.bounds.size.height)];
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+
     UIGraphicsEndImageContext();
+
+    image = [[FakeCameraUtil instance] drawBricksOnImage:image inRect:tabletopRect];
+
     return image;
 }
 

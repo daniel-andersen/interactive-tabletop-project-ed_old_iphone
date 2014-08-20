@@ -56,6 +56,7 @@
 @property (nonatomic, readonly) int state;
 @property (nonatomic, readonly) BoardBounds boardBounds;
 @property (nonatomic, readonly) cv::Mat boardImage;
+@property (nonatomic, readonly) CGSize boardImageSize;
 @property (nonatomic, strong) NSObject *boardImageLock;
 @property (nonatomic, readonly) FourPoints screenPoints;
 

@@ -27,6 +27,8 @@
 #import "MazeContainerView.h"
 #import "MazeModel.h"
 #import "MazeConstants.h"
+#import "BoardCalibrator.h"
+#import "BrickRecognizer.h"
 #import "Constants.h"
 #import "Util.h"
 
@@ -105,6 +107,20 @@
 }
 
 - (void)update {
+    if (![BoardCalibrator instance].isBoardRecognized) {
+        return;
+    }
+    cv::vector<cv::Point> positions;
+    for (MazeEntry *entry in [[MazeModel instance] reachableEntriesForPlayer:0 reachDistance:1]) {
+        positions.push_back(cv::Point(entry.x, entry.y));
+    }
+    /*for (int i = 1; i < 5; i++) {
+        for (int j = 1; j < 5; j++) {
+            positions.push_back(cv::Point(j, i));
+        }
+    }*/
+    cv::Point p = [[BrickRecognizer instance] positionOfBrickAtLocations:positions];
+    NSLog(@"%i, %i", p.x, p.y);
 }
 
 - (void)drawMaze {

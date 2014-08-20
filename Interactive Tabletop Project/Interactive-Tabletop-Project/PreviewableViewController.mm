@@ -274,7 +274,7 @@ PreviewableViewController *previewInstance = nil;
     }
     if (!boardPreview.hidden) {
         if (![CameraSession instance].initialized && [Constants instance].gridSize.width > 0) {
-            simulatorBricksView.image = [[FakeCameraUtil instance] drawBricksWithSize:simulatorBricksView.frame.size];
+            //simulatorBricksView.image = [[FakeCameraUtil instance] drawBricksWithSize:simulatorBricksView.frame.size];
         }
     }
 }

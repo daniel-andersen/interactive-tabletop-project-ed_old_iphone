@@ -46,6 +46,7 @@ BoardCalibrator *boardCalibratorInstance = nil;
 @synthesize boardBounds;
 @synthesize screenPoints;
 @synthesize boardImage;
+@synthesize boardImageSize;
 @synthesize boardImageLock;
 
 + (BoardCalibrator *)instance {
@@ -105,6 +106,7 @@ BoardCalibrator *boardCalibratorInstance = nil;
         state = BOARD_CALIBRATION_STATE_CALIBRATED;
         @synchronized(boardImageLock) {
             boardImage = [self perspectiveCorrectImage:image];
+            boardImageSize = CGSizeMake(boardImage.cols, boardImage.rows);
         }
         //[cameraSession lock];
     } else {

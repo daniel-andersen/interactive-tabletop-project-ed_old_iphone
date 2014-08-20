@@ -101,7 +101,7 @@ FakeCameraUtil *fakeCameraUtilInstance = nil;
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    [self drawBricksInContext:context withSize:size];
+    [self drawBricksInContext:context inRect:CGRectMake(0.0f, 0.0f, size.width, size.height)];
     
     UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();
     
@@ -110,13 +110,13 @@ FakeCameraUtil *fakeCameraUtilInstance = nil;
     return outputImage;
 }
 
-- (UIImage *)drawBricksOnImage:(UIImage *)image {
+- (UIImage *)drawBricksOnImage:(UIImage *)image inRect:(CGRect)rect {
     UIGraphicsBeginImageContextWithOptions(image.size, NO, 1.0f);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, image.size.width, image.size.height), image.CGImage);
-    [self drawBricksInContext:context withSize:image.size];
+    [self drawBricksInContext:context inRect:rect];
     
     UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();
     
@@ -125,13 +125,15 @@ FakeCameraUtil *fakeCameraUtilInstance = nil;
     return outputImage;
 }
 
-- (void)drawBricksInContext:(CGContextRef)context withSize:(CGSize)size {
+- (void)drawBricksInContext:(CGContextRef)context inRect:(CGRect)destRect {
     for (int i = 0; i < [Constants instance].gridSize.height; i++) {
         NSArray *rowArray = [self.brickChecked objectAtIndex:i];
         for (int j = 0; j < [Constants instance].gridSize.width; j++) {
             NSNumber *checked = [rowArray objectAtIndex:j];
             if (checked.boolValue) {
-                CGRect rect = [[BoardUtil instance] brickScreenRect:cv::Point(j, i)];
+                CGRect rect = [[BoardUtil instance] brickRectWithPosition:cv::Point(j, i) screenSize:destRect.size];
+                rect.origin.x += destRect.origin.x;
+                rect.origin.y += destRect.origin.y;
                 rect.origin.x += 2.0f;
                 rect.origin.y += 2.0f;
                 rect.size.width -= 4.0f;

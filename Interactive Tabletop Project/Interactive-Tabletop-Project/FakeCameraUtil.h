@@ -34,7 +34,7 @@
 - (UIImage *)fakeOutputImage;
 
 - (UIImage *)drawBricksWithSize:(CGSize)size;
-- (UIImage *)drawBricksOnImage:(UIImage *)image;
+- (UIImage *)drawBricksOnImage:(UIImage *)image inRect:(CGRect)rect;
 
 - (void)clickAtPoint:(cv::Point)p;
 
