@@ -171,8 +171,6 @@ enum GameState {
     self.gameState = PLACE_PLAYERS;
 
     [self drawMaze];
-    [self swapMazeViews];
-    [self drawMaze];
 
     self.otherMazeView.alpha = 1.0f;
     self.currentMazeView.alpha = 1.0f;
@@ -321,6 +319,7 @@ enum GameState {
     }
     
     self.currentMazeView.mazeImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    self.otherMazeView.mazeImageView.image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 }
 
@@ -349,7 +348,7 @@ enum GameState {
     UIGraphicsBeginImageContextWithOptions(self.currentMazeView.mazeImageView.frame.size, NO, 1.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:0.5f].CGColor);
+    CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:0.0f].CGColor);
     CGContextFillRect(context, self.bounds);
 
     if (self.gameState != NEW_GAME) {
