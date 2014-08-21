@@ -54,6 +54,8 @@ enum GameState {
 
 @property (nonatomic, strong) UIView *overlayView;
 
+@property (nonatomic, strong) UIImageView *treasureImageView;
+
 @property (nonatomic, strong) NSArray *brickMarkers;
 
 @property (nonatomic, assign) enum GameState gameState;
@@ -101,13 +103,21 @@ enum GameState {
     UIImage *brickMarkerImage = [UIImage imageNamed:@"Brick Marker"];
     NSMutableArray *markers = [NSMutableArray array];
     for (int i = 0; i < MAX_PLAYERS; i++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:brickMarkerImage];
-        imageView.contentMode = UIViewContentModeScaleToFill;
-        imageView.alpha = 0.0f;
+        UIImageView *imageView = [self brickImageViewWithImage:brickMarkerImage];
         [markers addObject:imageView];
         [self.overlayView addSubview:imageView];
     }
     self.brickMarkers = [markers copy];
+    
+    self.treasureImageView = [self brickImageViewWithImage:[UIImage imageNamed:@"Treasure"]];
+    [self.overlayView addSubview:self.treasureImageView];
+}
+
+- (UIImageView *)brickImageViewWithImage:(UIImage *)image {
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.contentMode = UIViewContentModeScaleToFill;
+    imageView.alpha = 0.0f;
+    return imageView;
 }
 
 - (void)didAppear {
@@ -161,6 +171,12 @@ enum GameState {
     [self updateMask];
 }
 
+- (void)startPlayerTurn {
+    [self hideLogo];
+    [self hideBrickMarkers];
+    [self showTreasure];
+}
+
 - (void)update {
     switch (self.gameState) {
         case PLACE_PLAYERS:
@@ -191,8 +207,7 @@ enum GameState {
             }
         } else {
             if (position.x != -1 && position != [[MazeModel instance] positionOfPlayer:i] && [MazeModel instance].currentPlayer == i) {
-                [self hideLogo];
-                [self hideBrickMarkers];
+                [self startPlayerTurn];
                 [self movePlayerToPosition:position];
             }
         }
@@ -297,6 +312,10 @@ enum GameState {
             int mask = i == [MazeModel instance].currentPlayer || (self.gameState == PLACE_PLAYERS && ![[MazeModel instance] isPlayerEnabled:i]) ? 2 : 1;
             maskMap[entry.y][entry.x] = MAX(mask, maskMap[entry.y][entry.x]);
         }
+    }
+    if (self.gameState == PLAYER_TURN) {
+        cv::Point p = [[MazeModel instance] positionOfTreasure];
+        maskMap[p.y][p.x] = MAX(2, maskMap[p.y][p.x]);
     }
 
     UIGraphicsBeginImageContextWithOptions(self.currentMazeView.mazeImageView.frame.size, NO, 1.0f);
@@ -449,8 +468,12 @@ enum GameState {
 }
 
 - (CGRect)rectForEntry:(MazeEntry *)entry {
-    return CGRectMake(entry.x * [Constants instance].brickSize.width,
-                      entry.y * [Constants instance].brickSize.height,
+    return [self rectForPosition:entry.position];
+}
+
+- (CGRect)rectForPosition:(cv::Point)position {
+    return CGRectMake(position.x * [Constants instance].brickSize.width,
+                      position.y * [Constants instance].brickSize.height,
                       [Constants instance].brickSize.width,
                       [Constants instance].brickSize.height);
 }
@@ -512,6 +535,24 @@ enum GameState {
         markerView.alpha = 0.0f;
     } completion:^(BOOL finished) {
         markerView.hidden = YES;
+    }];
+}
+
+- (void)showTreasure {
+    self.treasureImageView.frame = [self rectForPosition:[[MazeModel instance] positionOfTreasure]];
+    self.treasureImageView.alpha = 0.0f;
+    self.treasureImageView.hidden = NO;
+    
+    [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
+        self.treasureImageView.alpha = 1.0f;
+    }];
+}
+
+- (void)hideTreasure {
+    [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
+        self.treasureImageView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        self.treasureImageView.hidden = YES;
     }];
 }
 
