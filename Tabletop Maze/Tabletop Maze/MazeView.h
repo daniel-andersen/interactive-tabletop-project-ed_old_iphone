@@ -27,8 +27,6 @@
 
 @interface MazeView : TabletopView
 
-- (void)drawMaze;
-
-- (void)showInitialPlacement;
+- (void)start;
 
 @end

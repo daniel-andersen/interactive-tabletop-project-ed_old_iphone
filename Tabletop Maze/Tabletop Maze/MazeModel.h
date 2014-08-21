@@ -61,11 +61,14 @@
 - (MazeEntry *)entryAtX:(int)x y:(int)y;
 - (MazeEntry *)entryAtPosition:(cv::Point2i)position;
 
+- (void)setPositionOfPlayer:(int)player position:(cv::Point2i)position;
 - (cv::Point2i)positionOfPlayer:(int)player;
 - (cv::Point2i)positionOfTreasure;
 
 - (MazeEntry *)entryForPlayer:(int)player;
 
+- (void)enablePlayer:(int)player;
+- (void)disablePlayer:(int)player;
 - (bool)isPlayerEnabled:(int)player;
 
 - (NSArray *)reachableEntriesForPlayer:(int)player;

@@ -50,27 +50,18 @@ BrickRecognizer *brickRecognizerInstance = nil;
 
 - (cv::Point)positionOfBrickAtLocations:(cv::vector<cv::Point>)locations {
     @synchronized([BoardCalibrator instance].boardImageLock) {
-        /*NSLog(@"----------");
-        NSLog(@"%i, %i", [BoardCalibrator instance].boardImage.cols, [BoardCalibrator instance].boardImage.rows);
-        NSLog(@"%f, %f", [[BoardUtil instance] singleBrickScreenSize].width, [[BoardUtil instance] singleBrickScreenSize].height);
-        NSLog(@"%f, %f", [[BoardUtil instance] singleBrickScreenSize].width * 26, [[BoardUtil instance] singleBrickScreenSize].height * 14);*/
-        
         cv::Mat brickImages = [self tiledImageFromLocations:locations];
         
         MedianMinMax medianMinMax = [self medianMinMaxFromLocations:locations inTiledImage:brickImages];
-        //NSLog(@"Median: %f - %f = %f", medianMinMax.min, medianMinMax.max, medianMinMax.max - medianMinMax.min);
         if (medianMinMax.max - medianMinMax.min < BRICK_RECOGNITION_MINIMUM_MEDIAN_DELTA) {
             return cv::Point(-1, -1);
         }
         cv::vector<float> probabilities = [self probabilitiesOfBricksAtLocations:locations];
         float maxProbability = [self maxProbabilityFromProbabilities:probabilities];
         float secondMaxProbability = [self secondMaxProbabilityFromProbabilities:probabilities];
-        //NSLog(@"%f", maxProbability);
-        NSLog(@"%f, %f", maxProbability, secondMaxProbability);
         if (maxProbability < BRICK_RECOGNITION_MINIMUM_PROBABILITY || secondMaxProbability >= BRICK_RECOGNITION_MINIMUM_PROBABILITY) {
             return cv::Point(-1, -1);
         }
-        //NSLog(@"BRICK!");
         return [self maxProbabilityPositionFromLocations:locations probabilities:probabilities];
     }
 }

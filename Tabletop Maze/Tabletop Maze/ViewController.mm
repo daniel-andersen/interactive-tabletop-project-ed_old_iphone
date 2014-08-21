@@ -52,28 +52,7 @@
     self.mazeView = [[MazeView alloc] init];
     self.tabletopView = self.mazeView;
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [self createMaze];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self didGenerateMaze];
-        });
-    });
-}
-
-- (void)createMaze {
-    [MazeModel instance].width = (int)[Constants instance].gridSize.width;
-    [MazeModel instance].height = (int)[Constants instance].gridSize.height;
-
-    [[MazeModel instance] createRandomMaze];
-}
-
-- (void)didGenerateMaze {
-    [self.mazeView drawMaze];
-    [self.mazeView showInitialPlacement];
-}
-
-- (void)initializePlayers {
-    
+    [self.mazeView start];
 }
 
 @end

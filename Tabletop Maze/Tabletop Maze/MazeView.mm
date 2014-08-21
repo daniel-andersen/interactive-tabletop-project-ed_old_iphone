@@ -34,6 +34,13 @@
 
 #define BRICK_TYPE_COUNT 6
 
+enum GameState {
+    INITIALIZING,
+    NEW_GAME,
+    PLACE_PLAYERS,
+    PLAYER_TURN
+};
+
 @interface MazeView ()
 
 @property (nonatomic, strong) UIImageView *titleImageView;
@@ -49,6 +56,8 @@
 
 @property (nonatomic, strong) NSArray *brickMarkers;
 
+@property (nonatomic, assign) enum GameState gameState;
+
 @end
 
 @implementation MazeView
@@ -63,6 +72,8 @@
 - (void)initialize {
     self.backgroundColor = [UIColor blackColor];
 
+    self.gameState = PLACE_PLAYERS;
+    
     self.borderSize = CGSizeMake(2.0f, 2.0f);
 
     self.otherMazeView = [[MazeContainerView alloc] init];
@@ -101,26 +112,141 @@
 
 - (void)didAppear {
     [super didAppear];
+}
+
+- (void)showLogo {
+    self.titleImageView.alpha = 0.0f;
+    self.titleImageView.hidden = NO;
     [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
         self.titleImageView.alpha = 1.0f;
     }];
 }
 
+- (void)hideLogo {
+    [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
+        self.titleImageView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        self.titleImageView.hidden = YES;
+    }];
+}
+
+- (void)start {
+    NSLog(@"Start");
+    [self startNewGame];
+}
+
+- (void)startNewGame {
+    NSLog(@"Start new game");
+    self.gameState = NEW_GAME;
+
+    for (int i = 0; i < MAX_PLAYERS; i++) {
+        [[MazeModel instance] disablePlayer:i];
+    }
+    [MazeModel instance].currentPlayer = -1;
+
+    [self showLogo];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [self createMaze];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self didGenerateMaze];
+        });
+    });
+}
+
+- (void)startPlacePlayers {
+    NSLog(@"Start place players");
+    self.gameState = PLACE_PLAYERS;
+    [self showBrickMarkers];
+    [self updateMask];
+}
+
 - (void)update {
-    if (![BoardCalibrator instance].isBoardRecognized) {
+    switch (self.gameState) {
+        case PLACE_PLAYERS:
+            [self updatePlacePlayers];
+            break;
+        case PLAYER_TURN:
+            [self updatePlayerTurn];
+        default:
+            break;
+    }
+}
+
+- (void)updatePlacePlayers {
+    if (![BoardCalibrator instance].isBoardFullyRecognized) {
         return;
     }
+    bool refreshMask = NO;
+    for (int i = 0; i < MAX_PLAYERS; i++) {
+        cv::Point position = [self findPlayerPosition:i];
+        if (![[MazeModel instance] isPlayerEnabled:i]) {
+            if (position == [[MazeModel instance] positionOfPlayer:i]) {
+                [[MazeModel instance] enablePlayer:i];
+                [self hideBrickMarker:i];
+                if ([MazeModel instance].currentPlayer == -1) {
+                    [MazeModel instance].currentPlayer = i;
+                }
+                refreshMask = YES;
+            }
+        } else {
+            if (position.x != -1 && position != [[MazeModel instance] positionOfPlayer:i] && [MazeModel instance].currentPlayer == i) {
+                [self hideLogo];
+                [self hideBrickMarkers];
+                [self movePlayerToPosition:position];
+            }
+        }
+        
+    }
+    if (refreshMask) {
+        [self updateMask];
+    }
+}
+
+- (void)updatePlayerTurn {
+    if (![BoardCalibrator instance].isBoardFullyRecognized) {
+        return;
+    }
+    cv::Point position = [self findPlayerPosition:[MazeModel instance].currentPlayer];
+    if (position.x != -1 && position != [[MazeModel instance] positionOfPlayer:[MazeModel instance].currentPlayer]) {
+        [self movePlayerToPosition:position];
+    }
+}
+
+- (void)movePlayerToPosition:(cv::Point)position {
+    [[MazeModel instance] setPositionOfPlayer:[MazeModel instance].currentPlayer position:position];
+    [self nextPlayer];
+}
+
+- (void)nextPlayer {
+    self.gameState = PLAYER_TURN;
+    do {
+        [MazeModel instance].currentPlayer = ([MazeModel instance].currentPlayer + 1) % MAX_PLAYERS;
+    } while (![[MazeModel instance] isPlayerEnabled:[MazeModel instance].currentPlayer]);
+    [self updateMask];
+}
+
+- (cv::Point)findPlayerPosition:(int)player {
     cv::vector<cv::Point> positions;
-    for (MazeEntry *entry in [[MazeModel instance] reachableEntriesForPlayer:0 reachDistance:1]) {
+    for (MazeEntry *entry in [[MazeModel instance] reachableEntriesForPlayer:player reachDistance:[self playerReachDistance:player]]) {
         positions.push_back(cv::Point(entry.x, entry.y));
     }
-    /*for (int i = 1; i < 5; i++) {
-        for (int j = 1; j < 5; j++) {
-            positions.push_back(cv::Point(j, i));
-        }
-    }*/
-    cv::Point p = [[BrickRecognizer instance] positionOfBrickAtLocations:positions];
-    NSLog(@"%i, %i", p.x, p.y);
+    return [[BrickRecognizer instance] positionOfBrickAtLocations:positions];
+}
+
+- (void)createMaze {
+    [MazeModel instance].width = (int)[Constants instance].gridSize.width;
+    [MazeModel instance].height = (int)[Constants instance].gridSize.height;
+    
+    [[MazeModel instance] createRandomMaze];
+}
+
+- (void)didGenerateMaze {
+    [self drawMaze];
+    [self swapMazeViews];
+    [self drawMaze];
+
+    [self startPlacePlayers];
 }
 
 - (void)drawMaze {
@@ -156,10 +282,6 @@
 }
 
 - (void)drawMask {
-    [self drawMaskWithReachDistance:[MazeModel instance].playerReachDistance];
-}
-
-- (void)drawMaskWithReachDistance:(int)reachDistance {
     int maskMap[[MazeModel instance].height][[MazeModel instance].width];
     for (int i = 0; i < [MazeModel instance].height; i++) {
         for (int j = 0; j < [MazeModel instance].width; j++) {
@@ -167,12 +289,12 @@
         }
     }
     for (int i = 0; i < MAX_PLAYERS; i++) {
-        if (![[MazeModel instance] isPlayerEnabled:i]) {
+        if (![[MazeModel instance] isPlayerEnabled:i] && self.gameState != PLACE_PLAYERS) {
             continue;
         }
-        NSArray *reachableEntries = [[MazeModel instance] reachableEntriesForPlayer:i reachDistance:reachDistance];
+        NSArray *reachableEntries = [[MazeModel instance] reachableEntriesForPlayer:i reachDistance:[self playerReachDistance:i]];
         for (MazeEntry *entry in reachableEntries) {
-            int mask = i == [MazeModel instance].currentPlayer || [MazeModel instance].currentPlayer == -1 ? 2 : 1;
+            int mask = i == [MazeModel instance].currentPlayer || (self.gameState == PLACE_PLAYERS && ![[MazeModel instance] isPlayerEnabled:i]) ? 2 : 1;
             maskMap[entry.y][entry.x] = MAX(mask, maskMap[entry.y][entry.x]);
         }
     }
@@ -333,12 +455,31 @@
                       [Constants instance].brickSize.height);
 }
 
-- (void)showInitialPlacement {
-    [self drawMaskWithReachDistance:1];
-    [self showBrickMarkers];
+- (int)playerReachDistance:(int)player {
+    return self.gameState == PLACE_PLAYERS && ![[MazeModel instance] isPlayerEnabled:player] ? 1 : [MazeModel instance].playerReachDistance;
+}
+
+- (void)updateMask {
+    [self swapMazeViews];
+
+    [self drawMask];
+
+    [self sendSubviewToBack:self.currentMazeView];
+    
+    self.currentMazeView.alpha = 1.0f;
+    self.currentMazeView.hidden = NO;
+    
     [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
-        self.currentMazeView.alpha = 1.0f;
+        self.otherMazeView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        self.otherMazeView.hidden = YES;
     }];
+}
+
+- (void)swapMazeViews {
+    MazeContainerView *tmpView = self.currentMazeView;
+    self.currentMazeView = self.otherMazeView;
+    self.otherMazeView = tmpView;
 }
 
 - (void)showBrickMarkers {

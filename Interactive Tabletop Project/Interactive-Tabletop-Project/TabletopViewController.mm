@@ -200,11 +200,13 @@
 
     UIGraphicsBeginImageContextWithOptions(size, NO, 1.0f);
     
-    CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(), [UIColor blackColor].CGColor);
-    CGContextFillRect(UIGraphicsGetCurrentContext(), CGRectMake(0.0f, 0.0f, size.width, size.height));
+    CGContextRef context = UIGraphicsGetCurrentContext();
     
-    [[UIImage imageWithView:self.tabletopBorderView] drawInRect:tabletopRect];
-    [[UIImage imageWithView:self.tabletopView] drawInRect:CGRectMake((size.width - self.tabletopView.bounds.size.width) / 2.0f, (size.height - self.tabletopView.bounds.size.height) / 2.0f, self.tabletopView.bounds.size.width, self.tabletopView.bounds.size.height)];
+    CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
+    CGContextFillRect(context, CGRectMake(0.0f, 0.0f, size.width, size.height));
+    
+    CGContextDrawImage(context, tabletopRect, [UIImage imageWithView:self.tabletopBorderView].CGImage);
+    CGContextDrawImage(context, CGRectMake((size.width - self.tabletopView.bounds.size.width) / 2.0f, (size.height - self.tabletopView.bounds.size.height) / 2.0f, self.tabletopView.bounds.size.width, self.tabletopView.bounds.size.height), [UIImage imageWithView:self.tabletopView].CGImage);
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
 

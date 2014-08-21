@@ -20,7 +20,6 @@
 
 - (void)initialize {
     self.backgroundColor = [UIColor blackColor];
-    self.alpha = 0.0f;
     
     self.mazeImageView = [[UIImageView alloc] initWithFrame:self.bounds];
     self.mazeImageView.contentMode = UIViewContentModeScaleToFill;

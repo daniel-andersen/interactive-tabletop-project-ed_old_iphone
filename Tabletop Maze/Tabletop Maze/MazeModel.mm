@@ -67,9 +67,6 @@ MazeModel *mazeModelInstance = nil;
     self.height = 20;
     self.playerReachDistance = 4;
     self.currentPlayer = -1;
-    for (int i = 0; i < MAX_PLAYERS; i++) {
-        playerEnabled[i] = YES;
-    }
 }
 
 - (void)createRandomMaze {
@@ -370,6 +367,10 @@ MazeModel *mazeModelInstance = nil;
     return [self entryAtX:position.x y:position.y];
 }
 
+- (void)setPositionOfPlayer:(int)player position:(cv::Point2i)position {
+    playerPosition[player] = position;
+}
+
 - (cv::Point2i)positionOfPlayer:(int)player {
     return playerPosition[player];
 }
@@ -382,9 +383,18 @@ MazeModel *mazeModelInstance = nil;
     return [self entryAtPosition:[self positionOfPlayer:player]];
 }
 
+- (void)disablePlayer:(int)player {
+    playerEnabled[player] = NO;
+}
+
+- (void)enablePlayer:(int)player {
+    playerEnabled[player] = YES;
+}
+
 - (bool)isPlayerEnabled:(int)player {
     return playerEnabled[player];
 }
+
 @end
 
 
