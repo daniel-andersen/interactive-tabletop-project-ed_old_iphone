@@ -75,7 +75,7 @@ enum GameState {
 - (void)initialize {
     self.backgroundColor = [UIColor blackColor];
 
-    self.gameState = PLACE_PLAYERS;
+    self.gameState = INITIALIZING;
     
     self.borderSize = CGSizeMake(2.0f, 2.0f);
 
@@ -155,6 +155,7 @@ enum GameState {
     }
     [MazeModel instance].currentPlayer = -1;
 
+    [self hideMaze];
     [self showLogo];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
@@ -168,6 +169,14 @@ enum GameState {
 - (void)startPlacePlayers {
     NSLog(@"Start place players");
     self.gameState = PLACE_PLAYERS;
+
+    [self drawMaze];
+    [self swapMazeViews];
+    [self drawMaze];
+
+    self.otherMazeView.alpha = 1.0f;
+    self.currentMazeView.alpha = 1.0f;
+
     [self showBrickMarkers];
     [self updateMask];
 }
@@ -235,7 +244,24 @@ enum GameState {
 
 - (void)movePlayerToPosition:(cv::Point)position {
     [[MazeModel instance] setPositionOfPlayer:[MazeModel instance].currentPlayer position:position];
-    [self nextPlayer];
+    if (position == [[MazeModel instance] positionOfTreasure]) {
+        [self updateMask];
+        self.gameState = WAIT;
+        [self performSelector:@selector(endGame) withObject:nil afterDelay:[Constants instance].defaultViewAnimationDuration];
+    } else {
+        [self nextPlayer];
+    }
+}
+
+- (void)endGame {
+    [UIView animateWithDuration:5.0f animations:^{
+        self.treasureImageView.frame = CGRectMake(self.treasureImageView.frame.origin.x - (self.treasureImageView.frame.size.width * 2.0f),
+                                                  self.treasureImageView.frame.origin.y - (self.treasureImageView.frame.size.height * 2.0f),
+                                                  self.treasureImageView.frame.size.width * 5.0f,
+                                                  self.treasureImageView.frame.size.height * 5.0f);
+    } completion:^(BOOL finished) {
+        [self startNewGame];
+    }];
 }
 
 - (void)nextPlayer {
@@ -263,10 +289,6 @@ enum GameState {
 }
 
 - (void)didGenerateMaze {
-    [self drawMaze];
-    [self swapMazeViews];
-    [self drawMaze];
-
     [self performSelector:@selector(startPlacePlayers) withObject:nil afterDelay:2.0f];
 }
 
@@ -327,37 +349,39 @@ enum GameState {
     UIGraphicsBeginImageContextWithOptions(self.currentMazeView.mazeImageView.frame.size, NO, 1.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:0.0f].CGColor);
+    CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:0.5f].CGColor);
     CGContextFillRect(context, self.bounds);
 
-    for (int i = 0; i < [MazeModel instance].height; i++) {
-        for (int j = 0; j < [MazeModel instance].width; j++) {
-            MazeEntry *entry = [[MazeModel instance] entryAtX:j y:i];
-            int alphaBit = maskMap[i][j];
-            int maskBit = 0;
-            if (maskMap[i][j] > 0) {
-                maskBit = 16;
-            } else {
-                if (![entry hasBorder:BORDER_UP] && maskMap[i - 1][j] > 0) {
-                    maskBit |= (1 << 0);
-                    alphaBit = MAX(alphaBit, maskMap[i - 1][j]);
+    if (self.gameState != NEW_GAME) {
+        for (int i = 0; i < [MazeModel instance].height; i++) {
+            for (int j = 0; j < [MazeModel instance].width; j++) {
+                MazeEntry *entry = [[MazeModel instance] entryAtX:j y:i];
+                int alphaBit = maskMap[i][j];
+                int maskBit = 0;
+                if (maskMap[i][j] > 0) {
+                    maskBit = 16;
+                } else {
+                    if (![entry hasBorder:BORDER_UP] && maskMap[i - 1][j] > 0) {
+                        maskBit |= (1 << 0);
+                        alphaBit = MAX(alphaBit, maskMap[i - 1][j]);
+                    }
+                    if (![entry hasBorder:BORDER_RIGHT] && maskMap[i][j + 1] > 0) {
+                        maskBit |= (1 << 1);
+                        alphaBit = MAX(alphaBit, maskMap[i][j + 1]);
+                    }
+                    if (![entry hasBorder:BORDER_DOWN] && maskMap[i + 1][j] > 0) {
+                        maskBit |= (1 << 2);
+                        alphaBit = MAX(alphaBit, maskMap[i + 1][j]);
+                    }
+                    if (![entry hasBorder:BORDER_LEFT] && maskMap[i][j - 1] > 0) {
+                        maskBit |= (1 << 3);
+                        alphaBit = MAX(alphaBit, maskMap[i][j - 1]);
+                    }
                 }
-                if (![entry hasBorder:BORDER_RIGHT] && maskMap[i][j + 1] > 0) {
-                    maskBit |= (1 << 1);
-                    alphaBit = MAX(alphaBit, maskMap[i][j + 1]);
-                }
-                if (![entry hasBorder:BORDER_DOWN] && maskMap[i + 1][j] > 0) {
-                    maskBit |= (1 << 2);
-                    alphaBit = MAX(alphaBit, maskMap[i + 1][j]);
-                }
-                if (![entry hasBorder:BORDER_LEFT] && maskMap[i][j - 1] > 0) {
-                    maskBit |= (1 << 3);
-                    alphaBit = MAX(alphaBit, maskMap[i][j - 1]);
-                }
+                float alpha = alphaBit == 0 ? 0.0f : (alphaBit == 1 ? 0.2f : 1.0f);
+                UIImage *image = [self.maskImages objectAtIndex:maskBit];
+                [image drawInRect:[self rectForEntry:entry] blendMode:kCGBlendModeNormal alpha:alpha];
             }
-            float alpha = alphaBit == 0 ? 0.0f : (alphaBit == 1 ? 0.2f : 1.0f);
-            UIImage *image = [self.maskImages objectAtIndex:maskBit];
-            [image drawInRect:[self rectForEntry:entry] blendMode:kCGBlendModeNormal alpha:alpha];
         }
     }
     
@@ -559,6 +583,20 @@ enum GameState {
         self.treasureImageView.alpha = 0.0f;
     } completion:^(BOOL finished) {
         self.treasureImageView.hidden = YES;
+    }];
+}
+
+- (void)hideMaze {
+    [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
+        self.treasureImageView.alpha = 0.0f;
+        self.currentMazeView.alpha = 0.0f;
+        self.otherMazeView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        self.treasureImageView.hidden = YES;
+
+        [self drawMask];
+        [self swapMazeViews];
+        [self drawMask];
     }];
 }
 

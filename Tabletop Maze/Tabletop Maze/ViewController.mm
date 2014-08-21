@@ -41,7 +41,11 @@
     [super viewDidLoad];
 
     [self showBorderAnimated:NO];
-    [self setGridWithPixelSize:CGSizeMake(20.0f, 20.0f)];
+#if TARGET_IPHONE_SIMULATOR
+    [self setGridWithPixelSize:CGSizeMake(30.0f, 30.0f)];
+#else
+    [self setGridWithPixelSize:CGSizeMake(80.0f, 80.0f)];
+#endif
     
     [self start];
 }
