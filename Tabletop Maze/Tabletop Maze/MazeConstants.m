@@ -46,7 +46,7 @@ MazeConstants *mazeConstantsInstance = nil;
 }
 
 - (void)initialize {
-    self.defaultAnimationDuration = 1.0f;
+    self.defaultAnimationDuration = 1.5f;
 }
 
 @end

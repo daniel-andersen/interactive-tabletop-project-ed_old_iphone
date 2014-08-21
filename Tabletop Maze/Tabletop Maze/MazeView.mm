@@ -38,7 +38,8 @@ enum GameState {
     INITIALIZING,
     NEW_GAME,
     PLACE_PLAYERS,
-    PLAYER_TURN
+    PLAYER_TURN,
+    WAIT
 };
 
 @interface MazeView ()
@@ -171,10 +172,14 @@ enum GameState {
     [self updateMask];
 }
 
-- (void)startPlayerTurn {
+- (void)startLevel {
     [self hideLogo];
     [self hideBrickMarkers];
     [self showTreasure];
+}
+
+- (void)startPlayerTurn {
+    self.gameState = PLAYER_TURN;
 }
 
 - (void)update {
@@ -207,8 +212,8 @@ enum GameState {
             }
         } else {
             if (position.x != -1 && position != [[MazeModel instance] positionOfPlayer:i] && [MazeModel instance].currentPlayer == i) {
-                [self startPlayerTurn];
                 [self movePlayerToPosition:position];
+                [self startLevel];
             }
         }
         
@@ -234,11 +239,12 @@ enum GameState {
 }
 
 - (void)nextPlayer {
-    self.gameState = PLAYER_TURN;
+    self.gameState = WAIT;
     do {
         [MazeModel instance].currentPlayer = ([MazeModel instance].currentPlayer + 1) % MAX_PLAYERS;
     } while (![[MazeModel instance] isPlayerEnabled:[MazeModel instance].currentPlayer]);
     [self updateMask];
+    [self performSelector:@selector(startPlayerTurn) withObject:nil afterDelay:[Constants instance].defaultViewAnimationDuration];
 }
 
 - (cv::Point)findPlayerPosition:(int)player {
@@ -261,7 +267,7 @@ enum GameState {
     [self swapMazeViews];
     [self drawMaze];
 
-    [self startPlacePlayers];
+    [self performSelector:@selector(startPlacePlayers) withObject:nil afterDelay:2.0f];
 }
 
 - (void)drawMaze {
@@ -313,7 +319,7 @@ enum GameState {
             maskMap[entry.y][entry.x] = MAX(mask, maskMap[entry.y][entry.x]);
         }
     }
-    if (self.gameState == PLAYER_TURN) {
+    if (self.gameState >= PLAYER_TURN) {
         cv::Point p = [[MazeModel instance] positionOfTreasure];
         maskMap[p.y][p.x] = MAX(2, maskMap[p.y][p.x]);
     }

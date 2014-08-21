@@ -101,6 +101,15 @@ MazeModel *mazeModelInstance = nil;
     for (int i = 0; i < self.height; i++) {
         for (int j = 0; j < self.width; j++) {
             MazeEntry *entry = [self entryAtX:j y:i];
+            bool valid = YES;
+            for (int k = 0; k < MAX_PLAYERS; k++) {
+                if (player != k && [self isPlayerEnabled:k] && [self positionOfPlayer:k] == entry.position) {
+                    valid = NO;
+                }
+            }
+            if (!valid) {
+                continue;
+            }
             NSNumber *distanceFromPlayer = [entry.bag objectForKey:@"distanceFromPlayer"];
             if (distanceFromPlayer != nil && distanceFromPlayer.intValue <= reachDistance) {
                 [reachableEntries addObject:entry];
