@@ -61,6 +61,8 @@ enum GameState {
 
 @property (nonatomic, assign) enum GameState gameState;
 
+@property (nonatomic, assign) int restartCountDown;
+
 @end
 
 @implementation MazeView
@@ -186,6 +188,7 @@ enum GameState {
 }
 
 - (void)startPlayerTurn {
+    self.restartCountDown = [MazeConstants instance].brickStableCountDown;
     self.gameState = PLAYER_TURN;
 }
 
@@ -237,6 +240,15 @@ enum GameState {
     cv::Point position = [self findPlayerPosition:[MazeModel instance].currentPlayer];
     if (position.x != -1 && position != [[MazeModel instance] positionOfPlayer:[MazeModel instance].currentPlayer]) {
         [self movePlayerToPosition:position];
+    }
+    
+    if (position.x == -1) {
+        self.restartCountDown--;
+        if (self.restartCountDown <= 0) {
+            [self startNewGame];
+        }
+    } else {
+        self.restartCountDown = [MazeConstants instance].brickStableCountDown;
     }
 }
 
@@ -360,19 +372,19 @@ enum GameState {
                 if (maskMap[i][j] > 0) {
                     maskBit = 16;
                 } else {
-                    if (![entry hasBorder:BORDER_UP] && maskMap[i - 1][j] > 0) {
+                    if (![entry hasBorder:BORDER_UP] && i > 0 && maskMap[i - 1][j] > 0) {
                         maskBit |= (1 << 0);
                         alphaBit = MAX(alphaBit, maskMap[i - 1][j]);
                     }
-                    if (![entry hasBorder:BORDER_RIGHT] && maskMap[i][j + 1] > 0) {
+                    if (![entry hasBorder:BORDER_RIGHT] && j < [MazeModel instance].width - 1 && maskMap[i][j + 1] > 0) {
                         maskBit |= (1 << 1);
                         alphaBit = MAX(alphaBit, maskMap[i][j + 1]);
                     }
-                    if (![entry hasBorder:BORDER_DOWN] && maskMap[i + 1][j] > 0) {
+                    if (![entry hasBorder:BORDER_DOWN] && i < [MazeModel instance].height - 1 && maskMap[i + 1][j] > 0) {
                         maskBit |= (1 << 2);
                         alphaBit = MAX(alphaBit, maskMap[i + 1][j]);
                     }
-                    if (![entry hasBorder:BORDER_LEFT] && maskMap[i][j - 1] > 0) {
+                    if (![entry hasBorder:BORDER_LEFT] && j > 0 && maskMap[i][j - 1] > 0) {
                         maskBit |= (1 << 3);
                         alphaBit = MAX(alphaBit, maskMap[i][j - 1]);
                     }

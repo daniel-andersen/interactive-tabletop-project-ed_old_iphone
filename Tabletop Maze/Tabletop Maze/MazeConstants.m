@@ -47,6 +47,7 @@ MazeConstants *mazeConstantsInstance = nil;
 
 - (void)initialize {
     self.defaultAnimationDuration = 1.5f;
+    self.brickStableCountDown = 10;
 }
 
 @end

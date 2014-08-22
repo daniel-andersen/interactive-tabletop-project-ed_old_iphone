@@ -38,4 +38,6 @@
 
 @property (nonatomic, assign) float defaultAnimationDuration;
 
+@property (nonatomic, assign) int brickStableCountDown;
+
 @end
