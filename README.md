@@ -50,9 +50,11 @@ The following features have been implemented:
 What's up next?
 ---------------
 
+* More stable board and brick recognition
 * Simple geometric figure recognition, fx. triangles, stars, etc.
 * Hand/finger recognition
 * More samples
+* Better/simpler setup
 
 Articles
 --------
