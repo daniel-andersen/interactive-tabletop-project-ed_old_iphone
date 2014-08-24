@@ -1,14 +1,15 @@
 Interactive Tabletop Project:ed
 ===============================
 
-Interactive Tabletop Project:ed is a framework for creating interactive, digital tabletop projects, focusing mainly on board games with physical bricks. It thus combines interaction between physical bricks and a digital board projected from a mini projector connected to an iPhone.
+Interactive Tabletop Project:ed is a framework for creating interactive, digital tabletop projects, focusing mainly on board games played with physical bricks. It thus combines interaction between physical bricks and a digital board projected from a mini projector connected to an iPhone.
 
-See photos and videos below from the original [Dystopia project](https://github.com/black-knight/dystopia).
 
 Description
 -----------
 
-Interactive Tabletop Project:ed enables you to create iPhone apps which - when run on an actual phone connected to a simple projector setup - creates an interactive, digital tabletop board game playable on any table.
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/description.jpg "Description Image")
+
+Interactive Tabletop Project:ed is a framework which enables you to create iPhone apps which - when run on an actual phone connected to a simple projector setup - creates an interactive, digital tabletop board game playable on any table.
 
 By monitoring the projected board game from the camera of the iPhone, the framework recognizes the board state by detecting the positions of the physical bricks. By interacting with the bricks the state changes and the board game is capable of evolving according to this new state.
 
@@ -18,9 +19,9 @@ The setup
 What you need in order to getting started:
 
 * An iPhone (>= 5?)
-* A mini projector (not pico, as the resolution should be at least 1280x800, and depending on the setup, not full size because of the weight)
+* A mini projector (not pico, as the resolution should be at least 1280x800, and (depending on the setup) low weight
 * A Lightning to VGA adapter to connect the iPhone to the projector
-* A camera stand with a cross bar capable of fitting a projector and an iPhone above a table. (I did my own from an unused clothing rack; see photos below)
+* A camera stand with a cross bar/boom
 * Bricks with black feet (see photos below)
 * A table :-)
 
@@ -40,13 +41,14 @@ The following features have been implemented:
 
 * Board recognition
 * Brick recognition
-* First sample almost done: Interactive Tabletop Project:ed MAZE
+* First sample: Interactive Tabletop Project:ed MAZE
 
 What's up next?
 ---------------
 
 * Simple geometric figure recognition, fx. triangles, stars, etc.
 * Hand/finger recognition
+* More samples
 
 Articles
 --------
@@ -65,16 +67,62 @@ Videos
 Photos
 ------
 
+### Interactive Tabletop Project:ed MAZE
+
+Photos are varying in quality. In particular, the maze is left completely white on some photos. On the actual table the image is, of course, perfectly clear.
+
+##### Initial screen
+
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze1.jpg "MAZE Image")
+
+##### First brick placed on table
+
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze2.jpg "MAZE Image")
+
+##### Moving a brick
+
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze3.jpg "MAZE Image")
+
+##### Daniel's daughter finding her way through the maze
+
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze4.jpg "MAZE Image")
+
+##### Daniel losing his way and ending up losing
+
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze5.jpg "MAZE Image")
+
+### Dystopia
+
 All photos are copyright by Henrik Bengtsson.
 
-![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/1.jpg "Dystopia Image")
-![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/2.jpg "Dystopia Image")
-![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/3.jpg "Dystopia Image")
-![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/4.jpg "Dystopia Image")
-![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/5.jpg "Dystopia Image")
-![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/6.jpg "Dystopia Image")
-![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/7.jpg "Dystopia Image")
-![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/8.jpg "Dystopia Image")
-![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/9.jpg "Dystopia Image")
-![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/10.jpg "Dystopia Image")
+##### The real tabletop game "Dystopia", the father of the framework
 
+![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/1.jpg "Dystopia Image")
+
+##### Initial placement of bricks
+
+![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/2.jpg "Dystopia Image")
+
+##### A marker shows which player has turn
+
+![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/3.jpg "Dystopia Image")
+
+![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/4.jpg "Dystopia Image")
+
+##### Fighting ones way through the game
+
+![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/5.jpg "Dystopia Image")
+
+##### Daniel explaining the setup
+
+![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/6.jpg "Dystopia Image")
+
+![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/7.jpg "Dystopia Image")
+
+##### Initial setup - a clothing rack!
+
+![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/8.jpg "Dystopia Image")
+
+![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/9.jpg "Dystopia Image")
+
+![alt text](https://raw.githubusercontent.com/black-knight/dystopia/master/photos/10.jpg "Dystopia Image")
