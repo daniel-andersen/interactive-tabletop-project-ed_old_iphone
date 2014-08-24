@@ -18,8 +18,9 @@ The setup
 
 ![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/setup1.jpg "Description")
 ![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/setup2.jpg "Description")
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/setup3.jpg "Description")
 
-What you need in order to getting started:
+What you need in order to get started:
 
 * An iPhone (>= 5?)
 * A mini projector (not pico, as the resolution should be at least 1280x800, and (depending on the setup) low weight
