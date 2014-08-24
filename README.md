@@ -7,7 +7,7 @@ Interactive Tabletop Project:ed is a framework for creating interactive, digital
 Description
 -----------
 
-<img src="https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/description.jpg" alt="Description" style="width:100%;"/>
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/description.jpg "Description")
 
 Interactive Tabletop Project:ed is a framework which enables you to create iPhone apps which - when run on an actual phone connected to a simple projector setup - creates an interactive, digital tabletop board game playable on any table.
 
@@ -15,6 +15,9 @@ By monitoring the projected board game from the camera of the iPhone, the framew
 
 The setup
 ---------
+
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/setup1.jpg "Description")
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/setup2.jpg "Description")
 
 What you need in order to getting started:
 
@@ -73,23 +76,23 @@ Photos are varying in quality. In particular, the maze is left completely white 
 
 ##### Initial screen
 
-<img src="https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze1.jpg" alt="MAZE" style="height:20%;”/>
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze1.jpg "MAZE Image")
 
 ##### First brick placed on table
 
-<img src="https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze2.jpg" alt="MAZE" style="height:200px;"/>
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze2.jpg "MAZE Image")
 
 ##### Moving a brick
 
-<img src="https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze3.jpg" alt="MAZE" style="height:200px;"/>
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze3.jpg "MAZE Image")
 
 ##### Daniel's daughter finding her way through the maze
 
-<img src="https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze4.jpg" alt="MAZE" style="height:200px;"/>
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze4.jpg "MAZE Image")
 
 ##### Daniel losing his way and ending up losing
 
-<img src="https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze5.jpg" alt="MAZE" style="height:200px;"/>
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze5.jpg "MAZE Image")
 
 ### Dystopia
 
