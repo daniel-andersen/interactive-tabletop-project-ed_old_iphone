@@ -23,7 +23,7 @@ The setup
 What you need in order to get started:
 
 * An iPhone (>= 5?)
-* A mini projector (not pico, as the resolution should be at least 1280x800, and (depending on the setup) low weight
+* A mini projector (not pico, as the resolution should be at least 1280x800, and - depending on the setup - low weight)
 * A Lightning to VGA adapter to connect the iPhone to the projector
 * A camera stand with a cross bar/boom
 * Bricks with black feet (see photos below)
