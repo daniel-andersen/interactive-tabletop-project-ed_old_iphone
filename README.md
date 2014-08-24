@@ -7,7 +7,7 @@ Interactive Tabletop Project:ed is a framework for creating interactive, digital
 Description
 -----------
 
-![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/description.jpg "Description Image")
+<img src="https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/description.jpg" alt="Description" style="width:100%;"/>
 
 Interactive Tabletop Project:ed is a framework which enables you to create iPhone apps which - when run on an actual phone connected to a simple projector setup - creates an interactive, digital tabletop board game playable on any table.
 
@@ -73,23 +73,23 @@ Photos are varying in quality. In particular, the maze is left completely white 
 
 ##### Initial screen
 
-![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze1.jpg "MAZE Image")
+<img src="https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze1.jpg" alt="MAZE" style="height:200px;"/>
 
 ##### First brick placed on table
 
-![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze2.jpg "MAZE Image")
+<img src="https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze2.jpg" alt="MAZE" style="height:200px;"/>
 
 ##### Moving a brick
 
-![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze3.jpg "MAZE Image")
+<img src="https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze3.jpg" alt="MAZE" style="height:200px;"/>
 
 ##### Daniel's daughter finding her way through the maze
 
-![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze4.jpg "MAZE Image")
+<img src="https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze4.jpg" alt="MAZE" style="height:200px;"/>
 
 ##### Daniel losing his way and ending up losing
 
-![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze5.jpg "MAZE Image")
+<img src="https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze5.jpg" alt="MAZE" style="height:200px;"/>
 
 ### Dystopia
 
