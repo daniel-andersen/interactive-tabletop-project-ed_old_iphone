@@ -1,6 +1,8 @@
 Interactive Tabletop Project:ed
 ===============================
 
+![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/intro.jpg “Intro”)
+
 Interactive Tabletop Project:ed is a framework for creating interactive, digital tabletop projects, focusing mainly on board games played with physical bricks. It thus combines interaction between physical bricks and a digital board projected from a mini projector connected to an iPhone.
 
 
