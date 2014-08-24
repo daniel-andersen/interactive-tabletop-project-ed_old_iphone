@@ -59,71 +59,57 @@ BoardUtil *boardUtilInstance = nil;
                       rectSize.height);
 }
 
-- (CGSize)brickSizeWithScreenSize:(CGSize)screenSize {
-    return CGSizeMake((int)(screenSize.width  / [Constants instance].gridSize.width),
-                      (int)(screenSize.height / [Constants instance].gridSize.height));
-}
-
-- (CGRect)gridRectWithBrickSize:(CGSize)brickSize screenSize:(CGSize)screenSize {
+- (CGRect)gridRectWithBrickSize:(CGSize)brickSize canvasSize:(CGSize)canvasSize {
     CGSize rectSize = CGSizeMake(brickSize.width  * [Constants instance].gridSize.width,
                                  brickSize.height * [Constants instance].gridSize.height);
     
-    return CGRectMake((screenSize.width  - rectSize.width ) / 2.0f,
-                      (screenSize.height - rectSize.height) / 2.0f,
+    return CGRectMake((canvasSize.width  - rectSize.width ) / 2.0f,
+                      (canvasSize.height - rectSize.height) / 2.0f,
                       rectSize.width,
                       rectSize.height);
+}
+
+- (CGRect)gridRectWithCanvasSize:(CGSize)canvasSize {
+    return CGRectMake(canvasSize.width  * [Constants instance].gridPaddingPercent.width,
+                      canvasSize.height * [Constants instance].gridPaddingPercent.height,
+                      canvasSize.width  * (1.0f - ([Constants instance].gridPaddingPercent.width  * 2.0f)),
+                      canvasSize.height * (1.0f - ([Constants instance].gridPaddingPercent.height * 2.0f)));
+}
+
+- (CGSize)gridPaddingPercentFromCanvasSize:(CGSize)canvasSize gridSize:(CGSize)gridSize {
+    return CGSizeMake((1.0f - (gridSize.width  / canvasSize.width )) / 2.0f,
+                      (1.0f - (gridSize.height / canvasSize.height)) / 2.0f);
+}
+
+- (CGSize)brickSizeWithCanvasSize:(CGSize)canvasSize {
+    return CGSizeMake((int)(canvasSize.width  / [Constants instance].gridSize.width),
+                      (int)(canvasSize.height / [Constants instance].gridSize.height));
+}
+
+- (CGSize)brickSizeWithGridRect:(CGRect)gridRect {
+    return CGSizeMake(gridRect.size.width  / [Constants instance].gridSize.width,
+                      gridRect.size.height / [Constants instance].gridSize.height);
+}
+
+- (CGRect)brickRectWithPosition:(cv::Point)position screenSize:(CGSize)screenSize {
+    CGRect canvasRect = [self canvasRectWithScreenSize:screenSize];
+    CGRect gridRect = [self gridRectWithCanvasSize:canvasRect.size];
+    CGSize brickSize = [[BoardUtil instance] brickSizeWithGridRect:gridRect];
+    return CGRectMake(canvasRect.origin.x + gridRect.origin.x + (position.x * brickSize.width),
+                      canvasRect.origin.y + gridRect.origin.y + (position.y * brickSize.height),
+                      (int)brickSize.width,
+                      (int)brickSize.height);
 }
 
 - (CGSize)screenSizeWithoutBorder:(CGSize)screenSize {
     CGSize borderSize = CGSizeMake(0.0f, 0.0f);
     if ([Constants instance].borderEnabled) {
-        borderSize = CGSizeMake(screenSize.width  * [Constants instance].borderRecognizedSizePct.width,
-                                screenSize.height * [Constants instance].borderRecognizedSizePct.height);
+        borderSize = CGSizeMake(screenSize.width  * ([Constants instance].borderViewSizePct.width + [Constants instance].borderPaddingSizePct.width),
+                                screenSize.height * ([Constants instance].borderViewSizePct.height + [Constants instance].borderPaddingSizePct.height));
     }
     
     return CGSizeMake(screenSize.width  - (borderSize.width  * 2.0f),
                       screenSize.height - (borderSize.height * 2.0f));
 }
-
-- (CGRect)brickRectWithPosition:(cv::Point)position screenSize:(CGSize)screenSize {
-    CGRect canvasRect = [self canvasRectWithScreenSize:screenSize];
-    CGSize canvasBrickSize = [[BoardUtil instance] brickSizeWithScreenSize:canvasRect.size];
-    CGRect gridRect = [self gridRectWithBrickSize:canvasBrickSize screenSize:canvasRect.size];
-    CGPoint p = CGPointMake(position.x * canvasBrickSize.width, position.y * canvasBrickSize.height);
-    return CGRectMake(canvasRect.origin.x + gridRect.origin.x + p.x,
-                      canvasRect.origin.y + gridRect.origin.y + p.y,
-                      canvasBrickSize.width,
-                      canvasBrickSize.height);
-}
-
-/*- (CGSize)singleBrickScreenSize {
-    return [Constants instance].brickSize;
-}
-
-- (CGSize)singleBrickScreenSizeFromBoardSize:(CGSize)size {
-    return CGSizeMake(size.width / [Constants instance].gridSize.width, size.height / [Constants instance].gridSize.height);
-}
-
-- (CGPoint)brickScreenPosition:(cv::Point)brickBoardPosition {
-    return CGPointMake((int)(brickBoardPosition.x * [self singleBrickScreenSize].width) + 1.0f, (int)(brickBoardPosition.y * [self singleBrickScreenSize].height) + 1.0f);
-}
-
-- (CGRect)brickScreenRect:(cv::Point)brickBoardPosition {
-    CGPoint p = [self brickScreenPosition:brickBoardPosition];
-    CGSize size = [self singleBrickScreenSize];
-    return CGRectMake(p.x, p.y, size.width, size.height);
-}
-
-- (CGRect)bricksScreenRectPosition1:(cv::Point)p1 position2:(cv::Point)p2 {
-    CGRect r1 = [self brickScreenRect:p1];
-    CGRect r2 = [self brickScreenRect:p2];
-    CGPoint p = CGPointMake(MIN(r1.origin.x, r2.origin.x), MIN(r1.origin.y, r2.origin.y));
-    CGSize size = CGSizeMake(MAX(r1.origin.x + r1.size.width, r2.origin.x + r2.size.width) - p.x, MAX(r1.origin.y + r1.size.height, r2.origin.y + r2.size.height) - p.y);
-    return CGRectMake(p.x, p.y, size.width, size.height);
-}
-
-- (CGPoint)cvPointToCGPoint:(cv::Point)p {
-    return CGPointMake(p.x, p.y);
-}*/
 
 @end

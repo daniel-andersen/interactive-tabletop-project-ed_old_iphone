@@ -42,16 +42,14 @@ typedef struct {
 + (BoardUtil *)instance;
 
 - (CGRect)canvasRectWithScreenSize:(CGSize)screenSize;
-- (CGSize)brickSizeWithScreenSize:(CGSize)screenSize;
-- (CGRect)gridRectWithBrickSize:(CGSize)brickSize screenSize:(CGSize)screenSize;
+
+- (CGRect)gridRectWithBrickSize:(CGSize)brickSize canvasSize:(CGSize)canvasSize;
+- (CGRect)gridRectWithCanvasSize:(CGSize)canvasSize;
+- (CGSize)gridPaddingPercentFromCanvasSize:(CGSize)canvasSize gridSize:(CGSize)gridSize;
+
+- (CGSize)brickSizeWithCanvasSize:(CGSize)canvasSize;
+- (CGSize)brickSizeWithGridRect:(CGRect)gridRect;
 - (CGRect)brickRectWithPosition:(cv::Point)position screenSize:(CGSize)screenSize;
 
-/*- (CGSize)singleBrickScreenSize;
-
-- (CGPoint)brickScreenPosition:(cv::Point)brickBoardPosition;
-- (CGRect)brickScreenRect:(cv::Point)brickBoardPosition;
-- (CGRect)bricksScreenRectPosition1:(cv::Point)p1 position2:(cv::Point)p2;
-
-- (CGPoint)cvPointToCGPoint:(cv::Point)p;*/
 
 @end

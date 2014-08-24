@@ -42,9 +42,9 @@
 
     [self showBorderAnimated:NO];
 #if TARGET_IPHONE_SIMULATOR
-    [self setGridWithPixelSize:CGSizeMake(30.0f, 30.0f)];
+    [self setGridWithPixelSize:CGSizeMake(25.0f, 25.0f)];
 #else
-    [self setGridWithPixelSize:CGSizeMake(80.0f, 80.0f)];
+    [self setGridWithPixelSize:CGSizeMake(60.0f, 60.0f)];
 #endif
     
     [self start];
@@ -53,6 +53,7 @@
 - (void)calibrationViewDidHide {
     [super calibrationViewDidHide];
 
+    NSLog(@"Starting...");
     self.mazeView = [[MazeView alloc] init];
     self.tabletopView = self.mazeView;
 

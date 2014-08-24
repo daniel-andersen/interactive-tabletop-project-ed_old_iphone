@@ -37,7 +37,7 @@
 - (id)init {
     if (self = [super init]) {
         self.frame = [Constants instance].canvasRect;
-        self.backgroundColor = [UIColor blackColor];
+        self.backgroundColor = [UIColor redColor];
     }
     return self;
 }

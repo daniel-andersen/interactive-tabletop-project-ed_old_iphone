@@ -23,9 +23,6 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-//#include <stdio.h>
-//#include <stdlib.h>
-
 #import "BrickRecognizer.h"
 #import "BoardCalibrator.h"
 #import "UIImage+OpenCV.h"
@@ -178,10 +175,10 @@ BrickRecognizer *brickRecognizerInstance = nil;
 }
 
 - (float)calculateMedianOfHistogram:(cv::Mat)histogram binCount:(int)binCount {
-    CGSize brickSize = [[BoardUtil instance] brickSizeWithScreenSize:[BoardCalibrator instance].boardImageSize];
+    CGSize brickSize = [self brickSizeFromBoardImage];
     float median = 0.0f;
     for (int i = 0; i < binCount; i++) {
-        median += histogram.at<float>(i) * (float)i / (brickSize.width * brickSize.height);
+        median += histogram.at<float>(i) * (float)i / ((int)brickSize.width * (int)brickSize.height);
     }
     return median;
 }
@@ -217,7 +214,7 @@ BrickRecognizer *brickRecognizerInstance = nil;
 }
 
 - (cv::Mat)extractBrickImageFromIndex:(int)index inTiledImage:(cv::Mat)image {
-    CGSize brickSize = [[BoardUtil instance] brickSizeWithScreenSize:[BoardCalibrator instance].boardImageSize];
+    CGSize brickSize = [self brickSizeFromBoardImage];
     cv::Rect rect = cv::Rect((int)brickSize.width * index, 0, (int)brickSize.width, (int)brickSize.height);
     return cv::Mat(image, rect);
 }
@@ -227,8 +224,15 @@ BrickRecognizer *brickRecognizerInstance = nil;
     return [self equalizeImage:preparedImage];
 }
 
+- (UIImage *)tiledImageWithLocations:(cv::vector<cv::Point>)locations {
+    @autoreleasepool {
+        cv::Mat image = [self prepareImageWithoutEqualizingWithLocations:locations];
+        return [UIImage imageWithCVMat:image];
+    }
+}
+
 - (cv::Mat)prepareImageWithoutEqualizingWithLocations:(cv::vector<cv::Point>)locations {
-    CGSize brickSize = [[BoardUtil instance] brickSizeWithScreenSize:[BoardCalibrator instance].boardImageSize];
+    CGSize brickSize = [self brickSizeFromBoardImage];
     cv::Mat tiledImage = cv::Mat((int)brickSize.height, (int)brickSize.width * locations.size(), [BoardCalibrator instance].boardImage.type());
     for (int i = 0; i < locations.size(); i++) {
         cv::Mat brickImage = [self extractBrickImageFromLocation:locations[i]];
@@ -242,6 +246,11 @@ BrickRecognizer *brickRecognizerInstance = nil;
     cv::Mat equalizedImage;
     cv::equalizeHist(image, equalizedImage);
     return equalizedImage;
+}
+
+- (CGSize)brickSizeFromBoardImage {
+    CGRect canvasRect = [[BoardUtil instance] canvasRectWithScreenSize:[BoardCalibrator instance].boardImageSize];
+    return [[BoardUtil instance] brickSizeWithGridRect:[[BoardUtil instance] gridRectWithCanvasSize:canvasRect.size]];
 }
 
 @end

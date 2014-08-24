@@ -50,9 +50,9 @@ Constants *constantsInstance = nil;
 
 - (void)initialize {
     _borderEnabled = NO;
-    _borderRecognizedSizePct = CGSizeMake(0.04f, 0.04f);
-    _borderViewSizePct = CGSizeMake(0.5f, 0.5f);
-    //[self recalculateConstants];
+    _borderRecognizedSizePct = CGSizeMake(0.024f, 0.024f * (1280.0f / 800));
+    _borderViewSizePct = CGSizeMake(0.016f, 0.016f * (1280.0f / 800));
+    _borderPaddingSizePct = CGSizeMake(0.02f, 0.02f * (1280.0f / 800));
     
     _defaultViewAnimationDuration = 0.3f;
 }
@@ -70,13 +70,16 @@ Constants *constantsInstance = nil;
     self.canvasScreenRect = [[BoardUtil instance] canvasRectWithScreenSize:screenSize];
     self.canvasCameraRect = [[BoardUtil instance] canvasRectWithScreenSize:cameraCaptureSize];
     
-    self.brickSize = [[BoardUtil instance] brickSizeWithScreenSize:self.canvasRect.size];
-    self.brickScreenSize = [[BoardUtil instance] brickSizeWithScreenSize:self.canvasScreenRect.size];
-    self.brickCameraSize = [[BoardUtil instance] brickSizeWithScreenSize:self.canvasCameraRect.size];
+    self.brickSize = [[BoardUtil instance] brickSizeWithCanvasSize:self.canvasRect.size];
 
-    self.gridRect = [[BoardUtil instance] gridRectWithBrickSize:self.brickSize screenSize:self.canvasRect.size];
-    self.gridScreenRect = [[BoardUtil instance] gridRectWithBrickSize:self.brickScreenSize screenSize:self.canvasScreenRect.size];
-    self.gridCameraRect = [[BoardUtil instance] gridRectWithBrickSize:self.brickCameraSize screenSize:self.canvasCameraRect.size];
+    self.gridRect = [[BoardUtil instance] gridRectWithBrickSize:self.brickSize canvasSize:self.canvasRect.size];
+    self.gridPaddingPercent = [[BoardUtil instance] gridPaddingPercentFromCanvasSize:self.canvasRect.size gridSize:self.gridRect.size];
+    
+    self.gridScreenRect = [[BoardUtil instance] gridRectWithCanvasSize:self.canvasScreenRect.size];
+    self.gridCameraRect = [[BoardUtil instance] gridRectWithCanvasSize:self.canvasCameraRect.size];
+
+    self.brickScreenSize = [[BoardUtil instance] brickSizeWithGridRect:self.gridScreenRect];
+    self.brickCameraSize = [[BoardUtil instance] brickSizeWithGridRect:self.gridCameraRect];
 }
 
 @end

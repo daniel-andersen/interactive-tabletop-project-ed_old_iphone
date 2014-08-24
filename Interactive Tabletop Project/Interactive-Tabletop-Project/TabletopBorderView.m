@@ -62,7 +62,7 @@ enum BorderViewImageIndex {
 }
 
 - (void)initialize {
-    self.backgroundColor = [UIColor blackColor];
+    self.backgroundColor = [UIColor clearColor];
     self.frame = [ExternalDisplay instance].widescreenBounds;
 
     if (self.borderImages != nil) {
@@ -73,8 +73,8 @@ enum BorderViewImageIndex {
 }
 
 - (void)drawImageBorder {
-    CGSize borderSize = CGSizeMake(self.bounds.size.width  * [Constants instance].borderRecognizedSizePct.width  * [Constants instance].borderViewSizePct.width,
-                                   self.bounds.size.height * [Constants instance].borderRecognizedSizePct.height * [Constants instance].borderViewSizePct.height);
+    CGSize borderSize = CGSizeMake(self.bounds.size.width  * [Constants instance].borderViewSizePct.width,
+                                   self.bounds.size.height * [Constants instance].borderViewSizePct.height);
 
     UIImage *topLeftImage = [self borderImageWithIndex:topLeft];
     UIImage *topImage = [self borderImageWithIndex:top];

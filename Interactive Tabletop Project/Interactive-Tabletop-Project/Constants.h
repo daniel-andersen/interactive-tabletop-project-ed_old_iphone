@@ -41,12 +41,15 @@
 @property (nonatomic, assign) CGRect gridScreenRect;
 @property (nonatomic, assign) CGRect gridCameraRect;
 
+@property (nonatomic, assign) CGSize gridPaddingPercent;
+
 @property (nonatomic, assign) CGSize brickSize;
 @property (nonatomic, assign) CGSize brickScreenSize;
 @property (nonatomic, assign) CGSize brickCameraSize;
 
 @property (nonatomic, assign) bool borderEnabled;
 @property (nonatomic, assign) CGSize borderViewSizePct;
+@property (nonatomic, assign) CGSize borderPaddingSizePct;
 @property (nonatomic, assign) CGSize borderRecognizedSizePct;
 
 @property (nonatomic, assign) float defaultViewAnimationDuration;

@@ -74,6 +74,12 @@
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
+    if (self.tabletopBorderView != nil) {
+        [[ExternalDisplay instance].window sendSubviewToBack:self.tabletopBorderView];
+    }
+    if (self.tabletopView != nil) {
+        [[ExternalDisplay instance].window bringSubviewToFront:self.tabletopView];
+    }
     [self.view bringSubviewToFront:super.overlayView];
     super.overlayView.hidden = [self isCalibratingExternalDisplay];
     if ([self isCalibratingExternalDisplay]) {
@@ -253,6 +259,7 @@
 - (void)showCurrentTabletopView {
     [_tabletopView willAppear];
     [_tabletopView show];
+    [[ExternalDisplay instance].window layoutSubviews];
     [_tabletopView didAppear];
 }
 

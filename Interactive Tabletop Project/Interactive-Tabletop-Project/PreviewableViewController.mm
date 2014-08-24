@@ -74,7 +74,10 @@ PreviewableViewController *previewInstance = nil;
     boardPreview.frame = self.view.bounds;
     cameraPreview.frame = self.view.bounds;
     boardBoundsLayer.frame = self.view.bounds;
-    boardGridLayer.frame = [Constants instance].canvasScreenRect;
+    boardGridLayer.frame = CGRectMake([Constants instance].canvasScreenRect.origin.x + [Constants instance].gridScreenRect.origin.x,
+                                      [Constants instance].canvasScreenRect.origin.y + [Constants instance].gridScreenRect.origin.y,
+                                      [Constants instance].gridScreenRect.size.width,
+                                      [Constants instance].gridScreenRect.size.height);
     
     [self setButtonFrame:boardButton x:75.0f];
     [self setButtonFrame:cameraPreviewButton x:(self.view.bounds.size.width - 75.0f)];
@@ -207,7 +210,7 @@ PreviewableViewController *previewInstance = nil;
     boardGridLayer = [CAShapeLayer layer];
     boardGridLayer.frame = self.view.bounds;
     boardGridLayer.fillColor = [UIColor clearColor].CGColor;
-    boardGridLayer.strokeColor = [UIColor colorWithRed:1.0f green:0.0f blue:1.0f alpha:0.25f].CGColor;
+    boardGridLayer.strokeColor = [UIColor colorWithRed:1.0f green:0.0f blue:1.0f alpha:0.5f].CGColor;
     boardGridLayer.backgroundColor = [UIColor clearColor].CGColor;
     [boardPreview.layer addSublayer:boardGridLayer];
 }
@@ -270,11 +273,6 @@ PreviewableViewController *previewInstance = nil;
     if (!cameraPreview.hidden) {
         if ([CameraSession instance].initialized) {
             cameraPreview.image = image;
-        }
-    }
-    if (!boardPreview.hidden) {
-        if (![CameraSession instance].initialized && [Constants instance].gridSize.width > 0) {
-            //simulatorBricksView.image = [[FakeCameraUtil instance] drawBricksWithSize:simulatorBricksView.frame.size];
         }
     }
 }

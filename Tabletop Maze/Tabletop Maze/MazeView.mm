@@ -63,6 +63,10 @@ enum GameState {
 
 @property (nonatomic, assign) int restartCountDown;
 
+@property (nonatomic, assign) bool animatingMask;
+
+@property (nonatomic, strong) UIImageView *testImage;
+
 @end
 
 @implementation MazeView
@@ -79,6 +83,8 @@ enum GameState {
 
     self.gameState = INITIALIZING;
     
+    self.animatingMask = NO;
+
     self.borderSize = CGSizeMake(2.0f, 2.0f);
 
     self.otherMazeView = [[MazeContainerView alloc] init];
@@ -114,6 +120,10 @@ enum GameState {
     
     self.treasureImageView = [self brickImageViewWithImage:[UIImage imageNamed:@"Treasure"]];
     [self.overlayView addSubview:self.treasureImageView];
+    
+    self.testImage = [[UIImageView alloc] initWithFrame:CGRectMake(self.overlayView.frame.size.width / 4, self.overlayView.frame.size.height / 4, self.overlayView.frame.size.width / 2, self.overlayView.frame.size.height / 2)];
+    self.testImage.contentMode = UIViewContentModeCenter;
+    [self addSubview:self.testImage];
 }
 
 - (UIImageView *)brickImageViewWithImage:(UIImage *)image {
@@ -193,6 +203,9 @@ enum GameState {
 }
 
 - (void)update {
+    if (self.animatingMask) {
+        return;
+    }
     switch (self.gameState) {
         case PLACE_PLAYERS:
             [self updatePlacePlayers];
@@ -242,24 +255,27 @@ enum GameState {
         [self movePlayerToPosition:position];
     }
     
+#ifndef TARGET_IPHONE_SIMULATOR
     if (position.x == -1) {
         self.restartCountDown--;
         if (self.restartCountDown <= 0) {
-            [self startNewGame];
+            [[MazeModel instance] disablePlayer:[MazeModel instance].currentPlayer];
+            [self nextPlayer];
         }
     } else {
         self.restartCountDown = [MazeConstants instance].brickStableCountDown;
     }
+#endif
 }
 
 - (void)movePlayerToPosition:(cv::Point)position {
     [[MazeModel instance] setPositionOfPlayer:[MazeModel instance].currentPlayer position:position];
+    [self updateMask];
     if (position == [[MazeModel instance] positionOfTreasure]) {
-        [self updateMask];
         self.gameState = WAIT;
-        [self performSelector:@selector(endGame) withObject:nil afterDelay:[Constants instance].defaultViewAnimationDuration];
+        [self performSelector:@selector(endGame) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 2.0f)];
     } else {
-        [self nextPlayer];
+        [self performSelector:@selector(nextPlayer) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 2.0f)];
     }
 }
 
@@ -276,17 +292,24 @@ enum GameState {
 
 - (void)nextPlayer {
     self.gameState = WAIT;
-    do {
+    for (int i = 0; i <= MAX_PLAYERS; i++) {
         [MazeModel instance].currentPlayer = ([MazeModel instance].currentPlayer + 1) % MAX_PLAYERS;
-    } while (![[MazeModel instance] isPlayerEnabled:[MazeModel instance].currentPlayer]);
-    [self updateMask];
-    [self performSelector:@selector(startPlayerTurn) withObject:nil afterDelay:[Constants instance].defaultViewAnimationDuration];
+        if ([[MazeModel instance] isPlayerEnabled:[MazeModel instance].currentPlayer]) {
+            [self updateMask];
+            [self performSelector:@selector(startPlayerTurn) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 2.0f)];
+            return;
+        }
+    }
+    [self endGame];
 }
 
 - (cv::Point)findPlayerPosition:(int)player {
     cv::vector<cv::Point> positions;
     for (MazeEntry *entry in [[MazeModel instance] reachableEntriesForPlayer:player reachDistance:[self playerReachDistance:player]]) {
         positions.push_back(cv::Point(entry.x, entry.y));
+    }
+    if (player == 2) {
+        self.testImage.image = [[BrickRecognizer instance] tiledImageWithLocations:positions];
     }
     return [[BrickRecognizer instance] positionOfBrickAtLocations:positions];
 }
@@ -520,10 +543,16 @@ enum GameState {
 }
 
 - (int)playerReachDistance:(int)player {
-    return self.gameState == PLACE_PLAYERS && ![[MazeModel instance] isPlayerEnabled:player] ? 1 : [MazeModel instance].playerReachDistance;
+    if ([[MazeModel instance] isPlayerEnabled:player]) {
+        return [MazeModel instance].playerReachDistance;
+    } else {
+        return 1;
+    }
 }
 
 - (void)updateMask {
+    self.animatingMask = YES;
+
     [self swapMazeViews];
 
     [self drawMask];
@@ -537,6 +566,7 @@ enum GameState {
         self.otherMazeView.alpha = 0.0f;
     } completion:^(BOOL finished) {
         self.otherMazeView.hidden = YES;
+        self.animatingMask = NO;
     }];
 }
 
