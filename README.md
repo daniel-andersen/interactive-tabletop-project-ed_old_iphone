@@ -73,7 +73,7 @@ Photos are varying in quality. In particular, the maze is left completely white 
 
 ##### Initial screen
 
-<img src="https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze1.jpg" alt="MAZE" style="height:200px;"/>
+<img src="https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze1.jpg" alt="MAZE" style="height:20%;”/>
 
 ##### First brick placed on table
 
