@@ -44,9 +44,10 @@
 #if TARGET_IPHONE_SIMULATOR
     [self setGridWithPixelSize:CGSizeMake(25.0f, 25.0f)];
 #else
-    [self setGridWithPixelSize:CGSizeMake(60.0f, 60.0f)];
+    [self setGridWithPixelSize:CGSizeMake(80.0f, 80.0f)];
 #endif
-    
+    /*[self setGridOfSize:CGSizeMake((int)([Constants instance].gridSize.width  / 2) * 2,
+                                   (int)([Constants instance].gridSize.height / 2) * 2)];*/
     [self start];
 }
 

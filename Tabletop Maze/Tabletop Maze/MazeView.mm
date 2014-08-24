@@ -85,7 +85,7 @@ enum GameState {
     
     self.animatingMask = NO;
 
-    self.borderSize = CGSizeMake(2.0f, 2.0f);
+    self.borderSize = CGSizeMake(4.0f, 4.0f);
 
     self.otherMazeView = [[MazeContainerView alloc] init];
     [self addSubview:self.otherMazeView];

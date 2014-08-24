@@ -43,9 +43,9 @@
 
 float intersectionAcceptDistanceMin = 0.02f;
 float intersectionAcceptDistanceMax = 5.0f;
-float squareAngleAcceptMax = 15.0f;
+float squareAngleAcceptMax = 20.0f;//15.0f;
 float lineGroupAngleAcceptMax = 15.0f;
-float aspectRatioAcceptMax = 0.1f;
+float aspectRatioAcceptMax = 0.2f;//0.1f;
 float lineGroupPointDistanceAcceptMax;
 
 typedef struct {
