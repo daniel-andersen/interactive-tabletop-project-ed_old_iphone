@@ -273,9 +273,9 @@ enum GameState {
     [self updateMask];
     if (position == [[MazeModel instance] positionOfTreasure]) {
         self.gameState = WAIT;
-        [self performSelector:@selector(endGame) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 2.0f)];
+        [self performSelector:@selector(endGame) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
     } else {
-        [self performSelector:@selector(nextPlayer) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 2.0f)];
+        [self performSelector:@selector(nextPlayer) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
     }
 }
 
@@ -296,7 +296,7 @@ enum GameState {
         [MazeModel instance].currentPlayer = ([MazeModel instance].currentPlayer + 1) % MAX_PLAYERS;
         if ([[MazeModel instance] isPlayerEnabled:[MazeModel instance].currentPlayer]) {
             [self updateMask];
-            [self performSelector:@selector(startPlayerTurn) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 2.0f)];
+            [self performSelector:@selector(startPlayerTurn) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
             return;
         }
     }
@@ -308,9 +308,9 @@ enum GameState {
     for (MazeEntry *entry in [[MazeModel instance] reachableEntriesForPlayer:player reachDistance:[self playerReachDistance:player]]) {
         positions.push_back(cv::Point(entry.x, entry.y));
     }
-    if (player == 2) {
+    /*if (player == 2) {
         self.testImage.image = [[BrickRecognizer instance] tiledImageWithLocations:positions];
-    }
+    }*/
     return [[BrickRecognizer instance] positionOfBrickAtLocations:positions];
 }
 

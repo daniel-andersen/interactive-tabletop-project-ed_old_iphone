@@ -27,7 +27,7 @@
 #import "BoardCalibrator.h"
 #import "UIImage+OpenCV.h"
 
-#define HISTOGRAM_BIN_COUNT 8
+#define HISTOGRAM_BIN_COUNT 4
 
 #define BRICK_RECOGNITION_MINIMUM_MEDIAN_DELTA 30.0f
 #define BRICK_RECOGNITION_MINIMUM_PROBABILITY 0.4f
@@ -175,10 +175,10 @@ BrickRecognizer *brickRecognizerInstance = nil;
 }
 
 - (float)calculateMedianOfHistogram:(cv::Mat)histogram binCount:(int)binCount {
-    CGSize brickSize = [self brickSizeFromBoardImage];
+    CGSize smallerBrickSize = [self smallerBrickSizeFromBoardImage];
     float median = 0.0f;
     for (int i = 0; i < binCount; i++) {
-        median += histogram.at<float>(i) * (float)i / ((int)brickSize.width * (int)brickSize.height);
+        median += histogram.at<float>(i) * (float)i / ((int)smallerBrickSize.width * (int)smallerBrickSize.height);
     }
     return median;
 }
@@ -215,7 +215,11 @@ BrickRecognizer *brickRecognizerInstance = nil;
 
 - (cv::Mat)extractBrickImageFromIndex:(int)index inTiledImage:(cv::Mat)image {
     CGSize brickSize = [self brickSizeFromBoardImage];
-    cv::Rect rect = cv::Rect((int)brickSize.width * index, 0, (int)brickSize.width, (int)brickSize.height);
+    CGSize paddingSize = [self brickPadding];
+    cv::Rect rect = cv::Rect(((int)brickSize.width * index) + paddingSize.width,
+                             paddingSize.height,
+                             (int)brickSize.width - (paddingSize.width * 2.0f),
+                             (int)brickSize.height - (paddingSize.height * 2.0f));
     return cv::Mat(image, rect);
 }
 
@@ -251,6 +255,18 @@ BrickRecognizer *brickRecognizerInstance = nil;
 - (CGSize)brickSizeFromBoardImage {
     CGRect canvasRect = [[BoardUtil instance] canvasRectWithScreenSize:[BoardCalibrator instance].boardImageSize];
     return [[BoardUtil instance] brickSizeWithGridRect:[[BoardUtil instance] gridRectWithCanvasSize:canvasRect.size]];
+}
+
+- (CGSize)smallerBrickSizeFromBoardImage {
+    CGSize brickSize = [self brickSizeFromBoardImage];
+    return CGSizeMake(brickSize.width * 0.8f, brickSize.height * 0.8f);
+}
+
+- (CGSize)brickPadding {
+    CGSize brickSize = [self brickSizeFromBoardImage];
+    CGSize smallerBrickSize = [self smallerBrickSizeFromBoardImage];
+    return CGSizeMake((brickSize.width  - smallerBrickSize.width ) / 2.0f,
+                      (brickSize.height - smallerBrickSize.height) / 2.0f);
 }
 
 @end

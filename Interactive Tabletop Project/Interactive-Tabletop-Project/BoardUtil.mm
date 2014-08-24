@@ -95,8 +95,8 @@ BoardUtil *boardUtilInstance = nil;
     CGRect canvasRect = [self canvasRectWithScreenSize:screenSize];
     CGRect gridRect = [self gridRectWithCanvasSize:canvasRect.size];
     CGSize brickSize = [[BoardUtil instance] brickSizeWithGridRect:gridRect];
-    return CGRectMake(canvasRect.origin.x + gridRect.origin.x + (position.x * brickSize.width),
-                      canvasRect.origin.y + gridRect.origin.y + (position.y * brickSize.height),
+    return CGRectMake(canvasRect.origin.x + gridRect.origin.x + ((float)position.x * brickSize.width),
+                      canvasRect.origin.y + gridRect.origin.y + ((float)position.y * brickSize.height),
                       (int)brickSize.width,
                       (int)brickSize.height);
 }
@@ -104,7 +104,7 @@ BoardUtil *boardUtilInstance = nil;
 - (CGSize)screenSizeWithoutBorder:(CGSize)screenSize {
     CGSize borderSize = CGSizeMake(0.0f, 0.0f);
     if ([Constants instance].borderEnabled) {
-        borderSize = CGSizeMake(screenSize.width  * ([Constants instance].borderViewSizePct.width + [Constants instance].borderPaddingSizePct.width),
+        borderSize = CGSizeMake(screenSize.width  * ([Constants instance].borderViewSizePct.width  + [Constants instance].borderPaddingSizePct.width),
                                 screenSize.height * ([Constants instance].borderViewSizePct.height + [Constants instance].borderPaddingSizePct.height));
     }
     
