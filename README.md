@@ -97,7 +97,7 @@ Photos are varying in quality. In particular, the maze is left completely white 
 
 ### Dystopia
 
-All photos are copyright by Henrik Bengtsson.
+All photos of Dystopia are copyright by Henrik Bengtsson.
 
 ##### The real tabletop game "Dystopia", the father of the framework
 
