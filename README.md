@@ -66,15 +66,23 @@ Articles
 Videos
 ------
 
+### Interactive Tabletop Project:ed MAZE
+
+##### First version
+
+[Daniel and his daughter playing #1](http://youtu.be/KGKh9mf7N1I)
+
+[Daniel and his daughter playing #2](http://youtu.be/JauZ_LG5UYA)
+
 ### Dystopia
 
 ##### Early development
 
-[Dystopia - opening doors](http://youtu.be/q70jRrMF240)
+[Opening doors](http://youtu.be/q70jRrMF240)
 
-[Dystopia - brick movement](http://youtu.be/2pPu2RXxLaE)
+[Brick movement](http://youtu.be/2pPu2RXxLaE)
 
-[Dystopia - brick recognition](http://youtu.be/lE4cS93vqYw)
+[Brick recognition](http://youtu.be/lE4cS93vqYw)
 
 Photos
 ------
