@@ -100,7 +100,7 @@ enum Direction {
         for (int i = 0; i < MAX_PLAYERS; i++) {
             validPlayers += [self isPlayerValid:i] ? 1 : 0;
         }
-        if (validPlayers < MAX_PLAYERS - 2) {
+        if (validPlayers < MAX_PLAYERS - 1) {
             NSLog(@"Failed!");
             continue;
         }
