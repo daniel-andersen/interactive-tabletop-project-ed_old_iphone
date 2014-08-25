@@ -31,20 +31,21 @@
 #define BORDER_DOWN  (1 << 3)
 #define BORDER_LEFT  (1 << 4)
 
+enum MazeEntryType {
+    HALLWAY,
+    WALL
+};
+
 @interface MazeEntry : NSObject
 
 - (id)initWithPosition:(CGPoint)p;
-
-- (bool)hasBorder:(int)borderMask;
-- (void)addBorder:(int)borderMask;
-- (void)removeBorder:(int)borderMask;
 
 @property (nonatomic, assign) int x;
 @property (nonatomic, assign) int y;
 
 @property (nonatomic, assign) cv::Point2i position;
 
-@property (nonatomic, assign) int borderMask;
+@property (nonatomic, assign) MazeEntryType type;
 
 @property (nonatomic, strong) NSMutableDictionary *bag;
 
@@ -63,13 +64,14 @@
 
 - (void)setPositionOfPlayer:(int)player position:(cv::Point2i)position;
 - (cv::Point2i)positionOfPlayer:(int)player;
-- (cv::Point2i)positionOfTreasure;
 
 - (MazeEntry *)entryForPlayer:(int)player;
 
 - (void)enablePlayer:(int)player;
 - (void)disablePlayer:(int)player;
 - (bool)isPlayerEnabled:(int)player;
+
+- (bool)isPlayerValid:(int)player;
 
 - (NSArray *)reachableEntriesForPlayer:(int)player;
 - (NSArray *)reachableEntriesForPlayer:(int)player reachDistance:(int)reachDistance;
@@ -80,5 +82,7 @@
 @property (nonatomic, assign) int playerReachDistance;
 
 @property (nonatomic, assign) int currentPlayer;
+
+@property (nonatomic, assign) cv::Point2i treasurePosition;
 
 @end

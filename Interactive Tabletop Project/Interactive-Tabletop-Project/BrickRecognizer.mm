@@ -27,7 +27,7 @@
 #import "BoardCalibrator.h"
 #import "UIImage+OpenCV.h"
 
-#define HISTOGRAM_BIN_COUNT 4
+#define HISTOGRAM_BIN_COUNT 6
 
 #define BRICK_RECOGNITION_MINIMUM_MEDIAN_DELTA 30.0f
 #define BRICK_RECOGNITION_MINIMUM_PROBABILITY 0.4f

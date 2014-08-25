@@ -48,8 +48,6 @@ enum GameState {
 
 @property (nonatomic, assign) CGSize borderSize;
 
-@property (nonatomic, strong) NSArray *maskImages;
-
 @property (nonatomic, strong) MazeContainerView *currentMazeView;
 @property (nonatomic, strong) MazeContainerView *otherMazeView;
 
@@ -85,7 +83,7 @@ enum GameState {
     
     self.animatingMask = NO;
 
-    self.borderSize = CGSizeMake(4.0f, 4.0f);
+    self.borderSize = CGSizeMake(2.0f, 2.0f);
 
     self.otherMazeView = [[MazeContainerView alloc] init];
     [self addSubview:self.otherMazeView];
@@ -98,12 +96,6 @@ enum GameState {
     self.titleImageView.contentMode = UIViewContentModeScaleAspectFit;
     self.titleImageView.alpha = 0.0f;
     [self addSubview:self.titleImageView];
-    
-    NSMutableArray *images = [NSMutableArray array];
-    for (int i = 0; i < 17; i++) {
-        [images addObject:[UIImage imageNamed:[NSString stringWithFormat:@"Brick Mask %i", i]]];
-    }
-    self.maskImages = [images copy];
     
     self.overlayView = [[UIView alloc] initWithFrame:[Constants instance].gridRect];
     self.overlayView.backgroundColor = [UIColor clearColor];
@@ -121,9 +113,9 @@ enum GameState {
     self.treasureImageView = [self brickImageViewWithImage:[UIImage imageNamed:@"Treasure"]];
     [self.overlayView addSubview:self.treasureImageView];
     
-    self.testImage = [[UIImageView alloc] initWithFrame:CGRectMake(self.overlayView.frame.size.width / 4, self.overlayView.frame.size.height / 4, self.overlayView.frame.size.width / 2, self.overlayView.frame.size.height / 2)];
+    /*self.testImage = [[UIImageView alloc] initWithFrame:CGRectMake(self.overlayView.frame.size.width / 4, self.overlayView.frame.size.height / 4, self.overlayView.frame.size.width / 2, self.overlayView.frame.size.height / 2)];
     self.testImage.contentMode = UIViewContentModeCenter;
-    [self addSubview:self.testImage];
+    [self addSubview:self.testImage];*/
 }
 
 - (UIImageView *)brickImageViewWithImage:(UIImage *)image {
@@ -200,6 +192,7 @@ enum GameState {
 - (void)startPlayerTurn {
     self.restartCountDown = [MazeConstants instance].brickStableCountDown;
     self.gameState = PLAYER_TURN;
+    [self updateMask];
 }
 
 - (void)update {
@@ -223,6 +216,9 @@ enum GameState {
     }
     bool refreshMask = NO;
     for (int i = 0; i < MAX_PLAYERS; i++) {
+        if (![[MazeModel instance] isPlayerValid:i]) {
+            continue;
+        }
         cv::Point position = [self findPlayerPosition:i];
         if (![[MazeModel instance] isPlayerEnabled:i]) {
             if (position == [[MazeModel instance] positionOfPlayer:i]) {
@@ -271,7 +267,7 @@ enum GameState {
 - (void)movePlayerToPosition:(cv::Point)position {
     [[MazeModel instance] setPositionOfPlayer:[MazeModel instance].currentPlayer position:position];
     [self updateMask];
-    if (position == [[MazeModel instance] positionOfTreasure]) {
+    if (position == [MazeModel instance].treasurePosition) {
         self.gameState = WAIT;
         [self performSelector:@selector(endGame) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
     } else {
@@ -292,15 +288,24 @@ enum GameState {
 
 - (void)nextPlayer {
     self.gameState = WAIT;
+
+    int nextPlayer = [MazeModel instance].currentPlayer;
+    [MazeModel instance].currentPlayer = -1;
+
     for (int i = 0; i <= MAX_PLAYERS; i++) {
-        [MazeModel instance].currentPlayer = ([MazeModel instance].currentPlayer + 1) % MAX_PLAYERS;
-        if ([[MazeModel instance] isPlayerEnabled:[MazeModel instance].currentPlayer]) {
-            [self updateMask];
-            [self performSelector:@selector(startPlayerTurn) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
+        nextPlayer = (nextPlayer + 1) % MAX_PLAYERS;
+        if ([[MazeModel instance] isPlayerEnabled:nextPlayer]) {
+            [self performSelector:@selector(setPlayerTurn:) withObject:[NSNumber numberWithInt:nextPlayer] afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
             return;
         }
     }
-    [self endGame];
+    [self performSelector:@selector(endGame) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
+}
+
+- (void)setPlayerTurn:(NSNumber *)player {
+    [self updateMask];
+    [MazeModel instance].currentPlayer = player.intValue;
+    [self performSelector:@selector(startPlayerTurn) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
 }
 
 - (cv::Point)findPlayerPosition:(int)player {
@@ -308,7 +313,7 @@ enum GameState {
     for (MazeEntry *entry in [[MazeModel instance] reachableEntriesForPlayer:player reachDistance:[self playerReachDistance:player]]) {
         positions.push_back(cv::Point(entry.x, entry.y));
     }
-    /*if (player == 2) {
+    /*if (player == 0) {
         self.testImage.image = [[BrickRecognizer instance] tiledImageWithLocations:positions];
     }*/
     return [[BrickRecognizer instance] positionOfBrickAtLocations:positions];
@@ -336,20 +341,14 @@ enum GameState {
     for (int i = 0; i < [MazeModel instance].height; i++) {
         for (int j = 0; j < [MazeModel instance].width; j++) {
             int type = [Util randomIntFrom:0 to:BRICK_TYPE_COUNT];
-            UIImage *tileImage = [UIImage imageNamed:[NSString stringWithFormat:@"Brick %i", type + 1]];
             MazeEntry *entry = [[MazeModel instance] entryAtX:j y:i];
+            UIImage *tileImage;
+            if (entry.type == HALLWAY) {
+                tileImage = [UIImage imageNamed:[NSString stringWithFormat:@"Brick %i", /*type + */1]];
+            } else {
+                tileImage = [UIImage imageNamed:[NSString stringWithFormat:@"Wall %i", type + 1]];
+            }
             CGContextDrawImage(context, [self rectForEntry:entry], tileImage.CGImage);
-        }
-    }
-    
-    // Draw walls
-    CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
-    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
-    
-    for (int i = 0; i < [MazeModel instance].height; i++) {
-        for (int j = 0; j < [MazeModel instance].width; j++) {
-            MazeEntry *entry = [[MazeModel instance] entryAtX:j y:i];
-            [self drawWallForEntry:entry withContext:context];
         }
     }
     
@@ -366,6 +365,9 @@ enum GameState {
         }
     }
     for (int i = 0; i < MAX_PLAYERS; i++) {
+        if (![[MazeModel instance] isPlayerValid:i]) {
+            continue;
+        }
         if (![[MazeModel instance] isPlayerEnabled:i] && self.gameState != PLACE_PLAYERS) {
             continue;
         }
@@ -376,7 +378,7 @@ enum GameState {
         }
     }
     if (self.gameState >= PLAYER_TURN) {
-        cv::Point p = [[MazeModel instance] positionOfTreasure];
+        cv::Point p = [MazeModel instance].treasurePosition;
         maskMap[p.y][p.x] = MAX(2, maskMap[p.y][p.x]);
     }
 
@@ -386,35 +388,16 @@ enum GameState {
     CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:1.0f alpha:0.0f].CGColor);
     CGContextFillRect(context, self.bounds);
 
+    UIImage *maskImage = [UIImage imageNamed:@"Mask"];
+
     if (self.gameState != NEW_GAME) {
         for (int i = 0; i < [MazeModel instance].height; i++) {
             for (int j = 0; j < [MazeModel instance].width; j++) {
-                MazeEntry *entry = [[MazeModel instance] entryAtX:j y:i];
-                int alphaBit = maskMap[i][j];
-                int maskBit = 0;
                 if (maskMap[i][j] > 0) {
-                    maskBit = 16;
-                } else {
-                    if (![entry hasBorder:BORDER_UP] && i > 0 && maskMap[i - 1][j] > 0) {
-                        maskBit |= (1 << 0);
-                        alphaBit = MAX(alphaBit, maskMap[i - 1][j]);
-                    }
-                    if (![entry hasBorder:BORDER_RIGHT] && j < [MazeModel instance].width - 1 && maskMap[i][j + 1] > 0) {
-                        maskBit |= (1 << 1);
-                        alphaBit = MAX(alphaBit, maskMap[i][j + 1]);
-                    }
-                    if (![entry hasBorder:BORDER_DOWN] && i < [MazeModel instance].height - 1 && maskMap[i + 1][j] > 0) {
-                        maskBit |= (1 << 2);
-                        alphaBit = MAX(alphaBit, maskMap[i + 1][j]);
-                    }
-                    if (![entry hasBorder:BORDER_LEFT] && j > 0 && maskMap[i][j - 1] > 0) {
-                        maskBit |= (1 << 3);
-                        alphaBit = MAX(alphaBit, maskMap[i][j - 1]);
-                    }
+                    MazeEntry *entry = [[MazeModel instance] entryAtX:j y:i];
+                    float alpha = maskMap[i][j] == 0 ? 0.0f : (maskMap[i][j] == 1 ? 0.2f : 1.0f);
+                    [maskImage drawInRect:[self maskRectForEntry:entry] blendMode:kCGBlendModeDestinationOver alpha:alpha];
                 }
-                float alpha = alphaBit == 0 ? 0.0f : (alphaBit == 1 ? 0.2f : 1.0f);
-                UIImage *image = [self.maskImages objectAtIndex:maskBit];
-                [image drawInRect:[self rectForEntry:entry] blendMode:kCGBlendModeNormal alpha:alpha];
             }
         }
     }
@@ -423,112 +406,6 @@ enum GameState {
 
     self.currentMazeView.maskLayer.contents = (id)image.CGImage;
     UIGraphicsEndImageContext();
-}
-
-- (void)drawWallForEntry:(MazeEntry *)entry withContext:(CGContextRef)context {
-    MazeEntry *leftEntry = [[MazeModel instance] entryAtX:(entry.x - 1) y:entry.y];
-    MazeEntry *rightEntry = [[MazeModel instance] entryAtX:(entry.x + 1) y:entry.y];
-    MazeEntry *upEntry = [[MazeModel instance] entryAtX:entry.x y:(entry.y - 1)];
-    MazeEntry *downEntry = [[MazeModel instance] entryAtX:entry.x y:(entry.y + 1)];
-    
-    bool brickBorders[3][3];
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            brickBorders[i][j] = NO;
-        }
-    }
-    
-    // Left
-    if ([entry hasBorder:BORDER_LEFT]) {
-        brickBorders[0][0] = YES;
-        brickBorders[1][0] = YES;
-        brickBorders[2][0] = YES;
-    }
-    
-    // Right
-    if ([entry hasBorder:BORDER_RIGHT]) {
-        brickBorders[0][2] = YES;
-        brickBorders[1][2] = YES;
-        brickBorders[2][2] = YES;
-    }
-
-    // Top
-    if ([entry hasBorder:BORDER_UP]) {
-        brickBorders[0][0] = YES;
-        brickBorders[0][1] = YES;
-        brickBorders[0][2] = YES;
-    }
-
-    // Bottom
-    if ([entry hasBorder:BORDER_DOWN]) {
-        brickBorders[2][0] = YES;
-        brickBorders[2][1] = YES;
-        brickBorders[2][2] = YES;
-    }
-    
-    // Corner left/top
-    if ([leftEntry hasBorder:BORDER_UP] || [upEntry hasBorder:BORDER_LEFT]) {
-        brickBorders[0][0] = YES;
-    }
-
-    // Corner right/top
-    if ([rightEntry hasBorder:BORDER_UP] || [upEntry hasBorder:BORDER_RIGHT]) {
-        brickBorders[0][2] = YES;
-    }
-
-    // Corner left/bottom
-    if ([leftEntry hasBorder:BORDER_DOWN] || [downEntry hasBorder:BORDER_LEFT]) {
-        brickBorders[2][0] = YES;
-    }
-    
-    // Corner right/bottom
-    if ([rightEntry hasBorder:BORDER_DOWN] || [downEntry hasBorder:BORDER_RIGHT]) {
-        brickBorders[2][2] = YES;
-    }
-    
-    // Draw borders
-    CGRect brickRect = [self rectForEntry:entry];
-
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            if (!brickBorders[i][j] || (i == 1 && j == 1)) {
-                continue;
-            }
-            CGRect borderRect = [self rectForBorderAtX:j y:i brickRect:brickRect];
-            borderRect.origin.x -= 1.0f;
-            borderRect.origin.y -= 1.0f;
-            borderRect.size.width += 2.0f;
-            borderRect.size.height += 2.0f;
-            
-            borderRect = CGRectIntersection(borderRect, brickRect);
-
-            CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
-            CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
-            CGContextFillRect(context, borderRect);
-        }
-    }
-
-    // Draw filling
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            if (!brickBorders[i][j] || (i == 1 && j == 1)) {
-                continue;
-            }
-            CGRect borderRect = [self rectForBorderAtX:j y:i brickRect:brickRect];
-            borderRect = CGRectIntersection(borderRect, brickRect);
-            
-            CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
-            CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
-            CGContextFillRect(context, borderRect);
-        }
-    }
-}
-
-- (CGRect)rectForBorderAtX:(int)x y:(int)y brickRect:(CGRect)brickRect {
-    return CGRectMake(brickRect.origin.x + (x == 0 ? 0.0f : (x == 2 ? brickRect.size.width - self.borderSize.width : self.borderSize.width)),
-                      brickRect.origin.y + (y == 0 ? 0.0f : (y == 2 ? brickRect.size.height - self.borderSize.height : self.borderSize.height)),
-                      x == 0 || x == 2 ? self.borderSize.width : (brickRect.size.width - (self.borderSize.width * 2.0f)),
-                      y == 0 || y == 2 ? self.borderSize.height : (brickRect.size.height - (self.borderSize.height * 2.0f)));
 }
 
 - (CGRect)rectForEntry:(MazeEntry *)entry {
@@ -540,6 +417,15 @@ enum GameState {
                       position.y * [Constants instance].brickSize.height,
                       [Constants instance].brickSize.width,
                       [Constants instance].brickSize.height);
+}
+
+- (CGRect)maskRectForEntry:(MazeEntry *)entry {
+    CGRect rect = [self rectForEntry:entry];
+    rect.origin.x -= rect.size.width;
+    rect.origin.y -= rect.size.height;
+    rect.size.width *= 3.0f;
+    rect.size.height *= 3.0f;
+    return rect;
 }
 
 - (int)playerReachDistance:(int)player {
@@ -589,6 +475,9 @@ enum GameState {
 }
 
 - (void)showBrickMarker:(int)player {
+    if (![[MazeModel instance] isPlayerValid:player]) {
+        return;
+    }
     UIImageView *markerView = [self.brickMarkers objectAtIndex:player];
 
     markerView.frame = [self rectForEntry:[[MazeModel instance] entryForPlayer:player]];
@@ -610,7 +499,7 @@ enum GameState {
 }
 
 - (void)showTreasure {
-    self.treasureImageView.frame = [self rectForPosition:[[MazeModel instance] positionOfTreasure]];
+    self.treasureImageView.frame = [self rectForPosition:[MazeModel instance].treasurePosition];
     self.treasureImageView.alpha = 0.0f;
     self.treasureImageView.hidden = NO;
     
