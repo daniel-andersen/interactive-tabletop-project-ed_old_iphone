@@ -192,6 +192,7 @@ enum GameState {
 - (void)startPlayerTurn {
     self.restartCountDown = [MazeConstants instance].brickStableCountDown;
     self.gameState = PLAYER_TURN;
+    [self showBrickMarker:[MazeModel instance].currentPlayer];
     [self updateMask];
 }
 
@@ -223,9 +224,10 @@ enum GameState {
         if (![[MazeModel instance] isPlayerEnabled:i]) {
             if (position == [[MazeModel instance] positionOfPlayer:i]) {
                 [[MazeModel instance] enablePlayer:i];
-                [self hideBrickMarker:i];
                 if ([MazeModel instance].currentPlayer == -1) {
                     [MazeModel instance].currentPlayer = i;
+                } else {
+                    [self hideBrickMarker:i];
                 }
                 refreshMask = YES;
             }
@@ -256,6 +258,7 @@ enum GameState {
         self.restartCountDown--;
         if (self.restartCountDown <= 0) {
             [[MazeModel instance] disablePlayer:[MazeModel instance].currentPlayer];
+            [self hideBrickMarker:[MazeModel instance].currentPlayer];
             [self nextPlayer];
         }
     } else {
@@ -271,6 +274,7 @@ enum GameState {
         self.gameState = WAIT;
         [self performSelector:@selector(endGame) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
     } else {
+        [self hideBrickMarker:[MazeModel instance].currentPlayer];
         [self performSelector:@selector(nextPlayer) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
     }
 }
@@ -295,17 +299,13 @@ enum GameState {
     for (int i = 0; i <= MAX_PLAYERS; i++) {
         nextPlayer = (nextPlayer + 1) % MAX_PLAYERS;
         if ([[MazeModel instance] isPlayerEnabled:nextPlayer]) {
-            [self performSelector:@selector(setPlayerTurn:) withObject:[NSNumber numberWithInt:nextPlayer] afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
+            [self updateMask];
+            [MazeModel instance].currentPlayer = nextPlayer;
+            [self performSelector:@selector(startPlayerTurn) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
             return;
         }
     }
     [self performSelector:@selector(endGame) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
-}
-
-- (void)setPlayerTurn:(NSNumber *)player {
-    [self updateMask];
-    [MazeModel instance].currentPlayer = player.intValue;
-    [self performSelector:@selector(startPlayerTurn) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
 }
 
 - (cv::Point)findPlayerPosition:(int)player {
