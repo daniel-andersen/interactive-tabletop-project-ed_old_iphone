@@ -82,7 +82,7 @@ enum Direction {
 
     self.granularity = 2;
     self.wallMinLength = 2;
-    self.wallMaxLength = 5;
+    self.wallMaxLength = 4;
 }
 
 - (void)createRandomMaze {
@@ -100,10 +100,12 @@ enum Direction {
         for (int i = 0; i < MAX_PLAYERS; i++) {
             validPlayers += [self isPlayerValid:i] ? 1 : 0;
         }
-        if (validPlayers < MAX_PLAYERS - 1) {
+        if (validPlayers < MAX_PLAYERS) {
             NSLog(@"Failed!");
             continue;
         }
+        
+        playerValid[2] = NO;
         
         NSLog(@"Generated maze!");
         [self resetMazeBags];

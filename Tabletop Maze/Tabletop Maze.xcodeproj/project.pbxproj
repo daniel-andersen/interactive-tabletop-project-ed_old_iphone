@@ -65,6 +65,7 @@
 		65FAF0BE199E27DC00B45084 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FAF0A0199A8CE100B45084 /* opencv2.framework */; };
 		65FAF0C419A27DE600B45084 /* TabletopBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FAF0C319A27DE600B45084 /* TabletopBorderView.m */; };
 		65FAF0C719A4D8A200B45084 /* MazeContainerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FAF0C619A4D8A200B45084 /* MazeContainerView.mm */; };
+		65FAF0CA19AE509700B45084 /* PracticeHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FAF0C919AE509700B45084 /* PracticeHelper.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +163,8 @@
 		65FAF0C319A27DE600B45084 /* TabletopBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabletopBorderView.m; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/TabletopBorderView.m"; sourceTree = "<group>"; };
 		65FAF0C519A4D8A200B45084 /* MazeContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeContainerView.h; sourceTree = "<group>"; };
 		65FAF0C619A4D8A200B45084 /* MazeContainerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MazeContainerView.mm; sourceTree = "<group>"; };
+		65FAF0C819AE509700B45084 /* PracticeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PracticeHelper.h; sourceTree = "<group>"; };
+		65FAF0C919AE509700B45084 /* PracticeHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PracticeHelper.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -387,6 +390,8 @@
 				6587DD31193B1D1100C2741E /* AppDelegate.m */,
 				65FAF0B0199A907A00B45084 /* MazeConstants.h */,
 				65FAF0B1199A907A00B45084 /* MazeConstants.m */,
+				65FAF0C819AE509700B45084 /* PracticeHelper.h */,
+				65FAF0C919AE509700B45084 /* PracticeHelper.mm */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -525,6 +530,7 @@
 				6587DDB5193CB5EA00C2741E /* CameraSession.mm in Sources */,
 				6587DDB4193CB5EA00C2741E /* BrickRecognizer.mm in Sources */,
 				6587DE0C193EF38400C2741E /* ExternalDislayCalibrationView.m in Sources */,
+				65FAF0CA19AE509700B45084 /* PracticeHelper.mm in Sources */,
 				65FAF0C419A27DE600B45084 /* TabletopBorderView.m in Sources */,
 				6587DDBA193CB5EA00C2741E /* FakeCameraUtil.mm in Sources */,
 				6587DDB9193CB5EA00C2741E /* ExternalDisplay.m in Sources */,

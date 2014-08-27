@@ -41,6 +41,8 @@
 
 - (void)calibrationViewDidHide;
 
+- (UIImage *)requestSimulatedImageIfNoCamera;
+
 @property (nonatomic, assign) CFTimeInterval updateInterval;
 
 @property (nonatomic, strong) TabletopView *tabletopView;

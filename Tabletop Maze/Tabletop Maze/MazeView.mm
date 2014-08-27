@@ -24,6 +24,7 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "MazeView.h"
+#import "PracticeHelper.h"
 #import "MazeContainerView.h"
 #import "MazeModel.h"
 #import "MazeConstants.h"
@@ -39,7 +40,8 @@ enum GameState {
     NEW_GAME,
     PLACE_PLAYERS,
     PLAYER_TURN,
-    WAIT
+    WAIT,
+    PRACTICING
 };
 
 @interface MazeView ()
@@ -113,9 +115,9 @@ enum GameState {
     self.treasureImageView = [self brickImageViewWithImage:[UIImage imageNamed:@"Treasure"]];
     [self.overlayView addSubview:self.treasureImageView];
     
-    /*self.testImage = [[UIImageView alloc] initWithFrame:CGRectMake(self.overlayView.frame.size.width / 4, self.overlayView.frame.size.height / 4, self.overlayView.frame.size.width / 2, self.overlayView.frame.size.height / 2)];
+    self.testImage = [[UIImageView alloc] initWithFrame:CGRectMake(50.0f, 50.0f, 200.0f, 200.0f)];
     self.testImage.contentMode = UIViewContentModeCenter;
-    [self addSubview:self.testImage];*/
+    [self addSubview:self.testImage];
 }
 
 - (UIImageView *)brickImageViewWithImage:(UIImage *)image {
@@ -147,7 +149,16 @@ enum GameState {
 
 - (void)start {
     NSLog(@"Start");
-    [self startNewGame];
+    if ([PracticeHelper instance].enabled) {
+        [self startPractice];
+    } else {
+        [self startNewGame];
+    }
+}
+
+- (void)startPractice {
+    NSLog(@"Practicing");
+    self.gameState = PRACTICING;
 }
 
 - (void)startNewGame {
@@ -201,6 +212,9 @@ enum GameState {
         return;
     }
     switch (self.gameState) {
+        case PRACTICING:
+            [self updatePracticing];
+            break;
         case PLACE_PLAYERS:
             [self updatePlacePlayers];
             break;
@@ -209,6 +223,14 @@ enum GameState {
         default:
             break;
     }
+}
+
+- (void)updatePracticing {
+    if (![BoardCalibrator instance].isBoardFullyRecognized) {
+        return;
+    }
+    self.testImage.image = [[BrickRecognizer instance] tiledImageWithLocations:[[PracticeHelper instance] validPositionsForPlayer:2]];
+    [[PracticeHelper instance] updatePractice];
 }
 
 - (void)updatePlacePlayers {
@@ -237,7 +259,6 @@ enum GameState {
                 [self startLevel];
             }
         }
-        
     }
     if (refreshMask) {
         [self updateMask];
@@ -313,9 +334,6 @@ enum GameState {
     for (MazeEntry *entry in [[MazeModel instance] reachableEntriesForPlayer:player reachDistance:[self playerReachDistance:player]]) {
         positions.push_back(cv::Point(entry.x, entry.y));
     }
-    /*if (player == 0) {
-        self.testImage.image = [[BrickRecognizer instance] tiledImageWithLocations:positions];
-    }*/
     return [[BrickRecognizer instance] positionOfBrickAtLocations:positions];
 }
 
@@ -379,7 +397,7 @@ enum GameState {
     }
     if (self.gameState >= PLAYER_TURN) {
         cv::Point p = [MazeModel instance].treasurePosition;
-        maskMap[p.y][p.x] = MAX(2, maskMap[p.y][p.x]);
+        maskMap[p.y][p.x] = MAX(1, maskMap[p.y][p.x]);
     }
 
     UIGraphicsBeginImageContextWithOptions(self.currentMazeView.mazeImageView.frame.size, NO, 1.0f);
@@ -432,7 +450,7 @@ enum GameState {
     if ([[MazeModel instance] isPlayerEnabled:player]) {
         return [MazeModel instance].playerReachDistance;
     } else {
-        return 1;
+        return 2;
     }
 }
 

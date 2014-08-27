@@ -26,6 +26,7 @@
 #import "ViewController.h"
 #import "MazeView.h"
 #import "ExternalDisplay.h"
+#import "PracticeHelper.h"
 #import "MazeModel.h"
 #import "Constants.h"
 
@@ -40,11 +41,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [PracticeHelper instance].enabled = NO;
+    [PracticeHelper instance].currentImageNumber = 6;
+    [PracticeHelper instance].placePlayers = NO;
+    
     [self showBorderAnimated:NO];
 #if TARGET_IPHONE_SIMULATOR
-    [self setGridWithPixelSize:CGSizeMake(20.0f, 20.0f)];
+    //[self setGridWithPixelSize:CGSizeMake(20.0f, 20.0f)];
+    [self setGridOfSize:CGSizeMake(33, 20)];
 #else
-    [self setGridWithPixelSize:CGSizeMake(30.0f, 30.0f)];
+    [self setGridWithPixelSize:CGSizeMake(35.0f, 35.0f)];
 #endif
     [self start];
 }
@@ -57,6 +63,14 @@
     self.tabletopView = self.mazeView;
 
     [self.mazeView start];
+}
+
+- (UIImage *)requestSimulatedImageIfNoCamera {
+    if ([PracticeHelper instance].enabled) {
+        return [[PracticeHelper instance] currentImage];
+    } else {
+        return [super requestSimulatedImageIfNoCamera];
+    }
 }
 
 @end

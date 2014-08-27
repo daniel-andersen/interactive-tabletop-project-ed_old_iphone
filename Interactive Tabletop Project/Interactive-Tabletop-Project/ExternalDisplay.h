@@ -36,6 +36,6 @@
 
 @property (nonatomic, readonly) bool externalDisplayFound;
 
-@property (nonatomic, readonly) CGRect widescreenBounds;
+@property (nonatomic, assign) CGRect widescreenBounds;
 
 @end
