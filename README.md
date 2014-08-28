@@ -95,19 +95,16 @@ Photos are varying in quality. In particular, the maze is left completely white 
 
 ![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze1.jpg "MAZE Image")
 
-##### First brick placed on table
+##### Approaching the treasure
 
 ![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze2.jpg "MAZE Image")
 
-##### Moving a brick
+##### Daniel’s children enjoying the game
 
 ![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze3.jpg "MAZE Image")
-
-##### Daniel's daughter finding her way through the maze
-
 ![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze4.jpg "MAZE Image")
 
-##### Daniel losing his way and ending up losing
+##### Close-up in dark room
 
 ![alt text](https://raw.githubusercontent.com/black-knight/interactive-tabletop-project-ed/master/Presentation/maze5.jpg "MAZE Image")
 
