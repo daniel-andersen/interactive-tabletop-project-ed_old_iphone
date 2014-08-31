@@ -240,9 +240,6 @@ enum GameState {
     }
     bool refreshMask = NO;
     for (int i = 0; i < MAX_PLAYERS; i++) {
-        if (![[MazeModel instance] isPlayerValid:i]) {
-            continue;
-        }
         cv::Point position = [self findPlayerPosition:i];
         if (![[MazeModel instance] isPlayerEnabled:i]) {
             if (position == [[MazeModel instance] positionOfPlayer:i]) {
@@ -302,6 +299,7 @@ enum GameState {
 }
 
 - (void)endGame {
+    [self hideBrickMarkers];
     [UIView animateWithDuration:5.0f animations:^{
         self.treasureImageView.frame = CGRectMake(self.treasureImageView.frame.origin.x - (self.treasureImageView.frame.size.width * 2.0f),
                                                   self.treasureImageView.frame.origin.y - (self.treasureImageView.frame.size.height * 2.0f),
@@ -384,9 +382,6 @@ enum GameState {
         }
     }
     for (int i = 0; i < MAX_PLAYERS; i++) {
-        if (![[MazeModel instance] isPlayerValid:i]) {
-            continue;
-        }
         if (![[MazeModel instance] isPlayerEnabled:i] && self.gameState != PLACE_PLAYERS) {
             continue;
         }
@@ -494,9 +489,6 @@ enum GameState {
 }
 
 - (void)showBrickMarker:(int)player {
-    if (![[MazeModel instance] isPlayerValid:player]) {
-        return;
-    }
     UIImageView *markerView = [self.brickMarkers objectAtIndex:player];
 
     markerView.frame = [self rectForEntry:[[MazeModel instance] entryForPlayer:player]];

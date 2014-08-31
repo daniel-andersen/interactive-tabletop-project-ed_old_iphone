@@ -41,7 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [PracticeHelper instance].enabled = YES;
+    [PracticeHelper instance].enabled = NO;
     [PracticeHelper instance].currentImageNumber = 10;
     [PracticeHelper instance].placePlayers = YES;
     

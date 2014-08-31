@@ -71,8 +71,6 @@ enum MazeEntryType {
 - (void)disablePlayer:(int)player;
 - (bool)isPlayerEnabled:(int)player;
 
-- (bool)isPlayerValid:(int)player;
-
 - (NSArray *)reachableEntriesForPlayer:(int)player;
 - (NSArray *)reachableEntriesForPlayer:(int)player reachDistance:(int)reachDistance;
 

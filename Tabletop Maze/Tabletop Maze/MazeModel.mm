@@ -41,12 +41,10 @@ enum Direction {
 @interface MazeModel () {
     cv::Point2i playerPosition[MAX_PLAYERS];
     bool playerEnabled[MAX_PLAYERS];
-    bool playerValid[MAX_PLAYERS];
 }
 
 @property (nonatomic, strong) NSMutableArray *maze;
 
-@property (nonatomic, strong) NSMutableArray *backtrackingStack;
 @property (nonatomic, strong) NSMutableArray *unvisitedEntries;
 
 @property (nonatomic, assign) int granularity;
@@ -82,26 +80,21 @@ enum Direction {
 
     self.granularity = 2;
     self.wallMinLength = 2;
-    self.wallMaxLength = 4;
+    self.wallMaxLength = 3;
 }
 
 - (void)createRandomMaze {
     for (int i = 0; i < 10; i++) {
         NSLog(@"Creating random maze with size %ix%i", self.width, self.height);
         [self resetMaze];
+        [self placePlayers];
         [self createWalls];
         
-        NSLog(@"Placing treasure and players");
+        NSLog(@"Placing treasure");
         [self resetMazeBags];
         [self placeTreasure];
-        [self placePlayers];
-        
-        int validPlayers = 0;
-        for (int i = 0; i < MAX_PLAYERS; i++) {
-            validPlayers += [self isPlayerValid:i] ? 1 : 0;
-        }
-        if (validPlayers < MAX_PLAYERS) {
-            NSLog(@"Failed!");
+        if (self.treasurePosition.x == -1) {
+            NSLog(@"Failed placing treasure!");
             continue;
         }
         
@@ -112,33 +105,71 @@ enum Direction {
 }
 
 - (void)createWalls {
-    int numberOfWalls = (self.width / 2) * (self.height / 2);
+    int numberOfWalls = (self.width * 2 / 3) * self.height;
     for (int i = 0; i < numberOfWalls; i++) {
         [self attemptWallStart];
+    }
+    for (int i = 0; i < MAX_PLAYERS; i++) {
+        [self entryForPlayer:i].type = HALLWAY;
     }
 }
 
 - (void)placeTreasure {
-    for (int i = 0; i < 1000; i++) {
-        int deltaX = self.width / 4;
-        int deltaY = self.height / 4;
-        
-        self.treasurePosition = cv::Point2i([Util randomIntFrom:((self.width - deltaX) / 2) to:((self.width + deltaX) / 2)],
-                                            [Util randomIntFrom:((self.height - deltaY) / 2) to:((self.height + deltaY) / 2)]);
-
-        MazeEntry *entry = [self entryAtPosition:self.treasurePosition];
-        if (entry.type == HALLWAY) {
-            break;
+    for (int i = 0; i < MAX_PLAYERS; i++) {
+        [self createPlayerDistanceMapForPlayer:i];
+    }
+    self.treasurePosition = cv::Point2i(-1, -1);
+    int bestScore = 10000;
+    for (int i = 0; i < self.height; i++) {
+        for (int j = 0; j < self.width; j++) {
+            MazeEntry *entry = [self entryAtX:j y:i];
+            if (entry.type == WALL) {
+                continue;
+            }
+            int minDistance = 100000;
+            int maxDistance = 0;
+            for (int k = 0; k < MAX_PLAYERS; k++) {
+                NSString *bagKey = [NSString stringWithFormat:@"distanceFromPlayer%i", k];
+                NSNumber *distance = [entry.bag objectForKey:bagKey];
+                if (distance != nil) {
+                    minDistance = MIN(minDistance, distance.intValue);
+                    maxDistance = MAX(maxDistance, distance.intValue);
+                } else {
+                    maxDistance = -1;
+                    break;
+                }
+            }
+            if (maxDistance == -1) {
+                continue;
+            }
+            int score = maxDistance - minDistance;
+            if (score < bestScore) {
+                self.treasurePosition = entry.position;
+                bestScore = score;
+            }
         }
     }
 }
 
-- (void)placePlayers {
-    for (int i = 0; i < MAX_PLAYERS; i++) {
-        playerValid[i] = YES;
+- (void)createPlayerDistanceMapForPlayer:(int)player {
+    self.unvisitedEntries = [NSMutableArray array];
+    
+    NSString *bagKey = [NSString stringWithFormat:@"distanceFromPlayer%i", player];
+    
+    MazeEntry *playerEntry = [self entryForPlayer:player];
+    [playerEntry.bag setObject:[NSNumber numberWithInt:0] forKey:bagKey];
+    
+    [self.unvisitedEntries addObject:playerEntry];
+    for (int i = 0; i < self.unvisitedEntries.count; i++) {
+        [self updatePlayerDistanceMapFromEntry:[self.unvisitedEntries objectAtIndex:i] bagKey:bagKey];
     }
-    [self recursivelyCreatePlayerPositionMapFromEntry:[self entryAtPosition:self.treasurePosition] distanceFromStart:0];
-    [self findPlayerPositionsFromMap];
+}
+
+- (void)placePlayers {
+    playerPosition[0] = cv::Point2i(1, 1);
+    playerPosition[1] = cv::Point2i(self.width - 2, 1);
+    playerPosition[2] = cv::Point2i(1, self.height - 2);
+    playerPosition[3] = cv::Point2i(self.width - 2, self.height - 2);
 }
 
 - (NSArray *)reachableEntriesForPlayer:(int)player {
@@ -199,149 +230,43 @@ enum Direction {
     }
 }
 
-- (void)findPlayerPositionsFromMap {
-    int maxBorderDistance[4];
-    
-    int verticalMargin = (int)((float)self.height * 0.25f);
-    int horizontalMargin = (int)((float)self.width * 0.25f);
-    
-    // Left max distance
-    for (int i = verticalMargin; i < self.height - verticalMargin; i++) {
-        MazeEntry *entry = [self entryAtX:1 y:i];
-        NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
-        if (distanceFromStart != nil) {
-            maxBorderDistance[0] = MAX(maxBorderDistance[0], distanceFromStart.intValue);
-        }
-    }
-
-    // Right max distance
-    for (int i = verticalMargin; i < self.height - verticalMargin; i++) {
-        MazeEntry *entry = [self entryAtX:(self.width - 2) y:i];
-        NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
-        if (distanceFromStart != nil) {
-            maxBorderDistance[1] = MAX(maxBorderDistance[1], distanceFromStart.intValue);
-        }
-    }
-
-    // Top max distance
-    for (int i = horizontalMargin; i < self.width - horizontalMargin; i++) {
-        MazeEntry *entry = [self entryAtX:i y:1];
-        NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
-        if (distanceFromStart != nil) {
-            maxBorderDistance[2] = MAX(maxBorderDistance[2], distanceFromStart.intValue);
-        }
-    }
-
-    // Bottom max distance
-    for (int i = horizontalMargin; i < self.width - horizontalMargin; i++) {
-        MazeEntry *entry = [self entryAtX:i y:(self.height - 2)];
-        NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
-        if (distanceFromStart != nil) {
-            maxBorderDistance[3] = MAX(maxBorderDistance[3], distanceFromStart.intValue);
-        }
-    }
-    
-    // Find minimum border distance per border
-    int minBorderDistance = 1000000;
-    for (int i = 0; i < 4; i++) {
-        minBorderDistance = MIN(maxBorderDistance[i], minBorderDistance);
-    }
-    
-    // Find nearest border location to minimum distance for all players
-    MazeEntry *leftStartingEntry = nil;
-    MazeEntry *rightStartingEntry = nil;
-    for (int i = verticalMargin; i < self.height - verticalMargin; i++) {
-        leftStartingEntry = [self updateBestStartingEntry:leftStartingEntry candidateEntry:[self entryAtX:1 y:i] targetDistanceFromStart:minBorderDistance];
-        rightStartingEntry = [self updateBestStartingEntry:rightStartingEntry candidateEntry:[self entryAtX:(self.width - 2) y:i] targetDistanceFromStart:minBorderDistance];
-    }
-
-    MazeEntry *topStartingEntry = nil;
-    MazeEntry *bottomStartingEntry = nil;
-    for (int i = horizontalMargin; i < self.width - horizontalMargin; i++) {
-        topStartingEntry = [self updateBestStartingEntry:topStartingEntry candidateEntry:[self entryAtX:i y:1] targetDistanceFromStart:minBorderDistance];
-        bottomStartingEntry = [self updateBestStartingEntry:bottomStartingEntry candidateEntry:[self entryAtX:i y:(self.height - 2)] targetDistanceFromStart:minBorderDistance];
-    }
-    
-    if ([leftStartingEntry.bag objectForKey:@"distanceFromStart"] != nil) {
-        leftStartingEntry = [self entryAtPosition:cv::Point2i(leftStartingEntry.position.x - 1, leftStartingEntry.position.y)];
-        leftStartingEntry.type = HALLWAY;
-        playerPosition[0] = leftStartingEntry.position;
-    } else {
-        playerValid[0] = NO;
-    }
-    
-    if ([rightStartingEntry.bag objectForKey:@"distanceFromStart"] != nil) {
-        rightStartingEntry = [self entryAtPosition:cv::Point2i(rightStartingEntry.position.x + 1, rightStartingEntry.position.y)];
-        rightStartingEntry.type = HALLWAY;
-        playerPosition[1] = rightStartingEntry.position;
-    } else {
-        playerValid[1] = NO;
-    }
-
-    if ([topStartingEntry.bag objectForKey:@"distanceFromStart"] != nil) {
-        topStartingEntry = [self entryAtPosition:cv::Point2i(topStartingEntry.position.x, topStartingEntry.position.y - 1)];
-        topStartingEntry.type = HALLWAY;
-        playerPosition[2] = topStartingEntry.position;
-    } else {
-        playerValid[2] = NO;
-    }
-    
-    if ([bottomStartingEntry.bag objectForKey:@"distanceFromStart"] != nil) {
-        bottomStartingEntry = [self entryAtPosition:cv::Point2i(bottomStartingEntry.position.x, bottomStartingEntry.position.y + 1)];
-        bottomStartingEntry.type = HALLWAY;
-        playerPosition[3] = bottomStartingEntry.position;
-    } else {
-        playerValid[3] = NO;
-    }
-}
-
-- (MazeEntry *)updateBestStartingEntry:(MazeEntry *)currentEntry candidateEntry:(MazeEntry *)candidateEntry targetDistanceFromStart:(int)targetDistanceFromStart {
-    if (currentEntry == nil || [currentEntry.bag objectForKey:@"distanceFromStart"] == nil) {
-        return candidateEntry;
-    }
-    NSNumber *currentDistanceFromStart = [currentEntry.bag objectForKey:@"distanceFromStart"];
-    NSNumber *candidateDistanceFromStart = [candidateEntry.bag objectForKey:@"distanceFromStart"];
-
-    int currentDelta = ABS(targetDistanceFromStart - currentDistanceFromStart.intValue);
-    int candidateDelta = ABS(targetDistanceFromStart - candidateDistanceFromStart.intValue);
-    
-    if (candidateDelta > currentDelta) {
-        return currentEntry;
-    }
-    if (candidateDelta == currentDelta && [Util randomIntFrom:0 to:10] < 5) {
-        return currentEntry;
-    }
-    return candidateEntry;
-}
-
-- (void)recursivelyCreatePlayerPositionMapFromEntry:(MazeEntry *)entry distanceFromStart:(int)newDistanceFromStart {
-    if (entry == nil || [entry.bag objectForKey:@"visited"] != nil) {
+- (void)updatePlayerDistanceMapFromEntry:(MazeEntry *)entry bagKey:(NSString *)bagKey {
+    if (entry == nil || entry.type == WALL) {
         return;
     }
-    [entry.bag setObject:[NSNumber numberWithBool:YES] forKey:@"visited"];
-
-    NSNumber *distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
-    if (distanceFromStart == nil || [distanceFromStart intValue] > newDistanceFromStart) {
-        [entry.bag setObject:[NSNumber numberWithInt:newDistanceFromStart] forKey:@"distanceFromStart"];
-    }
-    distanceFromStart = [entry.bag objectForKey:@"distanceFromStart"];
-
-    int nextDistanceFromStart = [distanceFromStart intValue] + 1;
+    NSNumber *distanceFromStart = [entry.bag objectForKey:bagKey];
+    
     MazeEntry *leftEntry = [self entryAtX:(entry.x - 1) y:entry.y];
-    if (leftEntry.type == HALLWAY) {
-        [self recursivelyCreatePlayerPositionMapFromEntry:leftEntry distanceFromStart:nextDistanceFromStart];
+    if (leftEntry != nil && leftEntry.type == HALLWAY) {
+        NSNumber *distance = [leftEntry.bag objectForKey:bagKey];
+        if (distance == nil) {
+            [leftEntry.bag setObject:[NSNumber numberWithInt:(distanceFromStart.intValue + 1)] forKey:bagKey];
+            [self.unvisitedEntries addObject:leftEntry];
+        }
     }
     MazeEntry *rightEntry = [self entryAtX:(entry.x + 1) y:entry.y];
-    if (rightEntry.type == HALLWAY) {
-        [self recursivelyCreatePlayerPositionMapFromEntry:rightEntry distanceFromStart:nextDistanceFromStart];
+    if (rightEntry != nil && rightEntry.type == HALLWAY) {
+        NSNumber *distance = [rightEntry.bag objectForKey:bagKey];
+        if (distance == nil) {
+            [rightEntry.bag setObject:[NSNumber numberWithInt:(distanceFromStart.intValue + 1)] forKey:bagKey];
+            [self.unvisitedEntries addObject:rightEntry];
+        }
     }
     MazeEntry *upEntry = [self entryAtX:entry.x y:(entry.y - 1)];
-    if (upEntry.type == HALLWAY) {
-        [self recursivelyCreatePlayerPositionMapFromEntry:upEntry distanceFromStart:nextDistanceFromStart];
+    if (upEntry != nil && upEntry.type == HALLWAY) {
+        NSNumber *distance = [upEntry.bag objectForKey:bagKey];
+        if (distance == nil) {
+            [upEntry.bag setObject:[NSNumber numberWithInt:(distanceFromStart.intValue + 1)] forKey:bagKey];
+            [self.unvisitedEntries addObject:upEntry];
+        }
     }
     MazeEntry *downEntry = [self entryAtX:entry.x y:(entry.y + 1)];
-    if (downEntry.type == HALLWAY) {
-        [self recursivelyCreatePlayerPositionMapFromEntry:downEntry distanceFromStart:nextDistanceFromStart];
+    if (downEntry != nil && downEntry.type == HALLWAY) {
+        NSNumber *distance = [downEntry.bag objectForKey:bagKey];
+        if (distance == nil) {
+            [downEntry.bag setObject:[NSNumber numberWithInt:(distanceFromStart.intValue + 1)] forKey:bagKey];
+            [self.unvisitedEntries addObject:downEntry];
+        }
     }
 }
 
@@ -361,7 +286,10 @@ enum Direction {
 }
 
 - (void)attemptWallStart {
-    cv::Point2i startPosition = [self randomWallStart];
+    [self attemptWallStartAtPosition:[self randomWallStart]];
+}
+
+- (void)attemptWallStartAtPosition:(cv::Point2i)startPosition {
     MazeEntry *startEntry = [self entryAtPosition:startPosition];
     if (startEntry.type == WALL) {
         return;
@@ -374,11 +302,6 @@ enum Direction {
 - (cv::Point2i)randomWallStart {
     return cv::Point2i([Util randomIntFrom:0 to:(self.width  / self.granularity)] * self.granularity,
                        [Util randomIntFrom:0 to:(self.height / self.granularity)] * self.granularity);
-}
-
-- (MazeEntry *)randomUnvisitedEntry {
-    int count = self.unvisitedEntries.count;
-    return [self.unvisitedEntries objectAtIndex:(rand() % count)];
 }
 
 - (NSArray *)unvisitedNeighboursFromEntry:(MazeEntry *)entry {
@@ -412,8 +335,6 @@ enum Direction {
 
 - (void)resetMaze {
     self.maze = [NSMutableArray array];
-    self.unvisitedEntries = [NSMutableArray array];
-    self.backtrackingStack = [NSMutableArray array];
 
     for (int i = 0; i < self.height; i++) {
         NSMutableArray *columnArray = [NSMutableArray array];
@@ -464,10 +385,6 @@ enum Direction {
 
 - (bool)isPlayerEnabled:(int)player {
     return playerEnabled[player];
-}
-
-- (bool)isPlayerValid:(int)player {
-    return playerValid[player];
 }
 
 @end
