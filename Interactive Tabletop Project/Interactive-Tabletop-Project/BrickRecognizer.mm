@@ -27,11 +27,13 @@
 #import "BoardCalibrator.h"
 #import "UIImage+OpenCV.h"
 
-#define HISTOGRAM_BIN_COUNT 3
+#define HISTOGRAM_BIN_COUNT 4
+#define HISTOGRAM_BIN_COUNT_FALLBACK 2
+#define HISTOGRAM_BIN_COUNT_FALLBACK_2 8
 
 #define BRICK_RECOGNITION_MINIMUM_MEDIAN_DELTA 40.0f
-#define BRICK_RECOGNITION_MINIMUM_PROBABILITY 0.5f
-#define BRICK_RECOGNITION_MINIMUM_DEVIATION 0.5f
+#define BRICK_RECOGNITION_MINIMUM_PROBABILITY 0.4f
+#define BRICK_RECOGNITION_MINIMUM_DEVIATION 0.7f
 
 BrickRecognizer *brickRecognizerInstance = nil;
 
@@ -55,16 +57,22 @@ BrickRecognizer *brickRecognizerInstance = nil;
             //NSLog(@"%f vs %f = %f", medianMinMax.min, medianMinMax.max, medianMinMax.max - medianMinMax.min);
             return cv::Point(-1, -1);
         }
-        cv::vector<float> probabilities = [self probabilitiesOfBricksAtLocations:locations];
-        float maxProbability = [self maxProbabilityFromProbabilities:probabilities];
-        float secondMaxProbability = [self secondMaxProbabilityFromProbabilities:probabilities];
-        if (maxProbability < BRICK_RECOGNITION_MINIMUM_PROBABILITY || secondMaxProbability / maxProbability >= BRICK_RECOGNITION_MINIMUM_DEVIATION) {
+        for (int i = 0; i < 3; i++) {
+            int histogramBinCount = i == 0 ? HISTOGRAM_BIN_COUNT : (i == 1 ? HISTOGRAM_BIN_COUNT_FALLBACK : HISTOGRAM_BIN_COUNT_FALLBACK_2);
+            cv::vector<float> probabilities = [self probabilitiesOfBricksAtLocations:locations withHistogramBinCount:histogramBinCount];
+            float maxProbability = [self maxProbabilityFromProbabilities:probabilities];
+            float secondMaxProbability = [self secondMaxProbabilityFromProbabilities:probabilities];
+            if (secondMaxProbability / maxProbability >= BRICK_RECOGNITION_MINIMUM_DEVIATION) {
+                //NSLog(@"%f vs %f - %f vs %f", medianMinMax.max - medianMinMax.min, maxProbability, secondMaxProbability, secondMaxProbability / maxProbability);
+                continue;
+            }
+            if (maxProbability < BRICK_RECOGNITION_MINIMUM_PROBABILITY) {
+                break;
+            }
             //NSLog(@"%f vs %f - %f vs %f", medianMinMax.max - medianMinMax.min, maxProbability, secondMaxProbability, secondMaxProbability / maxProbability);
-            return cv::Point(-1, -1);
+            return [self maxProbabilityPositionFromLocations:locations probabilities:probabilities];
         }
-        //NSLog(@"%f vs %f - %f vs %f", medianMinMax.max - medianMinMax.min, maxProbability, secondMaxProbability, secondMaxProbability / maxProbability);
-        //NSLog(@"RECOGNIZED AT %i, %i", [self maxProbabilityPositionFromLocations:locations probabilities:probabilities].x, [self maxProbabilityPositionFromLocations:locations probabilities:probabilities].y);
-        return [self maxProbabilityPositionFromLocations:locations probabilities:probabilities];
+        return cv::Point(-1, -1);
     }
 }
 
@@ -108,6 +116,8 @@ BrickRecognizer *brickRecognizerInstance = nil;
         if (probabilities[i] > maxProb) {
             secondMaxProb = maxProb;
             maxProb = probabilities[i];
+        } else if (probabilities[i] > secondMaxProb) {
+            secondMaxProb = probabilities[i];
         }
     }
     return secondMaxProb;
@@ -162,26 +172,29 @@ BrickRecognizer *brickRecognizerInstance = nil;
 }
 
 - (cv::vector<float>)probabilitiesOfBricksAtLocations:(cv::vector<cv::Point>)locations {
+    return [self probabilitiesOfBricksAtLocations:locations withHistogramBinCount:HISTOGRAM_BIN_COUNT];
+}
+
+- (cv::vector<float>)probabilitiesOfBricksAtLocations:(cv::vector<cv::Point>)locations withHistogramBinCount:(int)histogramBinCount {
     @synchronized([BoardCalibrator instance].boardImageLock) {
         cv::Mat preparedImage = [self prepareImageWithLocations:locations];
         cv::vector<float> probabilities;
         for (int i = 0; i < locations.size(); i++) {
-            probabilities.push_back([self probabilityOfBrickAtIndex:i inTiledImage:preparedImage]);
+            probabilities.push_back([self probabilityOfBrickAtIndex:i inTiledImage:preparedImage withHistogramBinCount:histogramBinCount]);
         }
         return probabilities;
     }
 }
 
-- (float)probabilityOfBrickAtIndex:(int)index inTiledImage:(cv::Mat)tiledImage {
+- (float)probabilityOfBrickAtIndex:(int)index inTiledImage:(cv::Mat)tiledImage withHistogramBinCount:(int)histogramBinCount {
     cv::Mat equalizedBrickImage = [self extractBrickImageFromIndex:index inTiledImage:tiledImage];
-    cv::Mat equalizedHistogram = [self calculateHistogramFromImage:equalizedBrickImage binCount:HISTOGRAM_BIN_COUNT];
-    CGSize smallerBrickSize = [self smallerBrickSizeFromBoardImage];
-    //NSLog(@"--- %f vs %f", equalizedHistogram.at<float>(0), (float)(smallerBrickSize.width * smallerBrickSize.height));
-    return equalizedHistogram.at<float>(0) / (float)(smallerBrickSize.width * smallerBrickSize.height);
+    cv::Mat equalizedHistogram = [self calculateHistogramFromImage:equalizedBrickImage binCount:histogramBinCount];
+    CGSize brickSize = [self brickSizeFromBoardImage];
+    return equalizedHistogram.at<float>(0) / (float)(brickSize.width * brickSize.height);
 }
 
 - (float)calculateMedianOfHistogram:(cv::Mat)histogram binCount:(int)binCount {
-    CGSize smallerBrickSize = [self smallerBrickSizeFromBoardImage];
+    CGSize smallerBrickSize = [self brickSizeFromBoardImage];
     float median = 0.0f;
     for (int i = 0; i < binCount; i++) {
         median += histogram.at<float>(i) * (float)i / ((int)smallerBrickSize.width * (int)smallerBrickSize.height);
@@ -221,29 +234,41 @@ BrickRecognizer *brickRecognizerInstance = nil;
 
 - (cv::Mat)extractBrickImageFromIndex:(int)index inTiledImage:(cv::Mat)image {
     CGSize brickSize = [self brickSizeFromBoardImage];
-    CGSize paddingSize = [self brickPadding];
-    cv::Rect rect = cv::Rect(((int)brickSize.width * index) + paddingSize.width,
-                             paddingSize.height,
-                             (int)brickSize.width - (paddingSize.width * 2.0f),
-                             (int)brickSize.height - (paddingSize.height * 2.0f));
+    cv::Rect rect = cv::Rect((int)brickSize.width * index,
+                             0,
+                             (int)brickSize.width,
+                             (int)brickSize.height);
     return cv::Mat(image, rect);
 }
 
 - (cv::Mat)prepareImageWithLocations:(cv::vector<cv::Point>)locations {
-    cv::Mat preparedImage = [self prepareImageWithoutEqualizingWithLocations:locations];
+    cv::Mat preparedImage = [self prepareImageWithoutEqualizingWithLocations:locations].clone();
     return [self equalizeImage:preparedImage];
 }
 
 - (UIImage *)tiledImageWithLocations:(cv::vector<cv::Point>)locations {
     @autoreleasepool {
-        cv::Mat image = [self prepareImageWithoutEqualizingWithLocations:locations];
-        return [UIImage imageWithCVMat:image];
+        @synchronized([BoardCalibrator instance].boardImageLock) {
+            //cv::Mat image = [self prepareImageWithoutEqualizingWithLocations:locations];
+            cv::Mat image = [self prepareImageWithLocations:locations];
+            return [Util drawGridOnTiledImage:[UIImage imageWithCVMat:image] count:locations.size()];
+        }
+    }
+}
+
+- (UIImage *)imageNumber:(int)index withLocations:(cv::vector<cv::Point>)locations {
+    @autoreleasepool {
+        @synchronized([BoardCalibrator instance].boardImageLock) {
+            cv::Mat tiledImage = [self prepareImageWithoutEqualizingWithLocations:locations];
+            cv::Mat image = [self extractBrickImageFromIndex:index inTiledImage:tiledImage].clone();
+            return [UIImage imageWithCVMat:image];
+        }
     }
 }
 
 - (cv::Mat)prepareImageWithoutEqualizingWithLocations:(cv::vector<cv::Point>)locations {
     CGSize brickSize = [self brickSizeFromBoardImage];
-    cv::Mat tiledImage = cv::Mat((int)brickSize.height, (int)brickSize.width * locations.size(), [BoardCalibrator instance].boardImage.type());
+    cv::Mat tiledImage = cv::Mat((int)brickSize.height, (int)brickSize.width * (int)locations.size(), [BoardCalibrator instance].boardImage.type());
     for (int i = 0; i < locations.size(); i++) {
         cv::Mat brickImage = [self extractBrickImageFromLocation:locations[i]];
         cv::Rect roi(cv::Point((int)brickSize.width * i, 0), brickImage.size());
@@ -261,18 +286,6 @@ BrickRecognizer *brickRecognizerInstance = nil;
 - (CGSize)brickSizeFromBoardImage {
     CGRect canvasRect = [[BoardUtil instance] canvasRectWithScreenSize:[BoardCalibrator instance].boardImageSize];
     return [[BoardUtil instance] brickSizeWithGridRect:[[BoardUtil instance] gridRectWithCanvasSize:canvasRect.size]];
-}
-
-- (CGSize)smallerBrickSizeFromBoardImage {
-    CGSize brickSize = [self brickSizeFromBoardImage];
-    return CGSizeMake(brickSize.width * 0.9f, brickSize.height * 0.9f);
-}
-
-- (CGSize)brickPadding {
-    CGSize brickSize = [self brickSizeFromBoardImage];
-    CGSize smallerBrickSize = [self smallerBrickSizeFromBoardImage];
-    return CGSizeMake((brickSize.width  - smallerBrickSize.width ) / 2.0f,
-                      (brickSize.height - smallerBrickSize.height) / 2.0f);
 }
 
 @end

@@ -42,5 +42,6 @@ typedef struct {
 - (cv::vector<float>)probabilitiesOfBricksAtLocations:(cv::vector<cv::Point>)locations;
 
 - (UIImage *)tiledImageWithLocations:(cv::vector<cv::Point>)locations;
+- (UIImage *)imageNumber:(int)index withLocations:(cv::vector<cv::Point>)locations;
 
 @end

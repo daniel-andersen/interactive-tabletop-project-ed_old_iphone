@@ -57,4 +57,6 @@ typedef struct {
 
 + (int)randomIntFrom:(int)lowerValue to:(int)higherValue;
 
++ (UIImage *)drawGridOnTiledImage:(UIImage *)tiledImage count:(int)count;
+
 @end

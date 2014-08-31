@@ -41,14 +41,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [PracticeHelper instance].enabled = NO;
-    [PracticeHelper instance].currentImageNumber = 6;
-    [PracticeHelper instance].placePlayers = NO;
+    [PracticeHelper instance].enabled = YES;
+    [PracticeHelper instance].currentImageNumber = 10;
+    [PracticeHelper instance].placePlayers = YES;
     
     [self showBorderAnimated:NO];
 #if TARGET_IPHONE_SIMULATOR
-    //[self setGridWithPixelSize:CGSizeMake(20.0f, 20.0f)];
-    [self setGridOfSize:CGSizeMake(33, 20)];
+    if ([PracticeHelper instance].enabled) {
+        [self setGridOfSize:CGSizeMake([[PracticeHelper instance] mazeSize].x, [[PracticeHelper instance] mazeSize].y)];
+    } else {
+        [self setGridWithPixelSize:CGSizeMake(20.0f, 20.0f)];
+    }
 #else
     [self setGridWithPixelSize:CGSizeMake(35.0f, 35.0f)];
 #endif

@@ -71,7 +71,27 @@ PracticeHelper *practiceHelper = nil;
         return positions[player];
     }
     if (self.currentImageNumber == 6) {
-        cv::Point2i positions[4] = {cv::Point2i(-1, -1), cv::Point2i(-1, -1), cv::Point2i(11, 1), cv::Point2i(-1, -1)};
+        cv::Point2i positions[4] = {cv::Point2i(11, 1), cv::Point2i(-1, -1), cv::Point2i(-1, -1), cv::Point2i(-1, -1)};
+        return positions[player];
+    }
+    if (self.currentImageNumber == 7) {
+        cv::Point2i positions[4] = {cv::Point2i(23, 3), cv::Point2i(-1, -1), cv::Point2i(-1, -1), cv::Point2i(-1, -1)};
+        return positions[player];
+    }
+    if (self.currentImageNumber == 8) {
+        cv::Point2i positions[4] = {cv::Point2i(21, 5), cv::Point2i(-1, -1), cv::Point2i(-1, -1), cv::Point2i(-1, -1)};
+        return positions[player];
+    }
+    if (self.currentImageNumber == 10) {
+        cv::Point2i positions[4] = {cv::Point2i(20, 5), cv::Point2i(-1, -1), cv::Point2i(-1, -1), cv::Point2i(-1, -1)};
+        return positions[player];
+    }
+    if (self.currentImageNumber == 11) {
+        cv::Point2i positions[4] = {cv::Point2i(7, 4), cv::Point2i(-1, -1), cv::Point2i(-1, -1), cv::Point2i(-1, -1)};
+        return positions[player];
+    }
+    if (self.currentImageNumber == 12) {
+        cv::Point2i positions[4] = {cv::Point2i(16, 5), cv::Point2i(-1, -1), cv::Point2i(-1, -1), cv::Point2i(-1, -1)};
         return positions[player];
     }
     return cv::Point2i(-1, -1);
@@ -217,7 +237,7 @@ PracticeHelper *practiceHelper = nil;
     }
     if (self.currentImageNumber == 6) {
         cv::Point2i p = [self positionOfPlayer:player];
-        if (player == 2) {
+        if (player == 0) {
             v.push_back(cv::Point2i(p.x, p.y));
             v.push_back(cv::Point2i(p.x - 1, p.y));
             v.push_back(cv::Point2i(p.x - 2, p.y));
@@ -228,6 +248,98 @@ PracticeHelper *practiceHelper = nil;
             v.push_back(cv::Point2i(p.x - 2, p.y + 1));
             v.push_back(cv::Point2i(p.x - 2, p.y + 1));
             v.push_back(cv::Point2i(p.x - 3, p.y - 1));
+        }
+    }
+    if (self.currentImageNumber == 7) {
+        cv::Point2i p = [self positionOfPlayer:player];
+        if (player == 0) {
+            v.push_back(cv::Point2i(p.x, p.y - 1));
+            v.push_back(cv::Point2i(p.x, p.y - 2));
+            v.push_back(cv::Point2i(p.x + 1, p.y - 2));
+            v.push_back(cv::Point2i(p.x + 1, p.y + 2));
+            v.push_back(cv::Point2i(p.x + 1, p.y + 1));
+            v.push_back(cv::Point2i(p.x + 1, p.y));
+            v.push_back(cv::Point2i(p.x + 1, p.y - 1));
+            v.push_back(cv::Point2i(p.x + 1, p.y - 2));
+            v.push_back(cv::Point2i(p.x + 2, p.y));
+            v.push_back(cv::Point2i(p.x + 2, p.y - 1));
+            v.push_back(cv::Point2i(p.x + 2, p.y - 2));
+            v.push_back(cv::Point2i(p.x + 3, p.y));
+            v.push_back(cv::Point2i(p.x + 3, p.y - 1));
+            v.push_back(cv::Point2i(p.x + 3, p.y - 2));
+            v.push_back(cv::Point2i(p.x + 4, p.y - 2));
+            v.push_back(cv::Point2i(p.x + 5, p.y - 2));
+            v.push_back(cv::Point2i(p.x, p.y));
+        }
+    }
+    if (self.currentImageNumber == 8) {
+        cv::Point2i p = [self positionOfPlayer:player];
+        if (player == 0) {
+            v.push_back(cv::Point2i(p.x, p.y));
+            v.push_back(cv::Point2i(p.x + 1, p.y));
+            v.push_back(cv::Point2i(p.x + 2, p.y));
+            v.push_back(cv::Point2i(p.x + 2, p.y + 1));
+            v.push_back(cv::Point2i(p.x + 2, p.y + 2));
+            v.push_back(cv::Point2i(p.x + 2, p.y - 1));
+            v.push_back(cv::Point2i(p.x + 2, p.y - 3));
+            v.push_back(cv::Point2i(p.x + 2, p.y - 3));
+            v.push_back(cv::Point2i(p.x + 2, p.y - 4));
+            v.push_back(cv::Point2i(p.x + 3, p.y - 4));
+            v.push_back(cv::Point2i(p.x + 4, p.y - 4));
+        }
+    }
+    if (self.currentImageNumber == 10) {
+        cv::Point2i p = [self positionOfPlayer:player];
+        if (player == 0) {
+            v.push_back(cv::Point2i(p.x, p.y));
+            v.push_back(cv::Point2i(p.x + 1, p.y));
+            v.push_back(cv::Point2i(p.x + 1, p.y - 1));
+            v.push_back(cv::Point2i(p.x + 2, p.y));
+            v.push_back(cv::Point2i(p.x + 3, p.y));
+            v.push_back(cv::Point2i(p.x + 3, p.y + 1));
+            v.push_back(cv::Point2i(p.x + 3, p.y + 2));
+            v.push_back(cv::Point2i(p.x + 3, p.y + 3));
+            v.push_back(cv::Point2i(p.x + 2, p.y + 2));
+            v.push_back(cv::Point2i(p.x + 3, p.y - 1));
+            v.push_back(cv::Point2i(p.x + 3, p.y - 2));
+            v.push_back(cv::Point2i(p.x + 3, p.y - 3));
+            v.push_back(cv::Point2i(p.x + 3, p.y - 4));
+            v.push_back(cv::Point2i(p.x + 4, p.y - 4));
+        }
+    }
+    if (self.currentImageNumber == 11) {
+        cv::Point2i p = [self positionOfPlayer:player];
+        if (player == 0) {
+            v.push_back(cv::Point2i(p.x, p.y - 1));
+            v.push_back(cv::Point2i(p.x - 1, p.y - 1));
+            v.push_back(cv::Point2i(p.x - 2, p.y - 1));
+            v.push_back(cv::Point2i(p.x - 2, p.y));
+            v.push_back(cv::Point2i(p.x - 2, p.y + 1));
+            v.push_back(cv::Point2i(p.x - 3, p.y + 1));
+            v.push_back(cv::Point2i(p.x - 2, p.y - 2));
+            v.push_back(cv::Point2i(p.x - 2, p.y - 3));
+            v.push_back(cv::Point2i(p.x - 1, p.y - 3));
+            v.push_back(cv::Point2i(p.x, p.y - 3));
+            v.push_back(cv::Point2i(p.x + 1, p.y - 3));
+            v.push_back(cv::Point2i(p.x, p.y));
+        }
+    }
+    if (self.currentImageNumber == 12) {
+        cv::Point2i p = [self positionOfPlayer:player];
+        if (player == 0) {
+            v.push_back(cv::Point2i(p.x, p.y));
+            v.push_back(cv::Point2i(p.x - 1, p.y));
+            v.push_back(cv::Point2i(p.x - 2, p.y));
+            v.push_back(cv::Point2i(p.x - 3, p.y));
+            v.push_back(cv::Point2i(p.x - 4, p.y));
+            v.push_back(cv::Point2i(p.x - 5, p.y));
+            v.push_back(cv::Point2i(p.x - 6, p.y));
+            v.push_back(cv::Point2i(p.x - 7, p.y));
+            v.push_back(cv::Point2i(p.x - 8, p.y));
+            v.push_back(cv::Point2i(p.x - 5, p.y - 1));
+            v.push_back(cv::Point2i(p.x - 5, p.y - 2));
+            v.push_back(cv::Point2i(p.x - 4, p.y - 2));
+            v.push_back(cv::Point2i(p.x - 7, p.y - 1));
         }
     }
     return v;

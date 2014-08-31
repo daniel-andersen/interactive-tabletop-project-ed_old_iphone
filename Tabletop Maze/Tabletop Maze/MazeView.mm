@@ -115,8 +115,8 @@ enum GameState {
     self.treasureImageView = [self brickImageViewWithImage:[UIImage imageNamed:@"Treasure"]];
     [self.overlayView addSubview:self.treasureImageView];
     
-    self.testImage = [[UIImageView alloc] initWithFrame:CGRectMake(50.0f, 50.0f, 200.0f, 200.0f)];
-    self.testImage.contentMode = UIViewContentModeCenter;
+    self.testImage = [[UIImageView alloc] initWithFrame:CGRectMake(20.0f, 20.0f, 300.0f, 200.0f)];
+    self.testImage.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:self.testImage];
 }
 
@@ -229,7 +229,8 @@ enum GameState {
     if (![BoardCalibrator instance].isBoardFullyRecognized) {
         return;
     }
-    self.testImage.image = [[BrickRecognizer instance] tiledImageWithLocations:[[PracticeHelper instance] validPositionsForPlayer:2]];
+    self.testImage.image = [[BrickRecognizer instance] tiledImageWithLocations:[[PracticeHelper instance] validPositionsForPlayer:0]];
+    //self.testImage.image = [[BrickRecognizer instance] imageNumber:0 withLocations:[[PracticeHelper instance] validPositionsForPlayer:0]];
     [[PracticeHelper instance] updatePractice];
 }
 

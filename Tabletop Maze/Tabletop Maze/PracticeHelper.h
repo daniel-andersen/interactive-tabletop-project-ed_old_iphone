@@ -17,6 +17,8 @@
 
 - (void)updatePractice;
 
+- (cv::Point2i)mazeSize;
+
 - (UIImage *)currentImage;
 
 @property (nonatomic, assign) bool enabled;

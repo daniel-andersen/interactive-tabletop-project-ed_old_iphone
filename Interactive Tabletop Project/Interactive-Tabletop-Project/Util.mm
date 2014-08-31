@@ -109,4 +109,21 @@
     return lowerValue + (rand() % (higherValue - lowerValue));
 }
 
++ (UIImage *)drawGridOnTiledImage:(UIImage *)tiledImage count:(int)count {
+    UIGraphicsBeginImageContextWithOptions(tiledImage.size, YES, 1.0f);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    [tiledImage drawInRect:CGRectMake(0.0f, 0.0f, tiledImage.size.width, tiledImage.size.height)];
+    for (int i = 0; i < count; i++) {
+        CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
+        CGContextFillRect(context, CGRectMake(i * (tiledImage.size.width / count), 0, 1, tiledImage.size.height));
+    }
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
 @end

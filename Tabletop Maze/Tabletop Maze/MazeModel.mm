@@ -105,8 +105,6 @@ enum Direction {
             continue;
         }
         
-        playerValid[2] = NO;
-        
         NSLog(@"Generated maze!");
         [self resetMazeBags];
         return;
