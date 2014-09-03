@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6563219D19B4D53D006EF3C2 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FAF0A0199A8CE100B45084 /* opencv2.framework */; };
 		6587DD22193B1D1100C2741E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DD21193B1D1100C2741E /* Foundation.framework */; };
 		6587DD24193B1D1100C2741E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DD23193B1D1100C2741E /* CoreGraphics.framework */; };
 		6587DD26193B1D1100C2741E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6587DD25193B1D1100C2741E /* UIKit.framework */; };
@@ -65,7 +66,6 @@
 		65FAF0C419A27DE600B45084 /* TabletopBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FAF0C319A27DE600B45084 /* TabletopBorderView.m */; };
 		65FAF0C719A4D8A200B45084 /* MazeContainerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FAF0C619A4D8A200B45084 /* MazeContainerView.mm */; };
 		65FAF0CA19AE509700B45084 /* PracticeHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FAF0C919AE509700B45084 /* PracticeHelper.mm */; };
-		65FDF53019B3CB0300D19506 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FAF0A0199A8CE100B45084 /* opencv2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,7 +156,7 @@
 		6587DE33194244BE00C2741E /* MazeView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MazeView.mm; sourceTree = "<group>"; };
 		6587DE351944EBD700C2741E /* MazeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeModel.h; sourceTree = "<group>"; };
 		6587DE361944EBD700C2741E /* MazeModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MazeModel.mm; sourceTree = "<group>"; };
-		65FAF0A0199A8CE100B45084 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = "../Interactive Tabletop Project/opencv2.framework"; sourceTree = "<group>"; };
+		65FAF0A0199A8CE100B45084 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = "../Interactive Tabletop Project/opencv2.framework"; sourceTree = SOURCE_ROOT; };
 		65FAF0B0199A907A00B45084 /* MazeConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeConstants.h; sourceTree = "<group>"; };
 		65FAF0B1199A907A00B45084 /* MazeConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeConstants.m; sourceTree = "<group>"; };
 		65FAF0C219A27DE600B45084 /* TabletopBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabletopBorderView.h; path = "../../Interactive Tabletop Project/Interactive-Tabletop-Project/TabletopBorderView.h"; sourceTree = "<group>"; };
@@ -172,7 +172,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65FDF53019B3CB0300D19506 /* opencv2.framework in Frameworks */,
+				6563219D19B4D53D006EF3C2 /* opencv2.framework in Frameworks */,
 				6587DDDB193CBA8800C2741E /* CoreMedia.framework in Frameworks */,
 				6587DDD9193CBA7300C2741E /* AVFoundation.framework in Frameworks */,
 				6587DDD7193CBA6D00C2741E /* QuartzCore.framework in Frameworks */,
@@ -661,26 +661,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/daniel/projects/Interactive,
-					Tabletop,
-					Project/Interactive,
-					Tabletop,
-					Project,
-					/Users/daniel/projects/Interactive,
-					Tabletop,
-					Project/Interactive,
-					Tabletop,
-					Project,
-					/Users/daniel/projects/Interactive,
-					Tabletop,
-					Project/Interactive,
-					Tabletop,
-					Project,
-					/Users/daniel/projects/Interactive,
-					Tabletop,
-					Project/Interactive,
-					Tabletop,
-					Project,
+					"$(SRCROOT)/../**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tabletop Maze/Tabletop Maze-Prefix.pch";
@@ -699,26 +680,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/daniel/projects/Interactive,
-					Tabletop,
-					Project/Interactive,
-					Tabletop,
-					Project,
-					/Users/daniel/projects/Interactive,
-					Tabletop,
-					Project/Interactive,
-					Tabletop,
-					Project,
-					/Users/daniel/projects/Interactive,
-					Tabletop,
-					Project/Interactive,
-					Tabletop,
-					Project,
-					/Users/daniel/projects/Interactive,
-					Tabletop,
-					Project/Interactive,
-					Tabletop,
-					Project,
+					"$(SRCROOT)/../**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tabletop Maze/Tabletop Maze-Prefix.pch";
