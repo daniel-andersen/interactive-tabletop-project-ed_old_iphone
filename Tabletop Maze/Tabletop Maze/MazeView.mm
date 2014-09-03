@@ -391,10 +391,6 @@ enum GameState {
             maskMap[entry.y][entry.x] = MAX(mask, maskMap[entry.y][entry.x]);
         }
     }
-    if (self.gameState >= PLAYER_TURN) {
-        cv::Point p = [MazeModel instance].treasurePosition;
-        maskMap[p.y][p.x] = MAX(1, maskMap[p.y][p.x]);
-    }
 
     UIGraphicsBeginImageContextWithOptions(self.currentMazeView.mazeImageView.frame.size, NO, 1.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
