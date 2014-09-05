@@ -35,17 +35,18 @@
 #define LINE_DIRECTION_VERTICAL_LEFT   2
 #define LINE_DIRECTION_VERTICAL_RIGHT  3
 
-#define CANNY_THRESHOLDING_MODE_COUNT 3
+#define CANNY_THRESHOLDING_MODE_COUNT 4
 
 #define CANNY_THRESHOLDING_MODE_AUTOMATIC   0
 #define CANNY_THRESHOLDING_MODE_BRIGHT_ROOM 1
 #define CANNY_THRESHOLDING_MODE_DARK_ROOM   2
+#define CANNY_THRESHOLDING_MODE_NORMAL   3
 
 float intersectionAcceptDistanceMin = 0.02f;
 float intersectionAcceptDistanceMax = 5.0f;
-float squareAngleAcceptMax = 20.0f;//15.0f;
+float squareAngleAcceptMax = 10.0f;
 float lineGroupAngleAcceptMax = 15.0f;
-float aspectRatioAcceptMax = 0.15f;//0.1f;
+float aspectRatioAcceptMax = 0.1f;
 float lineGroupPointDistanceAcceptMax;
 
 typedef struct {
@@ -134,9 +135,12 @@ BoardRecognizer *boardRecognizerInstance = nil;
         } else if (thresholdingMode == CANNY_THRESHOLDING_MODE_BRIGHT_ROOM) {
             thresholdMin = 40;
             thresholdMax = 70;
-        } else {
+        } else if (thresholdingMode == CANNY_THRESHOLDING_MODE_DARK_ROOM) {
             thresholdMin = 100;
             thresholdMax = 300;
+        } else {
+            thresholdMin = 60;
+            thresholdMax = 120;
         }
         
         // Canny image

@@ -38,6 +38,9 @@ enum Direction {
     DOWN
 };
 
+const int dirX[4] = {-1,  0, 1, 0};
+const int dirY[4] = { 0, -1, 0, 1};
+
 @interface MazeModel () {
     cv::Point2i playerPosition[MAX_PLAYERS];
     bool playerEnabled[MAX_PLAYERS];
@@ -161,7 +164,7 @@ enum Direction {
     
     [self.unvisitedEntries addObject:playerEntry];
     for (int i = 0; i < self.unvisitedEntries.count; i++) {
-        [self updatePlayerDistanceMapFromEntry:[self.unvisitedEntries objectAtIndex:i] bagKey:bagKey];
+        [self updateDistanceMapFromEntry:[self.unvisitedEntries objectAtIndex:i] bagKey:bagKey endEntry:nil];
     }
 }
 
@@ -230,8 +233,8 @@ enum Direction {
     }
 }
 
-- (void)updatePlayerDistanceMapFromEntry:(MazeEntry *)entry bagKey:(NSString *)bagKey {
-    if (entry == nil || entry.type == WALL) {
+- (void)updateDistanceMapFromEntry:(MazeEntry *)entry bagKey:(NSString *)bagKey endEntry:(MazeEntry *)endEntry {
+    if (entry == nil || entry.type == WALL || entry == endEntry) {
         return;
     }
     NSNumber *distanceFromStart = [entry.bag objectForKey:bagKey];
@@ -321,6 +324,50 @@ enum Direction {
     MazeEntry *rightEntry = [self entryAtX:(entry.x + 1) y:entry.y];
     if (rightEntry != nil && [self.unvisitedEntries containsObject:rightEntry]) {
         [entries addObject:rightEntry];
+    }
+    return entries;
+}
+
+- (NSArray *)shortestPathFrom:(cv::Point2i)sourcePosition to:(cv::Point2i)destPosition {
+    [self resetMazeBags];
+    self.unvisitedEntries = [NSMutableArray array];
+    
+    MazeEntry *startEntry = [self entryAtPosition:sourcePosition];
+    MazeEntry *endEntry = [self entryAtPosition:destPosition];
+    MazeEntry *prevEntry = endEntry;
+
+    [startEntry.bag setObject:[NSNumber numberWithInt:0] forKey:@"distance"];
+    
+    [self.unvisitedEntries addObject:startEntry];
+    for (int i = 0; i < self.unvisitedEntries.count; i++) {
+        [self updateDistanceMapFromEntry:[self.unvisitedEntries objectAtIndex:i] bagKey:@"distance" endEntry:endEntry];
+    }
+    
+    NSMutableArray *entries = [NSMutableArray arrayWithObject:endEntry];
+    while ([entries objectAtIndex:0] != startEntry) {
+        int shortestDir = -1;
+        int shortestDistance = -1;
+        MazeEntry *shortestEntry = nil;
+        MazeEntry *currentEntry = [entries objectAtIndex:0];
+        for (int i = 0; i < 4; i++) {
+            MazeEntry *entry = [self entryAtX:(currentEntry.x + dirX[i]) y:(currentEntry.y + dirY[i])];
+            NSNumber *distance = [entry.bag objectForKey:@"distance"];
+            if (distance != nil && (distance.intValue < shortestDistance || shortestDistance == -1)) {
+                shortestDistance = distance.intValue;
+                shortestDir = i;
+                shortestEntry = entry;
+            }
+        }
+        if (shortestEntry == nil) {
+            return nil;
+        }
+        [prevEntry.bag setObject:[NSNumber numberWithInt:shortestDir] forKey:@"direction"];
+        /*if ([endEntry.bag objectForKey:@"direction"] == nil) {
+            [endEntry.bag setObject:[NSNumber numberWithInt:shortestDir] forKey:@"direction"];
+        }*/
+        [entries insertObject:shortestEntry atIndex:0];
+        
+        prevEntry = shortestEntry;
     }
     return entries;
 }

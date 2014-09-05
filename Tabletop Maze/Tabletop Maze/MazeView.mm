@@ -40,6 +40,7 @@ enum GameState {
     NEW_GAME,
     PLACE_PLAYERS,
     PLAYER_TURN,
+    MOVING_ONTO_POSITION,
     WAIT,
     PRACTICING
 };
@@ -255,6 +256,7 @@ enum GameState {
             if (position.x != -1 && position != [[MazeModel instance] positionOfPlayer:i] && [MazeModel instance].currentPlayer == i) {
                 [self movePlayerToPosition:position];
                 [self startLevel];
+                return;
             }
         }
     }
@@ -287,14 +289,83 @@ enum GameState {
 }
 
 - (void)movePlayerToPosition:(cv::Point)position {
+    self.gameState = MOVING_ONTO_POSITION;
+    
+    cv::Point oldPosition = [[MazeModel instance] positionOfPlayer:[MazeModel instance].currentPlayer];
+    
     [[MazeModel instance] setPositionOfPlayer:[MazeModel instance].currentPlayer position:position];
-    [self updateMask];
-    if (position == [MazeModel instance].treasurePosition) {
-        self.gameState = WAIT;
-        [self performSelector:@selector(endGame) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
+    [self updateMaskWithAnimationDuration:[MazeConstants instance].stepAnimationDuration completion:nil];
+
+    NSArray *pathEntries = [[MazeModel instance] shortestPathFrom:oldPosition to:position];
+    float delayPerBrick = [MazeConstants instance].stepAnimationDuration / (float)(pathEntries.count - 1);
+    for (int i = 1; i < pathEntries.count; i++) {
+        MazeEntry *entry = [pathEntries objectAtIndex:i];
+        float delayRight = delayPerBrick * (float)(i - 1);
+        float delayLeft = (delayRight + (delayPerBrick / 2.0f));
+        if (i < pathEntries.count - 1) {
+            [self performSelector:@selector(placeDisplacedRightFootprintAtEntry:) withObject:entry afterDelay:delayRight];
+            [self performSelector:@selector(placeDisplacedLeftFootprintAtEntry:) withObject:entry afterDelay:delayLeft];
+        } else {
+            [self performSelector:@selector(placeRightFootprintAtEntry:) withObject:entry afterDelay:delayRight];
+            [self performSelector:@selector(placeLeftFootprintAtEntry:) withObject:entry afterDelay:delayLeft];
+        }
+    }
+    [self performSelector:@selector(finishMovePlayerToEntry:) withObject:[pathEntries lastObject] afterDelay:(delayPerBrick * (float)pathEntries.count)];
+}
+
+- (void)placeLeftFootprintAtEntry:(MazeEntry *)entry {
+    [self placeFootprintAtEntry:entry side:0 displacement:0.0f];
+}
+
+- (void)placeRightFootprintAtEntry:(MazeEntry *)entry {
+    [self placeFootprintAtEntry:entry side:1 displacement:0.0f];
+}
+
+- (void)placeDisplacedLeftFootprintAtEntry:(MazeEntry *)entry {
+    [self placeFootprintAtEntry:entry side:0 displacement:0.2f];
+}
+
+- (void)placeDisplacedRightFootprintAtEntry:(MazeEntry *)entry {
+    [self placeFootprintAtEntry:entry side:1 displacement:0.2f];
+}
+
+- (void)placeFootprintAtEntry:(MazeEntry *)entry side:(int)side displacement:(float)displacement {
+    int dir = ((NSNumber *)[entry.bag objectForKey:@"direction"]).intValue;
+
+    UIImage *footprintImage = [UIImage imageNamed:[NSString stringWithFormat:@"Player Footprint %@", side == 0 ? @"Left" : @"Right"]];
+
+    CGRect rect = [self rectForEntry:entry];
+    rect.origin.x += dirX[(dir + (side == 1 ? 0 : 2)) % 4] * rect.size.width  * displacement;
+    rect.origin.y += dirY[(dir + (side == 1 ? 0 : 2)) % 4] * rect.size.height * displacement;
+    
+    UIGraphicsBeginImageContextWithOptions(self.currentMazeView.mazeImageView.image.size, NO, 1.0f);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);
+    CGContextFillRect(context, self.currentMazeView.mazeImageView.bounds);
+
+    [self.currentMazeView.mazeImageView.image drawAtPoint:CGPointZero];
+    
+    CGContextSaveGState(context);
+    CGContextTranslateCTM(context, rect.origin.x, rect.origin.y);
+    CGContextTranslateCTM(context, rect.size.width * 0.5f, rect.size.height * 0.5f);
+    CGContextRotateCTM(context, ((float)(dir + 3) / 4.0f) * 2.0f * M_PI);
+    CGContextTranslateCTM(context, rect.size.width * -0.5f, rect.size.height * -0.5f);
+    CGContextDrawImage(context, (CGRect){ CGPointZero, rect.size }, footprintImage.CGImage);
+    CGContextRestoreGState(context);
+    
+    self.currentMazeView.mazeImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    self.otherMazeView.mazeImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+
+    UIGraphicsEndImageContext();
+}
+
+- (void)finishMovePlayerToEntry:(MazeEntry *)entry {
+    if (entry.position == [MazeModel instance].treasurePosition) {
+        [self endGame];
     } else {
         [self hideBrickMarker:[MazeModel instance].currentPlayer];
-        [self performSelector:@selector(nextPlayer) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
+        [self nextPlayer];
     }
 }
 
@@ -351,7 +422,7 @@ enum GameState {
     UIGraphicsBeginImageContextWithOptions(self.currentMazeView.mazeImageView.frame.size, NO, 1.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGContextSetFillColorWithColor(context, [UIColor redColor].CGColor);
+    CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);
     CGContextFillRect(context, self.bounds);
 
     // Draw tiles
@@ -361,7 +432,7 @@ enum GameState {
             MazeEntry *entry = [[MazeModel instance] entryAtX:j y:i];
             UIImage *tileImage;
             if (entry.type == HALLWAY) {
-                tileImage = [UIImage imageNamed:[NSString stringWithFormat:@"Brick %i", /*type + */1]];
+                tileImage = [UIImage imageNamed:[NSString stringWithFormat:@"Brick %i", type + 1]];
             } else {
                 tileImage = [UIImage imageNamed:[NSString stringWithFormat:@"Wall %i", type + 1]];
             }
@@ -371,6 +442,7 @@ enum GameState {
     
     self.currentMazeView.mazeImageView.image = UIGraphicsGetImageFromCurrentImageContext();
     self.otherMazeView.mazeImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+
     UIGraphicsEndImageContext();
 }
 
@@ -447,6 +519,10 @@ enum GameState {
 }
 
 - (void)updateMask {
+    [self updateMaskWithAnimationDuration:[MazeConstants instance].defaultAnimationDuration completion:nil];
+}
+
+- (void)updateMaskWithAnimationDuration:(float)animationDuration completion:(void (^)())completion {
     self.animatingMask = YES;
 
     [self swapMazeViews];
@@ -458,11 +534,14 @@ enum GameState {
     self.currentMazeView.alpha = 1.0f;
     self.currentMazeView.hidden = NO;
     
-    [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
+    [UIView animateWithDuration:animationDuration animations:^{
         self.otherMazeView.alpha = 0.0f;
     } completion:^(BOOL finished) {
         self.otherMazeView.hidden = YES;
         self.animatingMask = NO;
+        if (completion != nil) {
+            completion();
+        }
     }];
 }
 

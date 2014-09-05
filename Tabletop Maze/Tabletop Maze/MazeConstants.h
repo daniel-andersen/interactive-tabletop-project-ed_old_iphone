@@ -37,6 +37,7 @@
 + (MazeConstants *)instance;
 
 @property (nonatomic, assign) float defaultAnimationDuration;
+@property (nonatomic, assign) float stepAnimationDuration;
 
 @property (nonatomic, assign) int brickStableCountDown;
 

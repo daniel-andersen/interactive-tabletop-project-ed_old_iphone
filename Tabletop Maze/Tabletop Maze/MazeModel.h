@@ -36,6 +36,9 @@ enum MazeEntryType {
     WALL
 };
 
+extern const int dirX[4];
+extern const int dirY[4];
+
 @interface MazeEntry : NSObject
 
 - (id)initWithPosition:(CGPoint)p;
@@ -73,6 +76,8 @@ enum MazeEntryType {
 
 - (NSArray *)reachableEntriesForPlayer:(int)player;
 - (NSArray *)reachableEntriesForPlayer:(int)player reachDistance:(int)reachDistance;
+
+- (NSArray *)shortestPathFrom:(cv::Point2i)sourcePosition to:(cv::Point2i)destPosition;
 
 @property (nonatomic, assign) int width;
 @property (nonatomic, assign) int height;
