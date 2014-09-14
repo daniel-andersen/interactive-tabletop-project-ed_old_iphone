@@ -66,6 +66,9 @@ enum GameState {
 
 @property (nonatomic, assign) bool animatingMask;
 
+@property (nonatomic, strong) NSMutableArray *dragonFootprintImageViewsLeft;
+@property (nonatomic, strong) NSMutableArray *dragonFootprintImageViewsRight;
+
 @property (nonatomic, strong) UIImageView *testImage;
 
 @end
@@ -115,7 +118,23 @@ enum GameState {
     
     self.treasureImageView = [self brickImageViewWithImage:[UIImage imageNamed:@"Treasure"]];
     [self.overlayView addSubview:self.treasureImageView];
+
+    self.dragonFootprintImageViewsLeft = [NSMutableArray array];
+    self.dragonFootprintImageViewsRight = [NSMutableArray array];
+    for (int i = 0; i < MAX_DRAGONS; i++) {
+        UIImageView *leftImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Dragon Footprint Left"]];
+        leftImageView.contentMode = UIViewContentModeScaleAspectFit;
+        leftImageView.alpha = 0.0f;
+        [self insertSubview:leftImageView atIndex:0];
+        [self.dragonFootprintImageViewsLeft addObject:leftImageView];
     
+        UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Dragon Footprint Right"]];
+        rightImageView.contentMode = UIViewContentModeScaleAspectFit;
+        rightImageView.alpha = 0.0f;
+        [self insertSubview:rightImageView atIndex:0];
+        [self.dragonFootprintImageViewsRight addObject:rightImageView];
+    }
+
     self.testImage = [[UIImageView alloc] initWithFrame:CGRectMake(20.0f, 20.0f, 300.0f, 200.0f)];
     self.testImage.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:self.testImage];
@@ -191,6 +210,7 @@ enum GameState {
     self.otherMazeView.alpha = 1.0f;
     self.currentMazeView.alpha = 1.0f;
 
+    [self placeDragons];
     [self showBrickMarkers];
     [self updateMask];
 }
@@ -198,7 +218,7 @@ enum GameState {
 - (void)startLevel {
     [self hideLogo];
     [self hideBrickMarkers];
-    [self showTreasure];
+    [self showObjects];
 }
 
 - (void)startPlayerTurn {
@@ -584,27 +604,35 @@ enum GameState {
     }];
 }
 
-- (void)showTreasure {
+- (void)showObjects {
     self.treasureImageView.frame = [self rectForPosition:[MazeModel instance].treasurePosition];
     self.treasureImageView.alpha = 0.0f;
     self.treasureImageView.hidden = NO;
     
     [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
         self.treasureImageView.alpha = 1.0f;
+        for (int i = 0; i < MAX_DRAGONS; i++) {
+            ((UIImageView *)[self.dragonFootprintImageViewsLeft objectAtIndex:i]).alpha = 1.0f;
+            ((UIImageView *)[self.dragonFootprintImageViewsRight objectAtIndex:i]).alpha = 1.0f;
+        }
     }];
 }
 
-- (void)hideTreasure {
+- (void)hideObjects {
     [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
         self.treasureImageView.alpha = 0.0f;
+        for (int i = 0; i < MAX_DRAGONS; i++) {
+            ((UIImageView *)[self.dragonFootprintImageViewsLeft objectAtIndex:i]).alpha = 0.0f;
+            ((UIImageView *)[self.dragonFootprintImageViewsRight objectAtIndex:i]).alpha = 0.0f;
+        }
     } completion:^(BOOL finished) {
         self.treasureImageView.hidden = YES;
     }];
 }
 
 - (void)hideMaze {
+    [self hideObjects];
     [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
-        self.treasureImageView.alpha = 0.0f;
         self.currentMazeView.alpha = 0.0f;
         self.otherMazeView.alpha = 0.0f;
     } completion:^(BOOL finished) {
@@ -614,6 +642,21 @@ enum GameState {
         [self swapMazeViews];
         [self drawMask];
     }];
+}
+
+- (void)placeDragons {
+    for (int i = 0; i < MAX_DRAGONS; i++) {
+        CGRect frame = [self frameOfDragonWithIndex:i];
+        ((UIImageView *)[self.dragonFootprintImageViewsLeft objectAtIndex:i]).frame = frame;
+        ((UIImageView *)[self.dragonFootprintImageViewsRight objectAtIndex:i]).frame = frame;
+        
+        ((UIImageView *)[self.currentMazeView.dragonImageViews objectAtIndex:i]).frame = frame;
+        ((UIImageView *)[self.otherMazeView.dragonImageViews objectAtIndex:i]).frame = frame;
+    }
+}
+
+- (CGRect)frameOfDragonWithIndex:(int)index {
+    return [self rectForPosition:[[MazeModel instance] positionOfDragon:index]];
 }
 
 @end

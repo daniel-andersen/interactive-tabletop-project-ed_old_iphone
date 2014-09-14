@@ -68,6 +68,12 @@ extern const int dirY[4];
 - (void)setPositionOfPlayer:(int)player position:(cv::Point2i)position;
 - (cv::Point2i)positionOfPlayer:(int)player;
 
+- (void)setPositionOfDragon:(int)dragon position:(cv::Point2i)position;
+- (cv::Point2i)positionOfDragon:(int)dragon;
+
+- (void)setRandomTargetPositionOfDragon:(int)dragon;
+- (cv::Point2i)targetPositionOfDragon:(int)dragon;
+
 - (MazeEntry *)entryForPlayer:(int)player;
 
 - (void)enablePlayer:(int)player;
@@ -83,6 +89,7 @@ extern const int dirY[4];
 @property (nonatomic, assign) int height;
 
 @property (nonatomic, assign) int playerReachDistance;
+@property (nonatomic, assign) int dragonReachDistance;
 
 @property (nonatomic, assign) int currentPlayer;
 

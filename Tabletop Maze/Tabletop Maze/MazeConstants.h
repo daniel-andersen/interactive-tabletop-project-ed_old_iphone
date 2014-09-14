@@ -29,6 +29,7 @@
 #define __MAZECONSTANTS_H__
 
 #define MAX_PLAYERS 4
+#define MAX_DRAGONS 4
 
 #endif
 

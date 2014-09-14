@@ -25,6 +25,7 @@
 
 #import "MazeContainerView.h"
 #import "Constants.h"
+#import "MazeConstants.h"
 
 @implementation MazeContainerView
 
@@ -46,6 +47,15 @@
     self.maskLayer.anchorPoint = CGPointMake(0.0f, 0.0f);
     self.maskLayer.bounds = self.mazeImageView.bounds;
     self.mazeImageView.layer.mask = self.maskLayer;
+
+    self.dragonImageViews = [NSMutableArray array];
+    for (int i = 0; i < MAX_DRAGONS; i++) {
+        UIImageView *dragonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Dragon"]];
+        dragonImageView.contentMode = UIViewContentModeScaleAspectFit;
+        dragonImageView.alpha = 0.0f;
+        [self addSubview:dragonImageView];
+        [self.dragonImageViews addObject:dragonImageView];
+    }
 }
 
 @end

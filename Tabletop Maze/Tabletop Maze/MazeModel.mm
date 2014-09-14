@@ -44,6 +44,9 @@ const int dirY[4] = { 0, -1, 0, 1};
 @interface MazeModel () {
     cv::Point2i playerPosition[MAX_PLAYERS];
     bool playerEnabled[MAX_PLAYERS];
+
+    cv::Point2i dragonPosition[MAX_DRAGONS];
+    cv::Point2i dragonTargetPosition[MAX_DRAGONS];
 }
 
 @property (nonatomic, strong) NSMutableArray *maze;
@@ -76,6 +79,7 @@ const int dirY[4] = { 0, -1, 0, 1};
 
 - (void)initialize {
     self.playerReachDistance = 4;
+    self.dragonReachDistance = 3;
     self.currentPlayer = -1;
 
     self.width = 30;
@@ -100,7 +104,10 @@ const int dirY[4] = { 0, -1, 0, 1};
             NSLog(@"Failed placing treasure!");
             continue;
         }
-        
+
+        NSLog(@"Placing dragons");
+        [self placeDragons];
+
         NSLog(@"Generated maze!");
         [self resetMazeBags];
         return;
@@ -173,6 +180,29 @@ const int dirY[4] = { 0, -1, 0, 1};
     playerPosition[1] = cv::Point2i(self.width - 2, 1);
     playerPosition[2] = cv::Point2i(1, self.height - 2);
     playerPosition[3] = cv::Point2i(self.width - 2, self.height - 2);
+}
+
+- (void)placeDragons {
+    int deltaX = self.width * 0.6f;
+    int deltaY = self.height * 0.6f;
+
+    int minX = (self.width - deltaX) / 2;
+    int maxX = (self.width + deltaX) / 2;
+    int minY = (self.height - deltaY) / 2;
+    int maxY = (self.height + deltaY) / 2;
+    
+    for (int i = 0; i < MAX_DRAGONS; i++) {
+        for (int j = 0; j < 100; j++) {
+            dragonPosition[i] = cv::Point2i([Util randomIntFrom:minX to:maxX], [Util randomIntFrom:minY to:maxY]);
+            if ([self entryAtPosition:dragonPosition[i]].type == HALLWAY) {
+                break;
+            }
+        }
+    }
+    
+    for (int i = 0; i < MAX_DRAGONS; i++) {
+        [self setRandomTargetPositionOfDragon:i];
+    }
 }
 
 - (NSArray *)reachableEntriesForPlayer:(int)player {
@@ -362,9 +392,6 @@ const int dirY[4] = { 0, -1, 0, 1};
             return nil;
         }
         [prevEntry.bag setObject:[NSNumber numberWithInt:shortestDir] forKey:@"direction"];
-        /*if ([endEntry.bag objectForKey:@"direction"] == nil) {
-            [endEntry.bag setObject:[NSNumber numberWithInt:shortestDir] forKey:@"direction"];
-        }*/
         [entries insertObject:shortestEntry atIndex:0];
         
         prevEntry = shortestEntry;
@@ -416,6 +443,28 @@ const int dirY[4] = { 0, -1, 0, 1};
 
 - (cv::Point2i)positionOfPlayer:(int)player {
     return playerPosition[player];
+}
+
+- (void)setPositionOfDragon:(int)dragon position:(cv::Point2i)position {
+    dragonPosition[dragon] = position;
+}
+
+- (cv::Point2i)positionOfDragon:(int)dragon {
+    return dragonPosition[dragon];
+}
+
+- (void)setRandomTargetPositionOfDragon:(int)dragon {
+    for (int i = 0; i < 100; i++) {
+        dragonTargetPosition[dragon] = cv::Point2i([Util randomIntFrom:1 to:self.width],
+                                                   [Util randomIntFrom:1 to:self.height]);
+        if ([self entryAtPosition:dragonTargetPosition[dragon]].type == HALLWAY) {
+            break;
+        }
+    }
+}
+
+- (cv::Point2i)targetPositionOfDragon:(int)dragon {
+    return dragonTargetPosition[dragon];
 }
 
 - (MazeEntry *)entryForPlayer:(int)player {

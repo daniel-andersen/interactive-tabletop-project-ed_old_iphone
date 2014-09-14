@@ -28,6 +28,9 @@
 @interface MazeContainerView : UIView
 
 @property (nonatomic, strong) UIImageView *mazeImageView;
+
+@property (nonatomic, strong) NSMutableArray *dragonImageViews;
+
 @property (nonatomic, strong) CALayer *maskLayer;
 
 @end
