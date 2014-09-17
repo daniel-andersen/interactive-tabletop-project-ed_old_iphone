@@ -41,6 +41,8 @@ enum GameState {
     PLACE_PLAYERS,
     PLAYER_TURN,
     MOVING_ONTO_POSITION,
+    DRAGON_TURN,
+    DRAGON_MOVING_ONTO_POSITION,
     WAIT,
     PRACTICING
 };
@@ -65,9 +67,6 @@ enum GameState {
 @property (nonatomic, assign) int restartCountDown;
 
 @property (nonatomic, assign) bool animatingMask;
-
-@property (nonatomic, strong) NSMutableArray *dragonFootprintImageViewsLeft;
-@property (nonatomic, strong) NSMutableArray *dragonFootprintImageViewsRight;
 
 @property (nonatomic, strong) UIImageView *testImage;
 
@@ -118,22 +117,6 @@ enum GameState {
     
     self.treasureImageView = [self brickImageViewWithImage:[UIImage imageNamed:@"Treasure"]];
     [self.overlayView addSubview:self.treasureImageView];
-
-    self.dragonFootprintImageViewsLeft = [NSMutableArray array];
-    self.dragonFootprintImageViewsRight = [NSMutableArray array];
-    for (int i = 0; i < MAX_DRAGONS; i++) {
-        UIImageView *leftImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Dragon Footprint Left"]];
-        leftImageView.contentMode = UIViewContentModeScaleAspectFit;
-        leftImageView.alpha = 0.0f;
-        [self insertSubview:leftImageView atIndex:0];
-        [self.dragonFootprintImageViewsLeft addObject:leftImageView];
-    
-        UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Dragon Footprint Right"]];
-        rightImageView.contentMode = UIViewContentModeScaleAspectFit;
-        rightImageView.alpha = 0.0f;
-        [self insertSubview:rightImageView atIndex:0];
-        [self.dragonFootprintImageViewsRight addObject:rightImageView];
-    }
 
     self.testImage = [[UIImageView alloc] initWithFrame:CGRectMake(20.0f, 20.0f, 300.0f, 200.0f)];
     self.testImage.contentMode = UIViewContentModeScaleAspectFit;
@@ -226,6 +209,27 @@ enum GameState {
     self.gameState = PLAYER_TURN;
     [self showBrickMarker:[MazeModel instance].currentPlayer];
     [self updateMask];
+}
+
+- (void)startDragonTurn {
+    self.gameState = DRAGON_TURN;
+
+    for (int i = 0; i < 100; i++) {
+        cv::Point currentPosition = [[MazeModel instance] positionOfDragon:[MazeModel instance].currentDragon];
+        cv::Point targetPosition = [[MazeModel instance] targetPositionOfDragon:[MazeModel instance].currentDragon];
+
+        if (currentPosition == targetPosition) {
+            [[MazeModel instance] setRandomTargetPositionOfDragon:[MazeModel instance].currentDragon];
+            continue;
+        }
+    
+        NSArray *pathEntries = [[MazeModel instance] shortestPathFrom:currentPosition to:targetPosition];
+
+        MazeEntry *entry = pathEntries.count > [MazeModel instance].dragonReachDistance ? [pathEntries objectAtIndex:[MazeModel instance].dragonReachDistance] : [pathEntries lastObject];
+        [self moveDragonToPosition:entry.position];
+
+        break;
+    }
 }
 
 - (void)update {
@@ -389,6 +393,62 @@ enum GameState {
     }
 }
 
+- (void)moveDragonToPosition:(cv::Point)position {
+    self.gameState = DRAGON_MOVING_ONTO_POSITION;
+    
+    cv::Point oldPosition = [[MazeModel instance] positionOfDragon:[MazeModel instance].currentDragon];
+    
+    [[MazeModel instance] setPositionOfDragon:[MazeModel instance].currentDragon position:position];
+    
+    NSArray *pathEntries = [[MazeModel instance] shortestPathFrom:oldPosition to:position];
+    if (pathEntries == nil || pathEntries.count == 0) {
+        [self finishMoveDragonToEntry:[[MazeModel instance] entryAtPosition:position]];
+        return;
+    }
+    
+    float delayPerBrick = [MazeConstants instance].stepAnimationDuration / (float)(pathEntries.count - 1);
+    for (int i = 1; i < pathEntries.count; i++) {
+        MazeEntry *entry = [pathEntries objectAtIndex:i];
+        float delayRight = delayPerBrick * (float)(i - 1);
+        float delayLeft = (delayRight + (delayPerBrick / 2.0f));
+        [self performSelector:@selector(moveLeftFootprintOfDragonToEntry:) withObject:entry afterDelay:delayLeft];
+        [self performSelector:@selector(moveRightFootprintOfDragonToEntry:) withObject:entry afterDelay:delayRight];
+    }
+    [self performSelector:@selector(finishMoveDragonToEntry:) withObject:[pathEntries lastObject] afterDelay:(delayPerBrick * (float)pathEntries.count)];
+}
+
+- (void)moveLeftFootprintOfDragonToEntry:(MazeEntry *)entry {
+    [self moveDragonImageToEntry:entry imageView:[self.currentMazeView dragonFootprintLeftImageViewWithIndex:[MazeModel instance].currentDragon] enlarged:NO];
+    [self moveDragonImageToEntry:entry imageView:[self.currentMazeView dragonImageViewWithIndex:[MazeModel instance].currentDragon] enlarged:YES];
+    [self moveDragonImageToEntry:entry imageView:[self.otherMazeView dragonFootprintLeftImageViewWithIndex:[MazeModel instance].currentDragon] enlarged:NO];
+    [self moveDragonImageToEntry:entry imageView:[self.otherMazeView dragonImageViewWithIndex:[MazeModel instance].currentDragon] enlarged:YES];
+}
+
+- (void)moveRightFootprintOfDragonToEntry:(MazeEntry *)entry {
+    [self moveDragonImageToEntry:entry imageView:[self.currentMazeView dragonFootprintRightImageViewWithIndex:[MazeModel instance].currentDragon] enlarged:NO];
+    [self moveDragonImageToEntry:entry imageView:[self.currentMazeView dragonImageViewWithIndex:[MazeModel instance].currentDragon] enlarged:YES];
+    [self moveDragonImageToEntry:entry imageView:[self.otherMazeView dragonFootprintRightImageViewWithIndex:[MazeModel instance].currentDragon] enlarged:NO];
+    [self moveDragonImageToEntry:entry imageView:[self.otherMazeView dragonImageViewWithIndex:[MazeModel instance].currentDragon] enlarged:YES];
+}
+
+- (void)moveDragonImageToEntry:(MazeEntry *)entry imageView:(UIImageView *)imageView enlarged:(bool)enlarged {
+    int dir = ((NSNumber *)[entry.bag objectForKey:@"direction"]).intValue;
+    float angle = ((float)(dir + 1) / 4.0f) * 2.0f * M_PI;
+
+    imageView.frame = enlarged ? [self enlargedRect:[self rectForEntry:entry] factor:1.5f] : [self rectForEntry:entry];
+    imageView.transform = CGAffineTransformMakeRotation(angle);
+}
+
+- (void)finishMoveDragonToEntry:(MazeEntry *)entry {
+    // TODO! Check for player at position
+    if ([MazeModel instance].currentDragon < 3) {
+        [MazeModel instance].currentDragon = [MazeModel instance].currentDragon + 1;
+        [self startDragonTurn];
+    } else {
+        [self startFirstPlayerTurn];
+    }
+}
+
 - (void)endGame {
     [self hideBrickMarkers];
     [UIView animateWithDuration:5.0f animations:^{
@@ -401,22 +461,37 @@ enum GameState {
     }];
 }
 
+- (void)startFirstPlayerTurn {
+    self.gameState = WAIT;
+    
+    for (int i = 0; i < MAX_PLAYERS; i++) {
+        [MazeModel instance].currentPlayer = [MazeModel instance].currentPlayer + 1;
+        if ([[MazeModel instance] isPlayerEnabled:[MazeModel instance].currentPlayer]) {
+            [self startPlayerTurn];
+            return;
+        }
+    }
+    [self performSelector:@selector(endGame) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
+}
+
 - (void)nextPlayer {
     self.gameState = WAIT;
 
     int nextPlayer = [MazeModel instance].currentPlayer;
     [MazeModel instance].currentPlayer = -1;
+    
+    [self updateMask];
 
-    for (int i = 0; i <= MAX_PLAYERS; i++) {
-        nextPlayer = (nextPlayer + 1) % MAX_PLAYERS;
-        if ([[MazeModel instance] isPlayerEnabled:nextPlayer]) {
-            [self updateMask];
-            [MazeModel instance].currentPlayer = nextPlayer;
+    for (int i = nextPlayer + 1; i < MAX_PLAYERS; i++) {
+        if ([[MazeModel instance] isPlayerEnabled:i]) {
+            [MazeModel instance].currentPlayer = i;
             [self performSelector:@selector(startPlayerTurn) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
             return;
         }
     }
-    [self performSelector:@selector(endGame) withObject:nil afterDelay:([MazeConstants instance].defaultAnimationDuration * 1.2f)];
+    [MazeModel instance].currentDragon = 0;
+    NSLog(@"Start dragon turn!");
+    [self performSelector:@selector(startDragonTurn) withObject:nil afterDelay:[MazeConstants instance].defaultAnimationDuration * 1.2f];
 }
 
 - (cv::Point)findPlayerPosition:(int)player {
@@ -605,15 +680,20 @@ enum GameState {
 }
 
 - (void)showObjects {
-    self.treasureImageView.frame = [self rectForPosition:[MazeModel instance].treasurePosition];
+    self.treasureImageView.frame = [self enlargedRect:[self rectForPosition:[MazeModel instance].treasurePosition] factor:1.5f];
     self.treasureImageView.alpha = 0.0f;
     self.treasureImageView.hidden = NO;
     
     [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
         self.treasureImageView.alpha = 1.0f;
         for (int i = 0; i < MAX_DRAGONS; i++) {
-            ((UIImageView *)[self.dragonFootprintImageViewsLeft objectAtIndex:i]).alpha = 1.0f;
-            ((UIImageView *)[self.dragonFootprintImageViewsRight objectAtIndex:i]).alpha = 1.0f;
+            [self.currentMazeView dragonImageViewWithIndex:i].alpha = 1.0f;
+            [self.currentMazeView dragonFootprintLeftImageViewWithIndex:i].alpha = 1.0f;
+            [self.currentMazeView dragonFootprintRightImageViewWithIndex:i].alpha = 1.0f;
+
+            [self.otherMazeView dragonImageViewWithIndex:i].alpha = 1.0f;
+            [self.otherMazeView dragonFootprintLeftImageViewWithIndex:i].alpha = 1.0f;
+            [self.otherMazeView dragonFootprintRightImageViewWithIndex:i].alpha = 1.0f;
         }
     }];
 }
@@ -622,8 +702,13 @@ enum GameState {
     [UIView animateWithDuration:[MazeConstants instance].defaultAnimationDuration animations:^{
         self.treasureImageView.alpha = 0.0f;
         for (int i = 0; i < MAX_DRAGONS; i++) {
-            ((UIImageView *)[self.dragonFootprintImageViewsLeft objectAtIndex:i]).alpha = 0.0f;
-            ((UIImageView *)[self.dragonFootprintImageViewsRight objectAtIndex:i]).alpha = 0.0f;
+            [self.currentMazeView dragonImageViewWithIndex:i].alpha = 0.0f;
+            [self.currentMazeView dragonFootprintLeftImageViewWithIndex:i].alpha = 0.0f;
+            [self.currentMazeView dragonFootprintRightImageViewWithIndex:i].alpha = 0.0f;
+            
+            [self.otherMazeView dragonImageViewWithIndex:i].alpha = 0.0f;
+            [self.otherMazeView dragonFootprintLeftImageViewWithIndex:i].alpha = 0.0f;
+            [self.otherMazeView dragonFootprintRightImageViewWithIndex:i].alpha = 0.0f;
         }
     } completion:^(BOOL finished) {
         self.treasureImageView.hidden = YES;
@@ -647,16 +732,29 @@ enum GameState {
 - (void)placeDragons {
     for (int i = 0; i < MAX_DRAGONS; i++) {
         CGRect frame = [self frameOfDragonWithIndex:i];
-        ((UIImageView *)[self.dragonFootprintImageViewsLeft objectAtIndex:i]).frame = frame;
-        ((UIImageView *)[self.dragonFootprintImageViewsRight objectAtIndex:i]).frame = frame;
+        CGRect enlargedFrame = [self enlargedRect:frame factor:1.5f];
+
+        [self.currentMazeView dragonImageViewWithIndex:i].frame = enlargedFrame;
+        [self.currentMazeView dragonFootprintLeftImageViewWithIndex:i].frame = frame;
+        [self.currentMazeView dragonFootprintRightImageViewWithIndex:i].frame = frame;
         
-        ((UIImageView *)[self.currentMazeView.dragonImageViews objectAtIndex:i]).frame = frame;
-        ((UIImageView *)[self.otherMazeView.dragonImageViews objectAtIndex:i]).frame = frame;
+        [self.otherMazeView dragonImageViewWithIndex:i].frame = enlargedFrame;
+        [self.otherMazeView dragonFootprintLeftImageViewWithIndex:i].frame = frame;
+        [self.otherMazeView dragonFootprintRightImageViewWithIndex:i].frame = frame;
     }
 }
 
 - (CGRect)frameOfDragonWithIndex:(int)index {
     return [self rectForPosition:[[MazeModel instance] positionOfDragon:index]];
+}
+
+- (CGRect)enlargedRect:(CGRect)rect factor:(float)factor {
+    float width = rect.size.width * factor;
+    float height = rect.size.height * factor;
+    return CGRectMake(CGRectGetMidX(rect) - (width / 2.0f),
+                      CGRectGetMidY(rect) - (height / 2.0f),
+                      width,
+                      height);
 }
 
 @end

@@ -359,6 +359,10 @@ const int dirY[4] = { 0, -1, 0, 1};
 }
 
 - (NSArray *)shortestPathFrom:(cv::Point2i)sourcePosition to:(cv::Point2i)destPosition {
+    if (sourcePosition == destPosition) {
+        return [NSArray array];
+    }
+    
     [self resetMazeBags];
     self.unvisitedEntries = [NSMutableArray array];
     

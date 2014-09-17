@@ -92,6 +92,7 @@ extern const int dirY[4];
 @property (nonatomic, assign) int dragonReachDistance;
 
 @property (nonatomic, assign) int currentPlayer;
+@property (nonatomic, assign) int currentDragon;
 
 @property (nonatomic, assign) cv::Point2i treasurePosition;
 

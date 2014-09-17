@@ -27,6 +27,16 @@
 #import "Constants.h"
 #import "MazeConstants.h"
 
+@interface MazeContainerView ()
+
+@property (nonatomic, strong) UIView *view;
+
+@property (nonatomic, strong) NSMutableArray *dragonImageViews;
+@property (nonatomic, strong) NSMutableArray *dragonFootprintImageViewsLeft;
+@property (nonatomic, strong) NSMutableArray *dragonFootprintImageViewsRight;
+
+@end
+
 @implementation MazeContainerView
 
 - (id)init {
@@ -38,24 +48,54 @@
 
 - (void)initialize {
     self.backgroundColor = [UIColor blackColor];
+
+    self.view = [[UIView alloc] initWithFrame:self.bounds];
+    [self addSubview:self.view];
     
     self.mazeImageView = [[UIImageView alloc] initWithFrame:self.bounds];
     self.mazeImageView.contentMode = UIViewContentModeScaleToFill;
-    [self addSubview:self.mazeImageView];
+    [self.view addSubview:self.mazeImageView];
 
     self.maskLayer = [CALayer layer];
     self.maskLayer.anchorPoint = CGPointMake(0.0f, 0.0f);
     self.maskLayer.bounds = self.mazeImageView.bounds;
-    self.mazeImageView.layer.mask = self.maskLayer;
+    self.view.layer.mask = self.maskLayer;
 
     self.dragonImageViews = [NSMutableArray array];
+    self.dragonFootprintImageViewsLeft = [NSMutableArray array];
+    self.dragonFootprintImageViewsRight = [NSMutableArray array];
+
     for (int i = 0; i < MAX_DRAGONS; i++) {
         UIImageView *dragonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Dragon"]];
         dragonImageView.contentMode = UIViewContentModeScaleAspectFit;
         dragonImageView.alpha = 0.0f;
-        [self addSubview:dragonImageView];
+        [self.view addSubview:dragonImageView];
         [self.dragonImageViews addObject:dragonImageView];
+
+        UIImageView *leftFootprintImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Dragon Footprint Left"]];
+        leftFootprintImageView.contentMode = UIViewContentModeScaleAspectFit;
+        leftFootprintImageView.alpha = 0.0f;
+        [self insertSubview:leftFootprintImageView atIndex:0];
+        [self.dragonFootprintImageViewsLeft addObject:leftFootprintImageView];
+        
+        UIImageView *rightFootprintImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Dragon Footprint Right"]];
+        rightFootprintImageView.contentMode = UIViewContentModeScaleAspectFit;
+        rightFootprintImageView.alpha = 0.0f;
+        [self insertSubview:rightFootprintImageView atIndex:0];
+        [self.dragonFootprintImageViewsRight addObject:rightFootprintImageView];
     }
+}
+
+- (UIImageView *)dragonImageViewWithIndex:(int)index {
+    return [self.dragonImageViews objectAtIndex:index];
+}
+
+- (UIImageView *)dragonFootprintLeftImageViewWithIndex:(int)index {
+    return [self.dragonFootprintImageViewsLeft objectAtIndex:index];
+}
+
+- (UIImageView *)dragonFootprintRightImageViewWithIndex:(int)index {
+    return [self.dragonFootprintImageViewsRight objectAtIndex:index];
 }
 
 @end
